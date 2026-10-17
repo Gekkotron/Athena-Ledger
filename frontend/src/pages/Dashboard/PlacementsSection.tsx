@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 import type { Account } from '../../api/types';
 import { getInvestmentsTimeseries } from '../../api/investments';
 import { formatAmount } from '../../lib/format';
-import { formatGainPct, numberLocale } from '../Accounts/valuation-lib';
+import { formatGainPct, lockedAmount, numberLocale } from '../Accounts/valuation-lib';
+import { todayLocalIso } from '../../lib/dates';
 import { fromDateFor, RangePicker, type RangeKey } from '../../components/RangePicker';
 import { SectionRule } from '../../components/SectionRule';
 import { ChartSkeleton, ErrorState } from '../../components/StateBlocks';
@@ -21,14 +22,20 @@ interface Props {
   defaultRange: RangeKey;
 }
 
-export const isPlacementAccount = (a: Account): boolean => a.type === 'investment' || a.type === 'savings';
+// An account belongs on the Placements chart iff it shows a "Placé" or
+// "Bloqué" line on its card: investment-type accounts (Placé) and any
+// account with locked funds (Bloqué). Plain unlocked savings — e.g. a
+// Livret A — carry neither label and are excluded.
+export const isPlacementAccount = (a: Account, today: string): boolean =>
+  a.type === 'investment' || Math.abs(lockedAmount(a, today)) >= 0.005;
 
 // Dashboard "Placements" section: Valeur vs Versé over time for investment
-// and savings accounts. Owns its account + range controls (the page-wide
+// and locked accounts. Owns its account + range controls (the page-wide
 // scope bar targets the balance-based charts, which exclude these semantics).
 export function PlacementsSection({ accounts, displayCurrency, primaryCurrency, defaultRange }: Props): JSX.Element | null {
   const { t, i18n } = useTranslation('dashboard');
-  const eligible = useMemo(() => accounts.filter(isPlacementAccount), [accounts]);
+  const today = todayLocalIso();
+  const eligible = useMemo(() => accounts.filter((a) => isPlacementAccount(a, today)), [accounts, today]);
   const [range, setRangeState] = useState<RangeKey>(defaultRange);
   const [scope, setScopeState] = useState<'all' | 'available' | number>('all');
   // Lifted from the chart so the summary follows the drag-zoom window; a new

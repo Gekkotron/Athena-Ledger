@@ -14,8 +14,16 @@ const apiMock = vi.mocked(api);
 
 pinLocale('dashboard', 'charts');
 
-const acc = (id: number, type: string, name: string) => ({ id, type, name, currency: 'EUR' }) as unknown as Account;
-const accounts = [acc(1, 'checking', 'Courant'), acc(2, 'investment', 'Assurance-vie'), acc(3, 'savings', 'Livret A')];
+const acc = (id: number, type: string, name: string, extra: Partial<Account> = {}) =>
+  ({ id, type, name, currency: 'EUR', ...extra }) as unknown as Account;
+// A plain unlocked Livret A (no placement, no bloqué) is intentionally
+// excluded; the PEL is a locked savings so it still qualifies.
+const accounts = [
+  acc(1, 'checking', 'Courant'),
+  acc(2, 'investment', 'Assurance-vie'),
+  acc(3, 'savings', 'Livret A'),
+  acc(4, 'savings', 'PEL', { openingDate: '2020-01-01', currentBalance: '5000.00', availableBalance: '0.00', lockYears: 10 }),
+];
 
 const response = {
   points: [
@@ -41,8 +49,8 @@ beforeEach(() => {
   apiMock.mockResolvedValue(response as never);
 });
 
-it('renders nothing when there is no investment or savings account', () => {
-  const { container } = renderSection([accounts[0]!]);
+it('renders nothing when there is no investment or locked account', () => {
+  const { container } = renderSection([accounts[0]!, accounts[2]!]);
   expect(container).toBeEmptyDOMElement();
   expect(apiMock).not.toHaveBeenCalled();
 });
@@ -78,12 +86,12 @@ it('counts the plus-value from the start of the selected range', async () => {
   expect(summary.textContent).not.toMatch(/130,00/);
 });
 
-it('lists only investment and savings accounts in the picker and scopes the query', async () => {
+it('lists only investment and locked accounts in the picker and scopes the query', async () => {
   renderSection();
   await screen.findByTestId('placements-summary');
   const select = screen.getByRole('combobox');
   expect(Array.from(select.querySelectorAll('option')).map((o) => o.textContent)).toEqual([
-    'Tous les comptes', 'Assurance-vie (EUR)', 'Livret A (EUR)',
+    'Tous les comptes', 'Assurance-vie (EUR)', 'PEL (EUR)',
   ]);
   fireEvent.change(select, { target: { value: '2' } });
   await waitFor(() => expect(apiMock.mock.calls.at(-1)![1]).toMatchObject({ query: { accountId: 2 } }));

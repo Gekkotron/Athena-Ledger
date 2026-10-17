@@ -24,6 +24,7 @@ import { DashboardSectionNav } from './DashboardSectionNav';
 import { useDashboardScope } from './useDashboardScope';
 import { EmptyState, ErrorState, ChartSkeleton } from '../../components/StateBlocks';
 import { SectionRule } from '../../components/SectionRule';
+import { todayLocalIso } from '../../lib/dates';
 import { Link } from 'react-router-dom';
 
 export function Dashboard(): JSX.Element {
@@ -80,9 +81,10 @@ export function Dashboard(): JSX.Element {
   // Memoized by the array reference so DashboardSectionNav's observer
   // effect doesn't re-register on every parent render.
   const hidden = useMemo(() => new Set(settings.dashboardHiddenSections), [settings.dashboardHiddenSections]);
-  // The Placements pill/section only exist when an investment or savings
+  // The Placements pill/section only exist when an investment or locked
   // account does; fold that into the set the nav filters on.
-  const hasPlacements = accounts.some(isPlacementAccount);
+  const today = todayLocalIso();
+  const hasPlacements = accounts.some((a) => isPlacementAccount(a, today));
   const navHidden = useMemo(
     () => (hasPlacements ? hidden : new Set([...hidden, 'placements'])),
     [hidden, hasPlacements],
