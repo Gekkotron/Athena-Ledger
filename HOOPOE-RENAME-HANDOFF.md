@@ -1,44 +1,29 @@
 # Hoopoe rename — manual steps checklist
 
-Phases 1–4 are committed on `main` (5 commits, verified via backend
-vitest 1207, frontend vitest 1449, mcp vitest 22, `cargo check`). The
-steps below are the ones that need **your** hand (shared infra, local
-dir moves, or require decisions I shouldn't make on my own).
+Phases 1–5 are **done and pushed**:
 
-## 1. Push phases 1–4
+- 5 rename commits (`04a881e` → `155e8a0`) + handoff (`a0ea572`) on
+  `main`, pushed to origin (pre-push hook ran tsc + eslint + vitest
+  on both backend and frontend — all green).
+- Backend vitest 1207/1207, frontend vitest 1449/1449, mcp vitest
+  22/22, `cargo check` green.
+- GitHub repo renamed: `Gekkotron/Athena-Ledger` →
+  **`Gekkotron/Hoopoe`** (new URL: https://github.com/Gekkotron/Hoopoe).
+  GitHub keeps a server-side redirect from the old slug for both UI
+  and `git` fetches.
+- Local git remote URL updated to point at the new slug — `git fetch`
+  verified clean.
 
-```sh
-git push origin main
-```
+CI will run on the next event under the new slug. Watch the e2e job:
+it uses the renamed `POSTGRES_USER=hoopoe` / `POSTGRES_DB=hoopoe_e2e`
+service config, which hasn't been exercised on a GitHub Actions
+runner yet (local vitest doesn't boot Postgres).
 
-Watch CI once it lands (both unit + e2e). The e2e workflow uses the
-renamed `POSTGRES_USER=hoopoe` / `POSTGRES_DB=hoopoe_e2e` service
-config — if CI goes red on a stale cached runner image, re-run the
-job.
+The steps below are the ones that still need **your** hand (local dir
+move would kill the current session's cwd; your desktop install's
+first-boot behavior; dashboard rewiring).
 
-## 2. Rename the GitHub repo (`Gekkotron/Athena-Ledger` → `Gekkotron/Hoopoe`)
-
-`gh auth status` shows the Gekkotron account is already the active one
-on this machine, so no `gh auth switch` is needed.
-
-```sh
-cd ~/superconductor/projects/Athena-Ledger
-gh repo rename Hoopoe
-```
-
-GitHub keeps a server-side redirect from `Gekkotron/Athena-Ledger` to
-`Gekkotron/Hoopoe` for both the UI and `git` fetches, so nothing
-immediately breaks.
-
-Then point the local checkout at the new slug (replaces the ssh host
-alias form the current remote uses):
-
-```sh
-git remote set-url origin git@github.com-gekkotron:Gekkotron/Hoopoe.git
-git fetch
-```
-
-## 3. Rename the local directory
+## 1. Rename the local directory
 
 The current terminal session's cwd is `Athena-Ledger/`; moving it from
 under me would kill the session, so you need to do this one yourself
@@ -73,7 +58,7 @@ mv ~/.claude/projects/-Users-julienhuguel-superconductor-projects-Athena-Ledger 
 if the one for the new path doesn't exist. Moving it just keeps the
 accumulated context.)
 
-## 4. If you have an existing desktop install on your Mac
+## 2. If you have an existing desktop install on your Mac
 
 The Tauri app's data directory (`~/Library/Application Support/Athena Ledger/`)
 and the PGlite file inside (`athena.db`) will be auto-migrated on
@@ -102,7 +87,7 @@ installing the new build:
    now begin with `hoopoe_` (same labels, same meaning). Rewire any
    dashboards.
 
-## 5. Delete this hand-off file
+## 3. Delete this hand-off file
 
 Once you've worked through this list, `rm HOOPOE-RENAME-HANDOFF.md`
 and commit. It only exists as a one-shot checklist.
