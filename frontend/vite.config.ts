@@ -25,8 +25,8 @@ export default defineConfig(({ mode }) => {
         registerType: 'autoUpdate',
         includeAssets: ['owl-logo.png', 'owl-192.png', 'owl-512.png'],
         manifest: {
-          name: 'Athena Ledger',
-          short_name: 'Athena',
+          name: 'Hoopoe',
+          short_name: 'Hoopoe',
           description: 'Personal accounting — self-hosted, LAN-friendly.',
           theme_color: '#0b0d11',
           background_color: '#0b0d11',

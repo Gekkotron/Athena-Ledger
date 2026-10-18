@@ -28,7 +28,7 @@ export class RpcClient {
         body: JSON.stringify({ user: this.cfg.user, v: 1, nonce: req.nonce, ct: req.ct }),
       });
     } catch (err) {
-      throw new Error(`cannot reach Athena backend at ${this.cfg.apiUrl}: ${(err as Error).message}`);
+      throw new Error(`cannot reach Hoopoe backend at ${this.cfg.apiUrl}: ${(err as Error).message}`);
     }
     if (!res.ok) {
       // Setup/auth failures are plaintext.

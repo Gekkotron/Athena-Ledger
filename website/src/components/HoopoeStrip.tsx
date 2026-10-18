@@ -1,7 +1,7 @@
 import Translate from '@docusaurus/Translate';
 import styles from '../pages/index.module.css';
 
-type LedgerStep = {
+type HoopoeStep = {
   n: string;
   title: React.ReactNode;
   body: React.ReactNode;
@@ -11,8 +11,8 @@ type Props = {
   divider: React.ReactNode;
 };
 
-export function LedgerStrip({ divider }: Props) {
-  const steps: LedgerStep[] = [
+export function HoopoeStrip({ divider }: Props) {
+  const steps: HoopoeStep[] = [
     {
       n: '01',
       title: <Translate id="home.step1.title">Import</Translate>,

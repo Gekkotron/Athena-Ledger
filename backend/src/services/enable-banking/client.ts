@@ -60,7 +60,7 @@ export function buildJwt(
   return `${signingInput}.${b64url(signature)}`;
 }
 
-// --- Response shapes (subset of fields Athena consumes) ---------------------
+// --- Response shapes (subset of fields Hoopoe consumes) ---------------------
 
 export type EbApplication = {
   name: string;

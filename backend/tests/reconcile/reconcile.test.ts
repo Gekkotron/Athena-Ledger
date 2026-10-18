@@ -20,7 +20,7 @@ describe('reconcile', () => {
     expect(r.summary).toMatchObject({ statementLines: 1, matched: 1, missing: 0, mismatched: 0, extra: 0 });
   });
 
-  it('statement line absent from Athena → missing', () => {
+  it('statement line absent from Hoopoe → missing', () => {
     const r = reconcile([sline('2025-04-12', '-18.90', 'fnac')], []);
     expect(r.summary.missing).toBe(1);
     expect(r.missing[0]).toEqual({ date: '2025-04-12', amount: '-18.90', rawLabel: 'fnac' });
@@ -48,7 +48,7 @@ describe('reconcile', () => {
     expect(r.summary).toMatchObject({ missing: 1, mismatched: 0 });
   });
 
-  it('Athena row in period not on statement → extra; transfer legs excluded', () => {
+  it('Hoopoe row in period not on statement → extra; transfer legs excluded', () => {
     // Statement spans 2025-04-10..2025-04-20 so the unmatched row on 2025-04-15
     // falls inside [from,to] and is reported extra.
     const s = [sline('2025-04-10', '-5.73', 'magasin u'), sline('2025-04-20', '-10.00', 'autre')];
@@ -63,7 +63,7 @@ describe('reconcile', () => {
     expect(r.extra[0]).toMatchObject({ id: 2 });
   });
 
-  it('unmatched Athena row dated outside the statement period → not extra', () => {
+  it('unmatched Hoopoe row dated outside the statement period → not extra', () => {
     const s = [sline('2025-04-10', '-5.73', 'magasin u'), sline('2025-04-20', '-10.00', 'autre')];
     const e = [
       etx(1, '2025-04-10', '-5.73', 'magasin u'),
@@ -74,7 +74,7 @@ describe('reconcile', () => {
     expect(r.summary.extra).toBe(0);
   });
 
-  it('each Athena row is consumed at most once', () => {
+  it('each Hoopoe row is consumed at most once', () => {
     const s = [sline('2025-04-10', '-5.73', 'magasin u'), sline('2025-04-10', '-5.73', 'magasin u')];
     const e = [etx(1, '2025-04-10', '-5.73', 'magasin u')];
     const r = reconcile(s, e);

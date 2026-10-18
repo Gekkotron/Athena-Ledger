@@ -87,7 +87,7 @@ export function consentRedirectUrl(origin: string): string {
 
 // Manual consent finalization: the bank's redirect can land on an
 // unreachable page (e.g. the whitelisted URL doesn't match the address the
-// user browses Athena at) — the authorization code is still in that page's
+// user browses Hoopoe at) — the authorization code is still in that page's
 // URL. Accepts a full pasted URL or the bare code.
 export function extractAuthCode(input: string): string | null {
   const raw = input.trim();

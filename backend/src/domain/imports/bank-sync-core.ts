@@ -20,7 +20,7 @@ function firstNonEmpty(...values: Array<string | null | undefined>): string | nu
   return null;
 }
 
-// Returns null for rows Athena must not import (pending, unusable date or
+// Returns null for rows Hoopoe must not import (pending, unusable date or
 // amount) — callers filter those out.
 export function normalizeEbTransaction(t: EbTransaction): ParsedTransaction | null {
   // Only booked transactions land in the ledger; PEND rows change amount,

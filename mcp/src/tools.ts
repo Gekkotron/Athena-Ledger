@@ -134,10 +134,10 @@ export function registerTools(server: McpServer, client: RpcLike, opts: { statem
 
   server.tool(
     'reconcile_statement',
-    "Reconcile a bank-statement PDF against Athena. Reads a PDF file on this machine, compares it to recorded transactions, and returns matched/missing/mismatched/extra. Read-only — it never changes data.",
+    "Reconcile a bank-statement PDF against Hoopoe. Reads a PDF file on this machine, compares it to recorded transactions, and returns matched/missing/mismatched/extra. Read-only — it never changes data.",
     {
       path: z.string().describe('The statement PDF: a bare filename (resolved against HOOPOE_STATEMENTS_DIR if set) or an absolute path on this machine. Not a URL.'),
-      accountId: z.number().int().positive().describe('The Athena account id — the small integer from list_accounts, NOT the bank account number.'),
+      accountId: z.number().int().positive().describe('The Hoopoe account id — the small integer from list_accounts, NOT the bank account number.'),
       fromDate: dateStr.optional(),
       toDate: dateStr.optional(),
     },

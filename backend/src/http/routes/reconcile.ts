@@ -54,17 +54,17 @@ export async function reconcileRoutes(app: FastifyInstance): Promise<void> {
       return reply.code(400).send({ error: 'could not read PDF', message: err instanceof Error ? err.message : String(err) });
     }
     if (pages.every((p) => p.items.length === 0)) {
-      return reply.code(422).send({ code: 'needs_template', reason: 'no_text_layer', error: 'PDF has no text layer; set up a template via Athena import first' });
+      return reply.code(422).send({ code: 'needs_template', reason: 'no_text_layer', error: 'PDF has no text layer; set up a template via Hoopoe import first' });
     }
     const fingerprint = fingerprintHeader(pages[0]!);
     const [tpl] = await db.select().from(pdfStatementTemplates)
       .where(and(eq(pdfStatementTemplates.fingerprint, fingerprint), eq(pdfStatementTemplates.accountId, accountId)));
     if (!tpl) {
-      return reply.code(422).send({ code: 'needs_template', reason: 'no_template', error: 'no saved template for this statement + account; import it once in Athena first' });
+      return reply.code(422).send({ code: 'needs_template', reason: 'no_template', error: 'no saved template for this statement + account; import it once in Hoopoe first' });
     }
     const rowsRes = parseStatementRows(pages, tpl.zones as TemplateZones);
     if (rowsRes.kind === 'stale') {
-      return reply.code(422).send({ code: 'needs_template', reason: 'template_stale', error: 'saved template no longer matches this PDF; re-train it via Athena import' });
+      return reply.code(422).send({ code: 'needs_template', reason: 'template_stale', error: 'saved template no longer matches this PDF; re-train it via Hoopoe import' });
     }
 
     const statement: StatementLine[] = rowsRes.rows.map((r) => {

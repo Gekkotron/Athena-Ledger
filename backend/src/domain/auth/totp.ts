@@ -100,7 +100,7 @@ export function verifyCode(
   return { ok: false, counter: 0 };
 }
 
-export function otpauthUrl(username: string, base32Secret: string, issuer: string = 'Athena'): string {
+export function otpauthUrl(username: string, base32Secret: string, issuer: string = 'Hoopoe'): string {
   const label = encodeURIComponent(`${issuer}:${username}`);
   const params = new URLSearchParams({
     secret: base32Secret,

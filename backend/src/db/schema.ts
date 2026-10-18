@@ -754,7 +754,7 @@ export const bankConnections = pgTable(
 );
 
 // Accounts returned by Enable Banking at session creation, plus the user's
-// mapping to an Athena account. account_id NULL = unmapped (sync skips it);
+// mapping to an Hoopoe account. account_id NULL = unmapped (sync skips it);
 // ON DELETE SET NULL keeps the connection alive when an account is removed.
 export const bankConnectionAccounts = pgTable(
   'bank_connection_accounts',

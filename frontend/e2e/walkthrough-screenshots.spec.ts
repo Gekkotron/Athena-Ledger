@@ -17,7 +17,7 @@ const __dirname = path.dirname(__filename);
 
 const SHOULD_RUN = process.env.WALKTHROUGH_SHOTS === '1';
 // Real-backend mode: WALKTHROUGH_LOCAL_URL points playwright.config's
-// baseURL at a running Athena instance instead of the demo build. When set,
+// baseURL at a running Hoopoe instance instead of the demo build. When set,
 // we also need to log in as the demo user first (WALKTHROUGH_LOCAL_USER /
 // WALKTHROUGH_LOCAL_PASS). Credentials are read at run time only — never
 // committed.
@@ -39,7 +39,7 @@ const OUT_DIR = path.resolve(
 );
 
 async function dismissWelcomeTour(page: Page): Promise<void> {
-  const tour = page.getByRole('dialog', { name: /Athena|Bienvenue/i });
+  const tour = page.getByRole('dialog', { name: /Hoopoe|Bienvenue/i });
   try {
     await tour.waitFor({ state: 'visible', timeout: 3_000 });
     await page.keyboard.press('Escape');

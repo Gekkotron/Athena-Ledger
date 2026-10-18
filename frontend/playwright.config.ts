@@ -9,7 +9,7 @@ import { defineConfig, devices } from '@playwright/test';
 // the config and needs the same env to serve at the overridden base.
 //
 // Real-backend override: set WALKTHROUGH_LOCAL_URL=http://host:port to point
-// the suite at a running Athena instance instead of the demo build. When set,
+// the suite at a running Hoopoe instance instead of the demo build. When set,
 // no webServer is booted and baseURL becomes the env value. Used to re-shoot
 // walkthrough PNGs against real data (see walkthrough-screenshots.spec.ts).
 

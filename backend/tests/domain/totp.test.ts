@@ -140,13 +140,13 @@ describe('otpauthUrl', () => {
   it('formats the RFC 5804 otpauth URI with SHA1/6/30 defaults', () => {
     const url = otpauthUrl('alice', 'JBSWY3DPEHPK3PXP');
     expect(url).toBe(
-      'otpauth://totp/Athena%3Aalice?secret=JBSWY3DPEHPK3PXP&issuer=Athena&algorithm=SHA1&digits=6&period=30',
+      'otpauth://totp/Hoopoe%3Aalice?secret=JBSWY3DPEHPK3PXP&issuer=Hoopoe&algorithm=SHA1&digits=6&period=30',
     );
   });
 
   it('URL-encodes usernames with special characters', () => {
     const url = otpauthUrl('a b@c', 'JBSWY3DPEHPK3PXP');
-    expect(url).toContain('Athena%3Aa%20b%40c');
+    expect(url).toContain('Hoopoe%3Aa%20b%40c');
   });
 });
 

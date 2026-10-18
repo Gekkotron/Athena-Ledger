@@ -1,6 +1,6 @@
 // Discord channel-webhook relay — fire-and-forget side-channel for notifications.
 //
-// Activation (user does this once, outside Athena):
+// Activation (user does this once, outside Hoopoe):
 //   1. In Discord: Server settings → Integrations → Webhooks → New Webhook.
 //   2. Pick the target channel, then "Copy Webhook URL".
 //   3. Paste the URL in Réglages.

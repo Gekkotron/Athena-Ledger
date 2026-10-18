@@ -85,7 +85,7 @@ describe('TotpSection', () => {
         enrolledPasswords.push(body!.password);
         return {
           secret: 'JBSWY3DPEHPK3PXP',
-          otpauthUrl: 'otpauth://totp/Athena:julien?secret=JBSWY3DPEHPK3PXP&issuer=Athena',
+          otpauthUrl: 'otpauth://totp/Hoopoe:julien?secret=JBSWY3DPEHPK3PXP&issuer=Hoopoe',
         };
       }
       if (path === '/api/auth/2fa/confirm') {

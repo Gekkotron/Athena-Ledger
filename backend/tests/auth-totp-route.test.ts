@@ -117,7 +117,7 @@ describe.skipIf(!RUN)('/api/auth/2fa', () => {
       expect(res.statusCode).toBe(200);
       const body = res.json();
       expect(body.secret).toMatch(/^[A-Z2-7]{32}$/);
-      expect(body.otpauthUrl).toMatch(/^otpauth:\/\/totp\/Athena%3Atotp-user\?/);
+      expect(body.otpauthUrl).toMatch(/^otpauth:\/\/totp\/Hoopoe%3Atotp-user\?/);
       expect(body.otpauthUrl).toContain(`secret=${body.secret}`);
     });
 

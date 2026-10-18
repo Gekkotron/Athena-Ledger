@@ -298,7 +298,7 @@ assert_account_present() {
   list_account_names "$1" | grep -qx "$2"
 }
 
-echo "=== Athena desktop encryption-at-rest smoke test ==="
+echo "=== Hoopoe desktop encryption-at-rest smoke test ==="
 log "work dir: $WORK_DIR"
 log "data dir: $DATA_DIR"
 

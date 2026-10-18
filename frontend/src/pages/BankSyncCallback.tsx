@@ -14,7 +14,7 @@ interface SessionResponse {
 
 // Landing page for the bank's consent redirect (?code=...). Exchanges the
 // code for a session, then lets the user map each returned bank account to
-// an Athena account before heading back to Réglages.
+// a Hoopoe account before heading back to Réglages.
 export function BankSyncCallback(): JSX.Element {
   const { t } = useTranslation('settings');
   const navigate = useNavigate();

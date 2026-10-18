@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 
 export interface Config { apiUrl: string; user: string; token: string; statementsDir?: string; }
 
-// Resolve the Athena backend URL. In the Docker/LAN path users set
+// Resolve the Hoopoe backend URL. In the Docker/LAN path users set
 // `HOOPOE_API_URL` directly (stable host + fixed port). In the Tauri desktop
 // path the backend binds to a random loopback port on every launch, so the
 // desktop entry writes that port to `${DATA_DIR}/.mcp-port` and the user's

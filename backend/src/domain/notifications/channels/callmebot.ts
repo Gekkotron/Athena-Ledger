@@ -1,6 +1,6 @@
 // CallMeBot WhatsApp relay — fire-and-forget side-channel for notifications.
 //
-// Activation (user does this once, outside Athena):
+// Activation (user does this once, outside Hoopoe):
 //   1. Add the number +34 644 51 95 23 to their phone contacts.
 //   2. Send "I allow callmebot to send me messages" from WhatsApp to that number.
 //   3. CallMeBot replies with a 7-10 digit apikey — paste it in Réglages.

@@ -1,6 +1,6 @@
-# Athena Desktop
+# Hoopoe Desktop
 
-Tauri distribution of Athena — a self-contained window that spawns the same
+Tauri distribution of Hoopoe — a self-contained window that spawns the same
 Fastify backend used by the Docker path, serving the built frontend over
 loopback. Two moving parts:
 

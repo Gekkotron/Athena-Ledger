@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Athena Ledger — installer
+# Hoopoe — installer
 #
 # Generates a .env file with cryptographically random secrets.
 # Idempotent: refuses to overwrite an existing .env unless --force is passed.
@@ -64,8 +64,8 @@ rand_hex() {
   openssl rand -hex 32
 }
 
-POSTGRES_USER="${POSTGRES_USER:-athena}"
-POSTGRES_DB="${POSTGRES_DB:-athena}"
+POSTGRES_USER="${POSTGRES_USER:-hoopoe}"
+POSTGRES_DB="${POSTGRES_DB:-hoopoe}"
 POSTGRES_PASSWORD="$(rand_password)"
 SESSION_SECRET="$(rand_hex)"
 FRONTEND_PORT="${FRONTEND_PORT:-8000}"

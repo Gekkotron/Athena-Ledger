@@ -59,7 +59,7 @@ elif [ -z "$DB_RUNNING" ]; then
   echo "$(date): db container not running — skipping backup (nothing to dump)."
 else
   mkdir -p backups
-  BACKUP="backups/athena-$(date +%F-%H%M)-pre-${VERSION}.sql"
+  BACKUP="backups/hoopoe-$(date +%F-%H%M)-pre-${VERSION}.sql"
   # Single quotes on purpose: POSTGRES_* are set inside the container, not
   # in this shell.
   "${COMPOSE[@]}" exec -T db sh -c 'pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB"' > "$BACKUP"

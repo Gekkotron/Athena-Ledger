@@ -22,8 +22,8 @@ $ErrorActionPreference = 'Stop'
 Start-Process -FilePath (Resolve-Path $Installer) -ArgumentList '/S' -Wait
 
 $roots = @(
-  (Join-Path $env:LOCALAPPDATA 'Athena Ledger'),
-  (Join-Path $env:ProgramFiles 'Athena Ledger')
+  (Join-Path $env:LOCALAPPDATA 'Hoopoe'),
+  (Join-Path $env:ProgramFiles 'Hoopoe')
 )
 $exe = $null
 foreach ($root in $roots) {

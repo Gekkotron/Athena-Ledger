@@ -48,7 +48,7 @@ export function useBankSyncActions() {
 
   // --- Manual consent finalization --------------------------------------------
   // Fallback for when the bank's redirect lands on an unreachable page (the
-  // whitelisted URL doesn't match the address Athena is browsed at): the user
+  // whitelisted URL doesn't match the address Hoopoe is browsed at): the user
   // pastes the final URL (or the bare code) and we exchange it here.
   const [manualInput, setManualInput] = useState('');
   const [manualError, setManualError] = useState<string | null>(null);

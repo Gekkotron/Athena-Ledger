@@ -3,7 +3,7 @@ import { parseCamt } from '../../src/domain/imports/camt-parser.js';
 
 // Synthetic ISO 20022 fixtures. Structure follows the CAMT.053.001.02 /
 // CAMT.052.001.02 examples from the ISO 20022 message set — trimmed to the
-// fields Athena consumes. No real bank statement is ever committed.
+// fields Hoopoe consumes. No real bank statement is ever committed.
 
 function camt053(ntries: string, opts: { namespace?: string } = {}): Buffer {
   const ns = opts.namespace ?? 'urn:iso:std:iso:20022:tech:xsd:camt.053.001.02';
