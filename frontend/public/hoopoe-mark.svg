@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="none">
+  <!--
+    Hoopoe (Upupa epops), stylised side profile facing right.
+    One continuous silhouette: round head at the upper-left, slight neck,
+    fuller body dropping down to the right, tail feathers angling to the
+    lower-right. The fan crest crowns the head; the long downcurved beak
+    extends forward. Two solid teal tones for feather separation.
+  -->
+
+  <!-- Main silhouette: head + neck + body, drawn as one path.
+       Starts at the nape, sweeps up over the head, under the chin, down
+       the breast, under the belly, up the back, and closes at the nape. -->
+  <path fill="#7dd3c0" d="
+    M34 28
+    C30 30 28 36 29 42
+    C29 48 32 50 34 52
+    C32 56 32 62 34 68
+    C37 78 46 84 56 82
+    C68 80 72 70 70 60
+    C68 52 64 48 60 46
+    L58 42
+    C57 36 53 30 46 28
+    C41 27 37 27 34 28 Z"/>
+
+  <!-- Tail feathers: three overlapping blades angling to the lower-right,
+       extending off the rear of the body. -->
+  <g fill="#4fb3a0">
+    <path d="M66 70 L84 76 L76 78 L68 76 Z"/>
+    <path d="M66 74 L82 82 L74 82 L66 80 Z"/>
+    <path d="M64 78 L78 86 L70 86 L63 82 Z"/>
+  </g>
+
+  <!-- Crest: five tapered leaf feathers fanning up and slightly back from
+       the top of the head. Alternating tones for separation. -->
+  <g>
+    <path fill="#4fb3a0" d="M32 28 C30 20 27 13 28 6 C32 10 36 18 36 27 Z"/>
+    <path fill="#7dd3c0" d="M37 27 C37 18 35  9 38 2 C42 7  43 18 41 27 Z"/>
+    <path fill="#4fb3a0" d="M42 27 C42 15 44  5 47 0 C51 6  50 18 47 28 Z"/>
+    <path fill="#7dd3c0" d="M48 28 C50 19 54 11 58 7 C58 15 55 24 52 29 Z"/>
+    <path fill="#4fb3a0" d="M53 30 C56 24 61 19 65 17 C64 24 60 30 56 32 Z"/>
+  </g>
+
+  <!-- Beak: long, finely tapered, slightly downcurved needle extending
+       from the lower front of the head. Drawn as a thin crescent. -->
+  <path fill="#3a9988" d="
+    M57 40
+    Q74 42 92 48
+    L92 48.6
+    Q74 45 57 44 Z"/>
+
+  <!-- Eye: dark pupil with a small catchlight -->
+  <circle cx="46" cy="38" r="2.1" fill="#0b0d11"/>
+  <circle cx="46.5" cy="37.2" r="0.7" fill="#eaf7f3"/>
+
+  <!-- Folded wing: a comma-shaped feather on the upper-back/flank.
+       Angled from the shoulder down to the lower back so it reads as
+       a wing in profile, not as a mouth. -->
+  <path fill="#4fb3a0" d="
+    M52 46
+    C62 48 68 56 68 68
+    C66 60 60 54 54 52
+    C50 51 49 48 52 46 Z"/>
+  <!-- Three short feather barbs on the wing for texture -->
+  <g fill="#3a9988" opacity="0.55">
+    <path d="M58 54 L65 60 L62 60 L56 55 Z"/>
+    <path d="M58 58 L66 64 L62 64 L56 59 Z"/>
+    <path d="M57 62 L65 68 L61 68 L55 63 Z"/>
+  </g>
+</svg>

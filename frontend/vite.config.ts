@@ -23,7 +23,7 @@ export default defineConfig(({ mode }) => {
       // (auth cookies + freshness matter more than offline reads here).
       !isDemo && VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['owl-logo.png', 'owl-192.png', 'owl-512.png'],
+        includeAssets: ['hoopoe-logo.png', 'hoopoe-192.png', 'hoopoe-512.png'],
         manifest: {
           name: 'Hoopoe',
           short_name: 'Hoopoe',
@@ -35,9 +35,9 @@ export default defineConfig(({ mode }) => {
           scope: '/',
           lang: 'fr',
           icons: [
-            { src: '/owl-192.png', sizes: '192x192', type: 'image/png' },
-            { src: '/owl-512.png', sizes: '512x512', type: 'image/png' },
-            { src: '/owl-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
+            { src: '/hoopoe-192.png', sizes: '192x192', type: 'image/png' },
+            { src: '/hoopoe-512.png', sizes: '512x512', type: 'image/png' },
+            { src: '/hoopoe-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
           ],
         },
         workbox: {

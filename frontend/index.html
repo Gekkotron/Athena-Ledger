@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#0b0d11" />
-    <link rel="icon" type="image/png" href="/owl-logo.png" />
-    <link rel="apple-touch-icon" href="/owl-logo.png" />
+    <link rel="icon" type="image/png" href="/hoopoe-logo.png" />
+    <link rel="apple-touch-icon" href="/hoopoe-logo.png" />
     <title>Hoopoe</title>
     <style>
       html, body { background: #0b0d11; margin: 0; }
@@ -56,17 +56,80 @@
           0 0 0 1px rgba(125, 211, 192, 0.10),
           0 1px 0 rgba(255, 255, 255, 0.03) inset;
         display: flex; align-items: center; justify-content: center;
+        overflow: hidden;
+        animation: splash-plate-in 460ms cubic-bezier(0.2, 0.9, 0.3, 1.08) both;
       }
-      .splash__img {
+      .splash__hoopoe {
         width: 86px; height: 86px;
-        border-radius: 20px;
         display: block;
+        overflow: visible;
+      }
+      /* All animated SVG shapes transform around their own box, not the
+         SVG viewport — avoids Firefox/Safari surprises with transform-origin
+         on <path>/<g>. Chrome, Safari, FF all support transform-box. */
+      .splash__hoopoe .hp-body,
+      .splash__hoopoe .hp-crest > *,
+      .splash__hoopoe .hp-beak,
+      .splash__hoopoe .hp-wing,
+      .splash__hoopoe .hp-wing-barbs,
+      .splash__hoopoe .hp-tail > * {
+        transform-box: fill-box;
+        transform-origin: center;
+      }
+      .splash__hoopoe .hp-body {
+        animation: hp-body-in 360ms cubic-bezier(0.2, 0.9, 0.3, 1) 80ms both;
+      }
+      .splash__hoopoe .hp-crest > * {
+        opacity: 0;
+        animation: hp-crest-in 520ms cubic-bezier(0.2, 0.9, 0.3, 1) both;
+      }
+      .splash__hoopoe .hp-crest > *:nth-child(1) { animation-delay: 240ms; }
+      .splash__hoopoe .hp-crest > *:nth-child(2) { animation-delay: 310ms; }
+      .splash__hoopoe .hp-crest > *:nth-child(3) { animation-delay: 380ms; }
+      .splash__hoopoe .hp-crest > *:nth-child(4) { animation-delay: 450ms; }
+      .splash__hoopoe .hp-crest > *:nth-child(5) { animation-delay: 520ms; }
+      .splash__hoopoe .hp-beak {
+        transform-origin: left center;
+        animation: hp-beak-in 340ms cubic-bezier(0.3, 0.9, 0.3, 1) 420ms both;
+      }
+      .splash__hoopoe .hp-wing,
+      .splash__hoopoe .hp-wing-barbs {
+        animation: hp-fade-in 360ms ease 560ms both;
+      }
+      .splash__hoopoe .hp-tail > *:nth-child(1) { animation: hp-tail-in 320ms cubic-bezier(0.3, 0.9, 0.3, 1) 620ms both; }
+      .splash__hoopoe .hp-tail > *:nth-child(2) { animation: hp-tail-in 320ms cubic-bezier(0.3, 0.9, 0.3, 1) 670ms both; }
+      .splash__hoopoe .hp-tail > *:nth-child(3) { animation: hp-tail-in 320ms cubic-bezier(0.3, 0.9, 0.3, 1) 720ms both; }
+      .splash__hoopoe .hp-eye-glint {
+        transform-box: fill-box; transform-origin: center;
+        animation: hp-glint 3.4s ease-in-out 1.6s infinite;
       }
       .splash__sheen {
         position: absolute; inset: 0;
         border-radius: 26px;
         pointer-events: none;
         background: linear-gradient(135deg, rgba(255,255,255,0.06), transparent 40%);
+      }
+      /* Diagonal highlight bar that sweeps across the plate on a slow loop,
+         like light catching a lacquered surface. */
+      .splash__sweep {
+        position: absolute; inset: 0;
+        border-radius: 26px;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .splash__sweep::before {
+        content: '';
+        position: absolute;
+        top: -20%; left: -60%;
+        width: 55%; height: 140%;
+        background: linear-gradient(100deg,
+          transparent 15%,
+          rgba(255, 255, 255, 0.13) 48%,
+          rgba(125, 211, 192, 0.14) 52%,
+          transparent 85%);
+        transform: translateX(0) rotate(8deg);
+        filter: blur(1px);
+        animation: splash-sweep 4.6s ease-in-out 1.4s infinite;
       }
 
       .splash__word {
@@ -78,6 +141,14 @@
         color: #f4f5f8;
         display: flex; align-items: baseline; gap: 10px;
       }
+      .splash__word > span {
+        display: inline-block;
+        opacity: 0;
+        transform: translateY(10px);
+        animation: splash-word-in 520ms cubic-bezier(0.2, 0.9, 0.3, 1) both;
+      }
+      .splash__word > span:nth-child(1) { animation-delay: 760ms; }
+      .splash__word > span:nth-child(2) { animation-delay: 880ms; }
       .splash__word .accent {
         font-style: italic;
         color: #7dd3c0;
@@ -91,6 +162,8 @@
         text-transform: uppercase;
         color: #7c8493;
         display: flex; align-items: center; gap: 14px;
+        opacity: 0;
+        animation: splash-sub-in 420ms ease 1120ms both;
       }
       .splash__sub .bar {
         width: 32px; height: 1px; background: #272d3b;
@@ -112,8 +185,65 @@
         0%, 80%, 100% { opacity: 0.25; transform: translateY(0); }
         40%           { opacity: 1;    transform: translateY(-3px); }
       }
+      @keyframes splash-plate-in {
+        from { opacity: 0; transform: scale(0.9); }
+        to   { opacity: 1; transform: scale(1); }
+      }
+      @keyframes hp-body-in {
+        from { opacity: 0; transform: translateY(4px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes hp-crest-in {
+        from { opacity: 0; transform: translateY(5px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes hp-beak-in {
+        from { opacity: 0; transform: translateX(-6px) scaleX(0.3); }
+        to   { opacity: 1; transform: translateX(0) scaleX(1); }
+      }
+      @keyframes hp-tail-in {
+        from { opacity: 0; transform: translateX(-3px); }
+        to   { opacity: 1; transform: translateX(0); }
+      }
+      @keyframes hp-fade-in {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+      }
+      @keyframes hp-glint {
+        0%, 85%, 100% { opacity: 0.9; transform: scale(1); }
+        92%           { opacity: 1;   transform: scale(1.3); }
+      }
+      @keyframes splash-sweep {
+        0%, 15%  { transform: translateX(0) rotate(8deg); opacity: 0; }
+        25%      { opacity: 1; }
+        55%      { transform: translateX(380%) rotate(8deg); opacity: 0; }
+        100%     { transform: translateX(380%) rotate(8deg); opacity: 0; }
+      }
+      @keyframes splash-word-in {
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes splash-sub-in {
+        to { opacity: 1; }
+      }
+
       @media (prefers-reduced-motion: reduce) {
-        .splash__halo, .splash__dots i { animation: none; }
+        .splash__halo,
+        .splash__dots i,
+        .splash__sweep::before,
+        .splash__plate,
+        .splash__hoopoe .hp-body,
+        .splash__hoopoe .hp-crest > *,
+        .splash__hoopoe .hp-beak,
+        .splash__hoopoe .hp-wing,
+        .splash__hoopoe .hp-wing-barbs,
+        .splash__hoopoe .hp-tail > *,
+        .splash__hoopoe .hp-eye-glint,
+        .splash__word > span,
+        .splash__sub {
+          animation: none !important;
+          opacity: 1 !important;
+          transform: none !important;
+        }
       }
     </style>
   </head>
@@ -122,8 +252,36 @@
       <div class="splash__mark">
         <div class="splash__halo"></div>
         <div class="splash__plate">
-          <img class="splash__img" src="/owl-logo.png" alt="" />
+          <!-- Hoopoe mark, drawn inline so each anatomy element can be
+               animated independently (crest unfurl, beak extend, tail
+               fan). Mirrors frontend/public/hoopoe-mark.svg; keep them
+               in sync when the mark is revised. -->
+          <svg class="splash__hoopoe" viewBox="0 0 96 96" aria-hidden="true" fill="none">
+            <path class="hp-body" fill="#7dd3c0" d="M34 28 C30 30 28 36 29 42 C29 48 32 50 34 52 C32 56 32 62 34 68 C37 78 46 84 56 82 C68 80 72 70 70 60 C68 52 64 48 60 46 L58 42 C57 36 53 30 46 28 C41 27 37 27 34 28 Z"/>
+            <g class="hp-tail" fill="#4fb3a0">
+              <path d="M66 70 L84 76 L76 78 L68 76 Z"/>
+              <path d="M66 74 L82 82 L74 82 L66 80 Z"/>
+              <path d="M64 78 L78 86 L70 86 L63 82 Z"/>
+            </g>
+            <g class="hp-crest">
+              <path fill="#4fb3a0" d="M32 28 C30 20 27 13 28 6 C32 10 36 18 36 27 Z"/>
+              <path fill="#7dd3c0" d="M37 27 C37 18 35  9 38 2 C42 7  43 18 41 27 Z"/>
+              <path fill="#4fb3a0" d="M42 27 C42 15 44  5 47 0 C51 6  50 18 47 28 Z"/>
+              <path fill="#7dd3c0" d="M48 28 C50 19 54 11 58 7 C58 15 55 24 52 29 Z"/>
+              <path fill="#4fb3a0" d="M53 30 C56 24 61 19 65 17 C64 24 60 30 56 32 Z"/>
+            </g>
+            <path class="hp-beak" fill="#3a9988" d="M57 40 Q74 42 92 48 L92 48.6 Q74 45 57 44 Z"/>
+            <circle class="hp-eye" cx="46" cy="38" r="2.1" fill="#0b0d11"/>
+            <circle class="hp-eye-glint" cx="46.5" cy="37.2" r="0.7" fill="#eaf7f3"/>
+            <path class="hp-wing" fill="#4fb3a0" d="M52 46 C62 48 68 56 68 68 C66 60 60 54 54 52 C50 51 49 48 52 46 Z"/>
+            <g class="hp-wing-barbs" fill="#3a9988" opacity="0.55">
+              <path d="M58 54 L65 60 L62 60 L56 55 Z"/>
+              <path d="M58 58 L66 64 L62 64 L56 59 Z"/>
+              <path d="M57 62 L65 68 L61 68 L55 63 Z"/>
+            </g>
+          </svg>
           <div class="splash__sheen"></div>
+          <div class="splash__sweep"></div>
         </div>
       </div>
       <div class="splash__word">
