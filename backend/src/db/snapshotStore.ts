@@ -3,11 +3,11 @@ import { existsSync } from 'node:fs';
 import path from 'node:path';
 
 export function snapshotPath(dir: string): string {
-  return path.join(dir, 'athena.db.enc');
+  return path.join(dir, 'hoopoe.db.enc');
 }
 
 export function backupSnapshotPath(dir: string): string {
-  return path.join(dir, 'athena.db.enc.bak');
+  return path.join(dir, 'hoopoe.db.enc.bak');
 }
 
 export function markerPath(dir: string): string {
@@ -15,7 +15,7 @@ export function markerPath(dir: string): string {
 }
 
 export async function writeSnapshot(dir: string, file: Buffer): Promise<void> {
-  const tmp = path.join(dir, 'athena.db.enc.tmp');
+  const tmp = path.join(dir, 'hoopoe.db.enc.tmp');
   const cur = snapshotPath(dir);
   const bak = backupSnapshotPath(dir);
 
@@ -121,7 +121,7 @@ export async function removeBackupSnapshot(dir: string): Promise<void> {
 export async function clearEncryption(dir: string): Promise<void> {
   const cur = snapshotPath(dir);
   const bak = backupSnapshotPath(dir);
-  const tmp = path.join(dir, 'athena.db.enc.tmp');
+  const tmp = path.join(dir, 'hoopoe.db.enc.tmp');
   const markerFile = markerPath(dir);
 
   await rm(cur, { force: true });

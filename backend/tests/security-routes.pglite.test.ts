@@ -50,7 +50,7 @@ const OTHER_PASSWORD = 'another-strong-passphrase-2026';
 
 describe('/api/security (pglite, AUTH_MODE=none)', () => {
   beforeAll(async () => {
-    tmp = await mkdtemp(path.join(tmpdir(), 'athena-sec-'));
+    tmp = await mkdtemp(path.join(tmpdir(), 'hoopoe-sec-'));
     process.env.DATA_DIR = tmp;
     process.env.PGLITE_PATH = path.join(tmp, 'athena.db');
 

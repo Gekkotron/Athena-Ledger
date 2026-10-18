@@ -18,14 +18,14 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { performance } from 'node:perf_hooks';
 
-const dir = await mkdtemp(path.join(tmpdir(), 'athena-drill-'));
+const dir = await mkdtemp(path.join(tmpdir(), 'hoopoe-drill-'));
 
 process.env.DATA_DIR = dir;
 process.env.DB_DRIVER = 'pglite';
 process.env.PGLITE_PATH = path.join(dir, 'athena.db');
 process.env.AUTH_MODE = 'none';
 process.env.SERVE_STATIC = 'false';
-process.env.SESSION_SECRET = 'athena-drill-session-secret-not-remote-32ch';
+process.env.SESSION_SECRET = 'hoopoe-drill-session-secret-not-remote-32ch';
 process.env.LOG_LEVEL = 'error';
 
 // Dynamic imports so env writes above land before env.ts is evaluated.

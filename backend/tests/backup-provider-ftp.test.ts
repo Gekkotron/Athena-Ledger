@@ -3,7 +3,7 @@ import { createFtpProvider } from '../src/domain/backup/ftp.js';
 import { BackupProviderError } from '../src/domain/backup/providers.js';
 import { startFakeFtp, type FakeFtp } from './helpers/fake-ftp.js';
 
-const NAME = 'athena-backup-2026-08-05-030000.enc.json';
+const NAME = 'hoopoe-backup-2026-08-05-030000.enc.json';
 
 let ftp: FakeFtp;
 beforeEach(async () => {
@@ -29,11 +29,11 @@ describe('ftp provider', () => {
     const p = createFtpProvider(cfg(), 'p4ss');
     await p.upload(NAME, Buffer.from('{"v":"enc1"}'));
     expect(ftp.files.get(NAME)?.toString()).toBe('{"v":"enc1"}');
-    expect(ftp.files.has(`athena-tmp-${NAME}`)).toBe(false);
+    expect(ftp.files.has(`hoopoe-tmp-${NAME}`)).toBe(false);
     expect(ftp.log).toContain('USER freebox');
     expect(ftp.log).toContain('TYPE I');
-    expect(ftp.log).toContain(`STOR athena-tmp-${NAME}`);
-    expect(ftp.log).toContain(`RNFR athena-tmp-${NAME}`);
+    expect(ftp.log).toContain(`STOR hoopoe-tmp-${NAME}`);
+    expect(ftp.log).toContain(`RNFR hoopoe-tmp-${NAME}`);
     expect(ftp.log).toContain(`RNTO ${NAME}`);
   });
 
@@ -64,10 +64,10 @@ describe('ftp provider', () => {
 
   it('list() returns only backup-named files, sorted', async () => {
     ftp.files.set(NAME, Buffer.from('x'));
-    ftp.files.set('athena-backup-2026-08-04-030000.enc.json', Buffer.from('x'));
+    ftp.files.set('hoopoe-backup-2026-08-04-030000.enc.json', Buffer.from('x'));
     ftp.files.set('film-vacances.mkv', Buffer.from('not ours'));
     const p = createFtpProvider(cfg(), 'p4ss');
-    expect(await p.list()).toEqual(['athena-backup-2026-08-04-030000.enc.json', NAME]);
+    expect(await p.list()).toEqual(['hoopoe-backup-2026-08-04-030000.enc.json', NAME]);
   });
 
   it('remove() deletes a file and tolerates a missing one', async () => {
@@ -75,7 +75,7 @@ describe('ftp provider', () => {
     const p = createFtpProvider(cfg(), 'p4ss');
     await p.remove(NAME);
     expect(ftp.files.has(NAME)).toBe(false);
-    await expect(p.remove('athena-backup-2020-01-01-000000.enc.json')).resolves.toBeUndefined();
+    await expect(p.remove('hoopoe-backup-2020-01-01-000000.enc.json')).resolves.toBeUndefined();
   });
 
   it('a connection refused surfaces as BackupProviderError', async () => {

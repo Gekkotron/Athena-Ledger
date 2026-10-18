@@ -661,7 +661,7 @@ curl -s http://localhost:8001/metrics
 Expose les compteurs et histogrammes au format Prometheus. Les deux
 lignes utiles à grepper quand quelque chose paraît lent sont
 `http_request_duration_seconds` (latence par route) et
-`athena_imports_failed_total` (échecs d'import par motif). Joignez un
+`hoopoe_imports_total` (échecs d'import par motif). Joignez un
 extrait de la sortie à votre issue si vous rapportez une régression
 de performance.
 

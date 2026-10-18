@@ -108,7 +108,7 @@ async function statusFor(uid: number, dest: BackupDestinationRecord | null) {
 // be counted or pruned as a backup — and carries no leading dot, which the
 // Freebox FTP server refuses (dev.freebox.fr FS#3196).
 async function probe(provider: BackupProvider): Promise<void> {
-  const name = `athena-destination-test-${randomUUID()}.tmp`;
+  const name = `hoopoe-destination-test-${randomUUID()}.tmp`;
   await provider.upload(name, Buffer.from('athena backup destination probe'));
   await provider.remove(name);
 }

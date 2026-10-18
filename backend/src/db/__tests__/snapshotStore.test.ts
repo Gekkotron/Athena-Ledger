@@ -20,7 +20,7 @@ describe('snapshotStore', () => {
   let dir: string;
 
   beforeEach(async () => {
-    dir = await mkdtemp(path.join(tmpdir(), 'athena-snapshot-'));
+    dir = await mkdtemp(path.join(tmpdir(), 'hoopoe-snapshot-'));
   });
 
   afterEach(async () => {
@@ -31,7 +31,7 @@ describe('snapshotStore', () => {
     it('returns correct paths for snapshot and marker', () => {
       const snap = snapshotPath(dir);
       const mark = markerPath(dir);
-      expect(snap).toBe(path.join(dir, 'athena.db.enc'));
+      expect(snap).toBe(path.join(dir, 'hoopoe.db.enc'));
       expect(mark).toBe(path.join(dir, 'security.json'));
     });
   });
@@ -52,7 +52,7 @@ describe('snapshotStore', () => {
       // Simulates a crash between writeSnapshot's two renames: `cur` never
       // landed (or was removed out from under us) but the rotated-out
       // previous snapshot is still sitting at `.bak`.
-      const bakPath = path.join(dir, 'athena.db.enc.bak');
+      const bakPath = path.join(dir, 'hoopoe.db.enc.bak');
       const previous = Buffer.from('previous still-valid snapshot');
       await writeFile(bakPath, previous);
 
@@ -93,7 +93,7 @@ describe('snapshotStore', () => {
 
       await writeSnapshot(dir, first);
       const curPath = snapshotPath(dir);
-      const bakPath = path.join(dir, 'athena.db.enc.bak');
+      const bakPath = path.join(dir, 'hoopoe.db.enc.bak');
 
       expect(existsSync(bakPath)).toBe(false);
 
@@ -116,7 +116,7 @@ describe('snapshotStore', () => {
       await writeSnapshot(dir, second);
       await writeSnapshot(dir, third);
 
-      const bakPath = path.join(dir, 'athena.db.enc.bak');
+      const bakPath = path.join(dir, 'hoopoe.db.enc.bak');
       const bakContent = await readFile(bakPath);
       expect(bakContent).toEqual(second);
 
@@ -225,7 +225,7 @@ describe('snapshotStore', () => {
       await writeMarker(dir, 'encrypted');
 
       const curPath = snapshotPath(dir);
-      const bakPath = path.join(dir, 'athena.db.enc.bak');
+      const bakPath = path.join(dir, 'hoopoe.db.enc.bak');
       const markerFile = markerPath(dir);
 
       expect(existsSync(curPath)).toBe(true);
@@ -247,7 +247,7 @@ describe('snapshotStore', () => {
     it('also removes a stray .tmp file left behind by a failed enable', async () => {
       await writeSnapshot(dir, Buffer.from('content'));
       await writeMarker(dir, 'encrypted');
-      const tmpPath = path.join(dir, 'athena.db.enc.tmp');
+      const tmpPath = path.join(dir, 'hoopoe.db.enc.tmp');
       await writeFile(tmpPath, 'leftover from an interrupted write');
 
       expect(existsSync(tmpPath)).toBe(true);
@@ -260,7 +260,7 @@ describe('snapshotStore', () => {
 
   describe('tmp file handling', () => {
     it('ignores and overwrites leftover .tmp from simulated interruption', async () => {
-      const tmpPath = path.join(dir, 'athena.db.enc.tmp');
+      const tmpPath = path.join(dir, 'hoopoe.db.enc.tmp');
       const oldTmpContent = Buffer.from('leftover tmp data');
       await writeFile(tmpPath, oldTmpContent);
 

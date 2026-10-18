@@ -6,7 +6,7 @@ import {
 } from '../src/domain/backup/providers.js';
 
 type Call = { method: string; url: string; headers: Record<string, string> };
-const NAME = 'athena-backup-2026-08-05-030000.enc.json';
+const NAME = 'hoopoe-backup-2026-08-05-030000.enc.json';
 
 function fakeFetch(script: (call: Call, n: number) => Response): Call[] {
   const calls: Call[] = [];
@@ -53,14 +53,14 @@ describe('webdav provider', () => {
     const xml = `<?xml version="1.0"?><d:multistatus xmlns:d="DAV:">
       <d:response><d:href>/dav/athena/</d:href></d:response>
       <d:response><d:href>/dav/athena/${NAME}</d:href></d:response>
-      <d:response><d:href>/dav/athena/athena-backup-2026-08-04-030000.enc.json</d:href></d:response>
+      <d:response><d:href>/dav/athena/hoopoe-backup-2026-08-04-030000.enc.json</d:href></d:response>
       <d:response><d:href>/dav/athena/notes%20perso.txt</d:href></d:response>
     </d:multistatus>`;
     const calls = fakeFetch(() => new Response(xml, { status: 207 }));
     const names = await createWebdavProvider(CFG, 'p4ss').list();
     expect(calls[0].method).toBe('PROPFIND');
     expect(calls[0].headers.depth).toBe('1');
-    expect(names).toEqual(['athena-backup-2026-08-04-030000.enc.json', NAME]);
+    expect(names).toEqual(['hoopoe-backup-2026-08-04-030000.enc.json', NAME]);
   });
   it('an unlisted (404) directory lists as empty', async () => {
     fakeFetch(() => new Response(null, { status: 404 }));

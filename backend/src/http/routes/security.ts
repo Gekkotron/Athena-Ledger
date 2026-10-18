@@ -142,7 +142,7 @@ export async function securityRoutes(app: FastifyInstance): Promise<void> {
     }
 
     // Same never-rejects caveat as /enable: the pipeline logs and swallows
-    // failures, so a silent failure here would leave athena.db.enc still
+    // failures, so a silent failure here would leave hoopoe.db.enc still
     // encrypted under `oldPassword` while reporting success — the user's new
     // password would then fail to unlock on next boot. Verify by reading the
     // snapshot back and decrypting it under `newPassword`; on failure,

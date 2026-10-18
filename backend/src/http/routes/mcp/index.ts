@@ -36,7 +36,7 @@ export async function mcpRpcRoutes(app: FastifyInstance): Promise<void> {
     let inner: z.infer<typeof Inner>;
     try {
       key = unwrapKey(masterKey(env.SESSION_SECRET), mcp.keyWrapped);
-      const plaintext = decryptEnvelope(key, `athena-mcp-v1|${user}|req`, nonce, ct);
+      const plaintext = decryptEnvelope(key, `hoopoe-mcp-v1|${user}|req`, nonce, ct);
       const parsed = Inner.safeParse(JSON.parse(plaintext));
       if (!parsed.success) return reply.code(400).send({ error: 'invalid request' });
       inner = parsed.data;
@@ -51,7 +51,7 @@ export async function mcpRpcRoutes(app: FastifyInstance): Promise<void> {
 
     // From here, respond ENCRYPTED — including operation-level errors.
     const respond = (status: number, body: unknown) => {
-      const out = encryptEnvelope(key, `athena-mcp-v1|${user}|res`, JSON.stringify({ status, body }));
+      const out = encryptEnvelope(key, `hoopoe-mcp-v1|${user}|res`, JSON.stringify({ status, body }));
       return reply.code(200).send({ v: 1, nonce: out.nonce, ct: out.ct });
     };
 
@@ -69,8 +69,8 @@ export async function mcpRpcRoutes(app: FastifyInstance): Promise<void> {
       query: built.query,
       payload: built.payload as string | object | Buffer | undefined,
       headers: {
-        'x-athena-internal-auth': app.internalAuthSecret,
-        'x-athena-internal-uid': String(mcp.userId),
+        'x-hoopoe-internal-auth': app.internalAuthSecret,
+        'x-hoopoe-internal-uid': String(mcp.userId),
         ...(built.payload !== undefined ? { 'content-type': 'application/json' } : {}),
       },
     });

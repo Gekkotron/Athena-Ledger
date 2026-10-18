@@ -43,7 +43,7 @@ const LoginBody = z.object({
 let dummyHashPromise: Promise<string> | null = null;
 function getDummyHash(): Promise<string> {
   if (!dummyHashPromise) {
-    dummyHashPromise = hash('athena-dummy-password-for-timing-stability', ARGON2_OPTS);
+    dummyHashPromise = hash('hoopoe-dummy-password-for-timing-stability', ARGON2_OPTS);
   }
   return dummyHashPromise;
 }

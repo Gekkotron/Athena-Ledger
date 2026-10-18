@@ -22,7 +22,7 @@ export const RECOVERY_CODE_COUNT = 10;
 let dummyRecoveryHashPromise: Promise<string> | null = null;
 function getDummyRecoveryHash(): Promise<string> {
   if (!dummyRecoveryHashPromise) {
-    dummyRecoveryHashPromise = hash('athena-recovery-dummy-code', ARGON2_OPTS);
+    dummyRecoveryHashPromise = hash('hoopoe-recovery-dummy-code', ARGON2_OPTS);
   }
   return dummyRecoveryHashPromise;
 }

@@ -19,14 +19,14 @@ describe('mcp crypto', () => {
 
   it('encrypt/decrypt round-trips with matching key + aad', () => {
     const k = deriveContentKey(TOKEN);
-    const { nonce, ct } = encryptEnvelope(k, 'athena-mcp-v1|alice|req', '{"op":"x"}');
-    expect(decryptEnvelope(k, 'athena-mcp-v1|alice|req', nonce, ct)).toBe('{"op":"x"}');
+    const { nonce, ct } = encryptEnvelope(k, 'hoopoe-mcp-v1|alice|req', '{"op":"x"}');
+    expect(decryptEnvelope(k, 'hoopoe-mcp-v1|alice|req', nonce, ct)).toBe('{"op":"x"}');
   });
 
   it('decrypt fails on wrong AAD (tamper detection)', () => {
     const k = deriveContentKey(TOKEN);
-    const { nonce, ct } = encryptEnvelope(k, 'athena-mcp-v1|alice|req', 'hi');
-    expect(() => decryptEnvelope(k, 'athena-mcp-v1|alice|res', nonce, ct)).toThrow();
+    const { nonce, ct } = encryptEnvelope(k, 'hoopoe-mcp-v1|alice|req', 'hi');
+    expect(() => decryptEnvelope(k, 'hoopoe-mcp-v1|alice|res', nonce, ct)).toThrow();
   });
 
   it('wrap/unwrap round-trips; unwrap fails under a different master key', () => {

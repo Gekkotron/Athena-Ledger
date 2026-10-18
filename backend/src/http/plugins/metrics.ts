@@ -45,14 +45,14 @@ const plugin: FastifyPluginAsync = async (app: FastifyInstance) => {
   attachHookMetrics(registry);
 
   const httpRequestsTotal = new Counter({
-    name: 'athena_http_requests_total',
+    name: 'hoopoe_http_requests_total',
     help: 'Count of HTTP requests, labeled by method, Fastify route template, and status class.',
     labelNames: ['method', 'route', 'status_class'] as const,
     registers: [registry],
   });
 
   const httpRequestDurationSeconds = new Histogram({
-    name: 'athena_http_request_duration_seconds',
+    name: 'hoopoe_http_request_duration_seconds',
     help: 'HTTP request duration in seconds, labeled by method, route template, and status class.',
     labelNames: ['method', 'route', 'status_class'] as const,
     buckets: HISTOGRAM_BUCKETS,
@@ -60,7 +60,7 @@ const plugin: FastifyPluginAsync = async (app: FastifyInstance) => {
   });
 
   const dbSizeBytes = new Gauge({
-    name: 'athena_db_size_bytes',
+    name: 'hoopoe_db_size_bytes',
     help: 'Size in bytes of the current Postgres database (pg_database_size).',
     registers: [registry],
     async collect() {
@@ -70,13 +70,13 @@ const plugin: FastifyPluginAsync = async (app: FastifyInstance) => {
         );
         this.set(Number(rows[0].s));
       } catch (err) {
-        app.log.warn({ err }, 'athena_db_size_bytes collect failed');
+        app.log.warn({ err }, 'hoopoe_db_size_bytes collect failed');
       }
     },
   });
 
   const transactionsTotal = new Gauge({
-    name: 'athena_transactions_total',
+    name: 'hoopoe_transactions_total',
     help: 'Total number of transactions across all users.',
     registers: [registry],
     async collect() {
@@ -86,13 +86,13 @@ const plugin: FastifyPluginAsync = async (app: FastifyInstance) => {
         );
         this.set(Number(rows[0].n));
       } catch (err) {
-        app.log.warn({ err }, 'athena_transactions_total collect failed');
+        app.log.warn({ err }, 'hoopoe_transactions_total collect failed');
       }
     },
   });
 
   const accountsTotal = new Gauge({
-    name: 'athena_accounts_total',
+    name: 'hoopoe_accounts_total',
     help: 'Total number of accounts across all users.',
     registers: [registry],
     async collect() {
@@ -102,20 +102,20 @@ const plugin: FastifyPluginAsync = async (app: FastifyInstance) => {
         );
         this.set(Number(rows[0].n));
       } catch (err) {
-        app.log.warn({ err }, 'athena_accounts_total collect failed');
+        app.log.warn({ err }, 'hoopoe_accounts_total collect failed');
       }
     },
   });
 
   const importsTotal = new Counter({
-    name: 'athena_imports_total',
+    name: 'hoopoe_imports_total',
     help: 'Count of import attempts, labeled by kind (ofx|qfx|csv|pdf|photo) and outcome (success|error|aborted).',
     labelNames: ['kind', 'outcome'] as const,
     registers: [registry],
   });
 
   const backupLastSuccessTimestampSeconds = new Gauge({
-    name: 'athena_backup_last_success_timestamp_seconds',
+    name: 'hoopoe_backup_last_success_timestamp_seconds',
     help: 'Unix timestamp of the last successful backup export (POST /api/backup/export).',
     registers: [registry],
   });

@@ -21,7 +21,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 COMPOSE_FILE="$ROOT/docker-compose.test.yml"
-PROJECT="athena-test"
+PROJECT="hoopoe-test"
 
 compose() { docker compose -p "$PROJECT" -f "$COMPOSE_FILE" "$@"; }
 

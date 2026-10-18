@@ -125,7 +125,7 @@ another disk, a NAS, a cloud sync folder. The PGlite file is a single
 file; a plain `cp`/`copy` is enough. Restore by putting the file back
 before launching the app.
 
-The `athena_backup_last_success_timestamp_seconds` Prometheus metric
+The `hoopoe_backup_last_success_timestamp_seconds` Prometheus metric
 that the Docker path exposes is not surfaced in desktop mode — nothing
 scrapes it. Use a calendar reminder instead.
 

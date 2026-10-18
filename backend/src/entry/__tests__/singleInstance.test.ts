@@ -13,7 +13,7 @@ describe('acquireSingleInstanceLock', () => {
   let dir: string;
 
   beforeEach(async () => {
-    dir = await mkdtemp(path.join(tmpdir(), 'athena-lock-'));
+    dir = await mkdtemp(path.join(tmpdir(), 'hoopoe-lock-'));
   });
 
   afterEach(async () => {

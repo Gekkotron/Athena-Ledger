@@ -33,7 +33,7 @@ plus rien à récupérer.
   - Linux : `~/.local/share/Hoopoe/`
   - Windows : `%APPDATA%\Hoopoe\`
   (Hoopoe crée le dossier au premier lancement.)
-- **Serveur familial (Docker).** Le volume nommé `athena_pgdata` est
+- **Serveur familial (Docker).** Le volume nommé `hoopoe_pgdata` est
   monté sur `/var/lib/postgresql/data` dans le conteneur Postgres.
   Sauvegarder le volume brut est possible, mais l'export JSON
   décrit ci-dessous est plus portable — il fonctionne d'une version
@@ -132,7 +132,7 @@ Préférez les sauvegardes distantes intégrées ci-dessus. Pour garder la main 
   phrase secrète en `POST` et dépose le résultat dans un dossier :
   ```sh
   curl -s -o "/mnt/coffre/athena-$(date +%F).enc.json" \
-    -b athena_session=… \
+    -b hoopoe.sid=… \
     -X POST -H 'Content-Type: application/json' \
     -d '{"passphrase":"…"}' \
     http://home.lan:8000/api/backup/export

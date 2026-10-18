@@ -15,7 +15,7 @@ describe('runUnlockServer', () => {
   let dir: string;
 
   beforeEach(async () => {
-    dir = await mkdtemp(path.join(tmpdir(), 'athena-unlock-'));
+    dir = await mkdtemp(path.join(tmpdir(), 'hoopoe-unlock-'));
     await writeSnapshot(dir, encryptBuffer(PLAINTEXT, PASSWORD));
     await writeMarker(dir, 'encrypted');
   });

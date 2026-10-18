@@ -17,7 +17,7 @@ const ARCHIVE_MAX_BYTES = 500 * 1024 * 1024;
 
 // Local-time stamp with milliseconds so rapid-fire runs (close-spaced
 // schedule ticks, tests, manual retries) never collide on the same
-// filename. Shape: athena-attachments-YYYY-MM-DD-HHMMSSmmm.bin. Both this
+// filename. Shape: hoopoe-attachments-YYYY-MM-DD-HHMMSSmmm.bin. Both this
 // and the JSON dump's backupFilename share the mm-precision convention.
 export function attachmentArchiveFilename(now: Date): string {
   const pad = (n: number) => String(n).padStart(2, '0');
@@ -25,14 +25,16 @@ export function attachmentArchiveFilename(now: Date): string {
   const stamp =
     `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}` +
     `-${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}${pad3(now.getMilliseconds())}`;
-  return `athena-attachments-${stamp}.bin`;
+  return `hoopoe-attachments-${stamp}.bin`;
 }
 
 // Whitelist of characters the retention pruner can trust. Accepts both the
 // legacy 6-digit (seconds-only) stamp and the 9-digit (seconds+milliseconds)
-// stamp so an upgrade doesn't strand older files outside the pruner's view.
+// stamp so an upgrade doesn't strand older files outside the pruner's view;
+// also accepts the pre-Hoopoe `athena-attachments-` prefix so existing
+// backups keep rotating cleanly after the rename.
 export function isAttachmentArchiveFilename(name: string): boolean {
-  return /^athena-attachments-\d{4}-\d{2}-\d{2}-\d{6,9}\.bin$/.test(name);
+  return /^(athena|hoopoe)-attachments-\d{4}-\d{2}-\d{2}-\d{6,9}\.bin$/.test(name);
 }
 
 const ExportBody = z.object({ passphrase: z.string().min(8).max(1024) });

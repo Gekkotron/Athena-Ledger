@@ -35,7 +35,7 @@ let tmp: string;
 
 describe.skipIf(!RUN)('/api/transactions/:id/attachments', () => {
   beforeAll(async () => {
-    tmp = await mkdtemp(path.join(tmpdir(), 'athena-att-'));
+    tmp = await mkdtemp(path.join(tmpdir(), 'hoopoe-att-'));
     process.env.DATA_DIR = tmp;
 
     const { buildApp } = await import('./helpers/build-app.js');

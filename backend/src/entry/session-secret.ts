@@ -39,14 +39,14 @@ export async function ensureSessionSecret(dir: string): Promise<SessionSecretRes
     if (trimmed.length < MIN_SECRET_CHARS) {
       throw new Error(
         `${SESSION_SECRET_FILENAME} is corrupted (fewer than ${MIN_SECRET_CHARS} chars). ` +
-          `Refusing to boot — restore a backup or delete athena.db + this file to reinitialise.`,
+          `Refusing to boot — restore a backup or delete hoopoe.db + this file to reinitialise.`,
       );
     }
     return { secret: trimmed, needsMigration: false, secretPath };
   }
 
   const secret = randomBytes(32).toString('hex');
-  const hasDatadir = await stat(path.join(dir, 'athena.db')).then(
+  const hasDatadir = await stat(path.join(dir, 'hoopoe.db')).then(
     (s) => s.isDirectory(),
     () => false,
   );

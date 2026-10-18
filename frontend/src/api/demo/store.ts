@@ -1,6 +1,6 @@
 // LocalStorage-backed store for the browser-only demo.
 //
-// State is a JSON blob under `athena_demo_state`. Schema is versioned:
+// State is a JSON blob under `hoopoe_demo_state`. Schema is versioned:
 // on version mismatch the store wipes and reseeds silently. The seed
 // itself is loaded via a hook the caller wires up (Task 2 fills it in);
 // until then, uninitialised state stays an empty envelope.
@@ -27,7 +27,7 @@ import type { Loan } from '../../../../shared/api-contracts';
 //              FX table, Task 7)
 //   v=8 → v=9  loans seeded (migration 0048)
 export const DEMO_SCHEMA_VERSION = 9;
-const STORAGE_KEY = 'athena_demo_state';
+const STORAGE_KEY = 'hoopoe_demo_state';
 const PERSIST_DEBOUNCE_MS = 250;
 
 export interface DemoState {

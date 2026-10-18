@@ -31,7 +31,7 @@ let destDir: string;
 
 describe.skipIf(!RUN)('runBackupNow — attachment archive fingerprint gating', () => {
   beforeAll(async () => {
-    tmp = await mkdtemp(path.join(tmpdir(), 'athena-runatt-'));
+    tmp = await mkdtemp(path.join(tmpdir(), 'hoopoe-runatt-'));
     process.env.DATA_DIR = tmp;
     destDir = path.join(tmp, 'dest');
     await (await import('node:fs/promises')).mkdir(destDir, { recursive: true });
@@ -134,22 +134,22 @@ describe.skipIf(!RUN)('runBackupNow — attachment archive fingerprint gating', 
     // First run — no prior fingerprint, so BOTH families must land.
     const { runBackupNow } = await import('../src/domain/backup/runner.js');
     const first = await runBackupNow(userAId);
-    expect(first.filename).toMatch(/^athena-backup-.*\.enc\.json$/);
-    expect(first.attachmentsFilename).toMatch(/^athena-attachments-.*\.bin$/);
-    expect(await countByPrefix('athena-backup-')).toBe(1);
-    expect(await countByPrefix('athena-attachments-')).toBe(1);
+    expect(first.filename).toMatch(/^hoopoe-backup-.*\.enc\.json$/);
+    expect(first.attachmentsFilename).toMatch(/^hoopoe-attachments-.*\.bin$/);
+    expect(await countByPrefix('hoopoe-backup-')).toBe(1);
+    expect(await countByPrefix('hoopoe-attachments-')).toBe(1);
 
     // Second run, no attachment changes — JSON refreshes, archive does not.
     const second = await runBackupNow(userAId);
     expect(second.attachmentsFilename).toBeUndefined();
-    expect(await countByPrefix('athena-backup-')).toBe(2);
-    expect(await countByPrefix('athena-attachments-')).toBe(1);
+    expect(await countByPrefix('hoopoe-backup-')).toBe(2);
+    expect(await countByPrefix('hoopoe-attachments-')).toBe(1);
 
     // Add another attachment, run again — archive re-uploads.
     await uploadAttachment('r2.png');
     const third = await runBackupNow(userAId);
     expect(third.attachmentsFilename).toBeDefined();
-    expect(await countByPrefix('athena-attachments-')).toBe(2);
+    expect(await countByPrefix('hoopoe-attachments-')).toBe(2);
   });
 
   it('prunes attachment archives independently of JSON dumps (keepLast is per-family)', async () => {
@@ -159,7 +159,7 @@ describe.skipIf(!RUN)('runBackupNow — attachment archive fingerprint gating', 
     // Deliberately re-tick many times to overflow the archive keepLast=5:
     // each iteration adds a new attachment (fingerprint shifts), so both
     // families upload every run.
-    const before = await countByPrefix('athena-attachments-');
+    const before = await countByPrefix('hoopoe-attachments-');
     for (let i = 0; i < 6; i++) {
       await uploadAttachment(`bulk-${i}.png`);
       const { runBackupNow } = await import('../src/domain/backup/runner.js');
@@ -167,9 +167,9 @@ describe.skipIf(!RUN)('runBackupNow — attachment archive fingerprint gating', 
     }
     // With keepLast=5 the archive family caps at 5, regardless of the JSON
     // family's own retention.
-    expect(await countByPrefix('athena-attachments-')).toBe(5);
+    expect(await countByPrefix('hoopoe-attachments-')).toBe(5);
     // JSON family also caps at 5 (was 3, +6 more = 9 uploads → pruned to 5).
-    expect(await countByPrefix('athena-backup-')).toBe(5);
+    expect(await countByPrefix('hoopoe-backup-')).toBe(5);
     // Silence the unused warning while keeping `before` documented above.
     expect(before).toBeGreaterThanOrEqual(0);
   });

@@ -46,7 +46,7 @@ describe.skipIf(!RUN)('watch-folder imports', () => {
     });
     accountId = acc.json().account.id;
 
-    watchDir = await mkdtemp(join(tmpdir(), 'athena-watch-'));
+    watchDir = await mkdtemp(join(tmpdir(), 'hoopoe-watch-'));
   });
 
   it('imports an OFX dropped in a matching account subfolder and renames it .imported', async () => {

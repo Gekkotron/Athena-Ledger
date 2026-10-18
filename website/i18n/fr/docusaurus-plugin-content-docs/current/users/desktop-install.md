@@ -73,7 +73,7 @@ Deux méthodes, utilisez les deux :
 
 **2. Copier le dossier de données.** Quittez l'application, puis copiez le dossier de données ci-dessus (ou juste `athena.db`) vers votre destination de sauvegarde — un autre disque, un NAS, un dossier de synchro cloud. Le fichier PGlite est un fichier unique ; un simple `cp`/`copy` suffit. Pour restaurer, remettez le fichier en place avant de lancer l'application.
 
-La métrique Prometheus `athena_backup_last_success_timestamp_seconds` que le mode Docker expose n'est pas remontée en mode bureau — rien ne la scrape. Utilisez un rappel de calendrier à la place.
+La métrique Prometheus `hoopoe_backup_last_success_timestamp_seconds` que le mode Docker expose n'est pas remontée en mode bureau — rien ne la scrape. Utilisez un rappel de calendrier à la place.
 
 ## Désinstaller
 

@@ -34,10 +34,10 @@ describe.skipIf(!RUN)('/metrics endpoint', () => {
     await app.inject({ method: 'GET', url: '/api/onboarding/status' });
     const res = await app.inject({ method: 'GET', url: '/metrics' });
     expect(res.body).toMatch(
-      /athena_http_requests_total\{method="GET",route="\/api\/onboarding\/status",status_class="2xx"\} \d+/,
+      /hoopoe_http_requests_total\{method="GET",route="\/api\/onboarding\/status",status_class="2xx"\} \d+/,
     );
     expect(res.body).toMatch(
-      /athena_http_request_duration_seconds_count\{method="GET",route="\/api\/onboarding\/status",status_class="2xx"\} \d+/,
+      /hoopoe_http_request_duration_seconds_count\{method="GET",route="\/api\/onboarding\/status",status_class="2xx"\} \d+/,
     );
   });
 
@@ -53,30 +53,30 @@ describe.skipIf(!RUN)('/metrics endpoint', () => {
     await app.inject({ method: 'GET', url: '/api/definitely-does-not-exist' });
     const res = await app.inject({ method: 'GET', url: '/metrics' });
     expect(res.body).toMatch(
-      /athena_http_requests_total\{method="GET",route="unmatched",status_class="4xx"\} \d+/,
+      /hoopoe_http_requests_total\{method="GET",route="unmatched",status_class="4xx"\} \d+/,
     );
   });
 
-  it('exposes athena_db_size_bytes with a positive value', async () => {
+  it('exposes hoopoe_db_size_bytes with a positive value', async () => {
     const res = await app.inject({ method: 'GET', url: '/metrics' });
-    const m = res.body.match(/athena_db_size_bytes (\d+)/);
+    const m = res.body.match(/hoopoe_db_size_bytes (\d+)/);
     expect(m).not.toBeNull();
     expect(Number(m![1])).toBeGreaterThan(0);
   });
 
-  it('exposes athena_transactions_total as a numeric gauge', async () => {
+  it('exposes hoopoe_transactions_total as a numeric gauge', async () => {
     const res = await app.inject({ method: 'GET', url: '/metrics' });
-    expect(res.body).toMatch(/# TYPE athena_transactions_total gauge/);
-    expect(res.body).toMatch(/athena_transactions_total \d+/);
+    expect(res.body).toMatch(/# TYPE hoopoe_transactions_total gauge/);
+    expect(res.body).toMatch(/hoopoe_transactions_total \d+/);
   });
 
-  it('exposes athena_accounts_total as a numeric gauge', async () => {
+  it('exposes hoopoe_accounts_total as a numeric gauge', async () => {
     const res = await app.inject({ method: 'GET', url: '/metrics' });
-    expect(res.body).toMatch(/# TYPE athena_accounts_total gauge/);
-    expect(res.body).toMatch(/athena_accounts_total \d+/);
+    expect(res.body).toMatch(/# TYPE hoopoe_accounts_total gauge/);
+    expect(res.body).toMatch(/hoopoe_accounts_total \d+/);
   });
 
-  it('increments athena_imports_total{kind="csv",outcome="success"} on CSV import', async () => {
+  it('increments hoopoe_imports_total{kind="csv",outcome="success"} on CSV import', async () => {
     // Set up user + account + upload a minimal CSV.
     await app.inject({
       method: 'POST', url: '/api/onboarding/create',
@@ -112,7 +112,7 @@ describe.skipIf(!RUN)('/metrics endpoint', () => {
 
     const before = await app.inject({ method: 'GET', url: '/metrics' });
     const beforeMatch = before.body.match(
-      /athena_imports_total\{kind="csv",outcome="success"\} (\d+)/,
+      /hoopoe_imports_total\{kind="csv",outcome="success"\} (\d+)/,
     );
     const beforeCount = beforeMatch ? Number(beforeMatch[1]) : 0;
 
@@ -125,13 +125,13 @@ describe.skipIf(!RUN)('/metrics endpoint', () => {
 
     const after = await app.inject({ method: 'GET', url: '/metrics' });
     const afterMatch = after.body.match(
-      /athena_imports_total\{kind="csv",outcome="success"\} (\d+)/,
+      /hoopoe_imports_total\{kind="csv",outcome="success"\} (\d+)/,
     );
     expect(afterMatch).not.toBeNull();
     expect(Number(afterMatch![1])).toBe(beforeCount + 1);
   });
 
-  it('sweeper increments athena_imports_total{kind="pdf",outcome="aborted"}', async () => {
+  it('sweeper increments hoopoe_imports_total{kind="pdf",outcome="aborted"}', async () => {
     // Self-contained: create a dedicated user + account for this test so
     // we don't race with other test files that call `db.delete(users)`
     // (e.g. tests/mcp/store.test.ts) in their beforeAll.
@@ -179,7 +179,7 @@ describe.skipIf(!RUN)('/metrics endpoint', () => {
 
     const before = await app.inject({ method: 'GET', url: '/metrics' });
     const beforeMatch = before.body.match(
-      /athena_imports_total\{kind="pdf",outcome="aborted"\} (\d+)/,
+      /hoopoe_imports_total\{kind="pdf",outcome="aborted"\} (\d+)/,
     );
     const beforeCount = beforeMatch ? Number(beforeMatch[1]) : 0;
 
@@ -196,13 +196,13 @@ describe.skipIf(!RUN)('/metrics endpoint', () => {
 
     const after = await app.inject({ method: 'GET', url: '/metrics' });
     const afterMatch = after.body.match(
-      /athena_imports_total\{kind="pdf",outcome="aborted"\} (\d+)/,
+      /hoopoe_imports_total\{kind="pdf",outcome="aborted"\} (\d+)/,
     );
     expect(afterMatch).not.toBeNull();
     expect(Number(afterMatch![1])).toBe(beforeCount + deleted);
   });
 
-  it('records athena_backup_last_success_timestamp_seconds after a backup export', async () => {
+  it('records hoopoe_backup_last_success_timestamp_seconds after a backup export', async () => {
     await app.inject({
       method: 'POST', url: '/api/onboarding/create',
       payload: { username: 'backup-user', password: 'backup-1234' },
@@ -227,7 +227,7 @@ describe.skipIf(!RUN)('/metrics endpoint', () => {
 
     const res = await app.inject({ method: 'GET', url: '/metrics' });
     const m = res.body.match(
-      /athena_backup_last_success_timestamp_seconds (\d+(?:\.\d+)?)/,
+      /hoopoe_backup_last_success_timestamp_seconds (\d+(?:\.\d+)?)/,
     );
     expect(m).not.toBeNull();
     expect(Number(m![1])).toBeGreaterThanOrEqual(nowBefore);

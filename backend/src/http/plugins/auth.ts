@@ -41,7 +41,7 @@ export const authPlugin = fp(async function authPlugin(app: FastifyInstance) {
   // stale-cookie guard — see session-store.ts for the races these close.
   await registerSession(app, {
     secret: env.SESSION_SECRET,
-    cookieName: 'athena.sid',
+    cookieName: 'hoopoe.sid',
     secure: env.COOKIE_SECURE,
     maxAgeMs: 30 * 24 * 60 * 60 * 1000,
   });
@@ -84,8 +84,8 @@ export const authPlugin = fp(async function authPlugin(app: FastifyInstance) {
       }
       return;
     }
-    const secret = req.headers['x-athena-internal-auth'];
-    const uidHeader = req.headers['x-athena-internal-uid'];
+    const secret = req.headers['x-hoopoe-internal-auth'];
+    const uidHeader = req.headers['x-hoopoe-internal-uid'];
     if (typeof secret === 'string' && safeEqual(secret, internalAuthSecret) && typeof uidHeader === 'string') {
       const uid = Number(uidHeader);
       if (Number.isInteger(uid) && uid > 0) {

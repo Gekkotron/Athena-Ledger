@@ -6,13 +6,13 @@ import { createFolderProvider, BackupProviderError } from '../src/domain/backup/
 
 let dir: string;
 beforeEach(async () => {
-  dir = await mkdtemp(join(tmpdir(), 'athena-backup-'));
+  dir = await mkdtemp(join(tmpdir(), 'hoopoe-backup-'));
 });
 afterEach(async () => {
   await rm(dir, { recursive: true, force: true });
 });
 
-const NAME = 'athena-backup-2026-08-05-030000.enc.json';
+const NAME = 'hoopoe-backup-2026-08-05-030000.enc.json';
 
 describe('folder provider', () => {
   it('requires an absolute path', () => {

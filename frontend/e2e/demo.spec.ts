@@ -62,11 +62,11 @@ test.describe('browser-only demo', () => {
     // manually-set sentinel is a deterministic marker.
     await page.evaluate(() => {
       localStorage.setItem(
-        'athena_demo_state',
+        'hoopoe_demo_state',
         JSON.stringify({ v: 1, sentinel: 'poisoned' }),
       );
     });
-    expect(await page.evaluate(() => localStorage.getItem('athena_demo_state')))
+    expect(await page.evaluate(() => localStorage.getItem('hoopoe_demo_state')))
       .toContain('poisoned');
 
     await page.getByRole('button', { name: 'Réinitialiser la démo' }).click();
@@ -74,7 +74,7 @@ test.describe('browser-only demo', () => {
 
     // The reset handler wipes the key; a subsequent read may re-populate it
     // via freshSeed(), but it must no longer contain the sentinel.
-    const after = await page.evaluate(() => localStorage.getItem('athena_demo_state'));
+    const after = await page.evaluate(() => localStorage.getItem('hoopoe_demo_state'));
     expect(after ?? '').not.toContain('poisoned');
   });
 

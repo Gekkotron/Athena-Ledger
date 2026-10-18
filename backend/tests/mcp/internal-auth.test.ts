@@ -21,7 +21,7 @@ describe.skipIf(!RUN)('internal-dispatch auth', () => {
   it('valid internal headers authenticate as the given uid', async () => {
     const res = await app.inject({
       method: 'GET', url: '/api/settings',
-      headers: { 'x-athena-internal-auth': app.internalAuthSecret, 'x-athena-internal-uid': String(uid) },
+      headers: { 'x-hoopoe-internal-auth': app.internalAuthSecret, 'x-hoopoe-internal-uid': String(uid) },
     });
     expect(res.statusCode).toBe(200);
   });
@@ -29,7 +29,7 @@ describe.skipIf(!RUN)('internal-dispatch auth', () => {
   it('wrong internal secret is rejected (401)', async () => {
     const res = await app.inject({
       method: 'GET', url: '/api/settings',
-      headers: { 'x-athena-internal-auth': 'deadbeef', 'x-athena-internal-uid': String(uid) },
+      headers: { 'x-hoopoe-internal-auth': 'deadbeef', 'x-hoopoe-internal-uid': String(uid) },
     });
     expect(res.statusCode).toBe(401);
   });

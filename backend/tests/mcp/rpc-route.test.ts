@@ -6,7 +6,7 @@ import {
 const RUN = !!process.env.RUN_DB_TESTS;
 
 const USER = 'rpcuser';
-function aad(dir: 'req' | 'res') { return `athena-mcp-v1|${USER}|${dir}`; }
+function aad(dir: 'req' | 'res') { return `hoopoe-mcp-v1|${USER}|${dir}`; }
 
 describe.skipIf(!RUN)('POST /api/mcp/rpc', () => {
   let app: FastifyInstance;
@@ -104,7 +104,7 @@ describe.skipIf(!RUN)('POST /api/mcp/rpc', () => {
   });
 
   it('unknown user → plaintext 401', async () => {
-    const { nonce, ct } = encryptEnvelope(key, 'athena-mcp-v1|ghost|req', JSON.stringify({ op: 'list_accounts', args: {}, ts: Date.now() }));
+    const { nonce, ct } = encryptEnvelope(key, 'hoopoe-mcp-v1|ghost|req', JSON.stringify({ op: 'list_accounts', args: {}, ts: Date.now() }));
     const res = await app.inject({ method: 'POST', url: '/api/mcp/rpc', payload: { user: 'ghost', v: 1, nonce, ct } });
     expect(res.statusCode).toBe(401);
   });

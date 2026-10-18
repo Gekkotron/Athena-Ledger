@@ -9,7 +9,7 @@ describe('ensureSessionSecret', () => {
   let dir: string;
 
   beforeEach(async () => {
-    dir = await mkdtemp(path.join(tmpdir(), 'athena-secret-'));
+    dir = await mkdtemp(path.join(tmpdir(), 'hoopoe-secret-'));
   });
 
   afterEach(async () => {
@@ -27,7 +27,7 @@ describe('ensureSessionSecret', () => {
   });
 
   it('legacy install: no file, datadir present → returns needsMigration=true and DOES NOT write file', async () => {
-    await mkdir(path.join(dir, 'athena.db'), { recursive: true });
+    await mkdir(path.join(dir, 'hoopoe.db'), { recursive: true });
     const result = await ensureSessionSecret(dir);
     expect(result.needsMigration).toBe(true);
     expect(result.secret.length).toBeGreaterThanOrEqual(32);
@@ -50,7 +50,7 @@ describe('ensureSessionSecret', () => {
   });
 
   it('two fresh calls back-to-back generate distinct secrets across separate temp dirs', async () => {
-    const dir2 = await mkdtemp(path.join(tmpdir(), 'athena-secret-'));
+    const dir2 = await mkdtemp(path.join(tmpdir(), 'hoopoe-secret-'));
     try {
       const first = await ensureSessionSecret(dir);
       const second = await ensureSessionSecret(dir2);
@@ -77,7 +77,7 @@ describe('writeSessionSecretFile', () => {
   let dir: string;
 
   beforeEach(async () => {
-    dir = await mkdtemp(path.join(tmpdir(), 'athena-secret-write-'));
+    dir = await mkdtemp(path.join(tmpdir(), 'hoopoe-secret-write-'));
   });
 
   afterEach(async () => {

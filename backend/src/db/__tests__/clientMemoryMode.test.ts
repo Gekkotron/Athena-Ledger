@@ -65,8 +65,8 @@ describe('client.ts in-memory PGlite handoff', () => {
   });
 
   it('boots from a loadDataDir blob, ignoring PGLITE_PATH, and exposes getPglite()/dbDriver', async () => {
-    sourceDir = await mkdtemp(path.join(tmpdir(), 'athena-client-memory-src-'));
-    unusedDataDir = await mkdtemp(path.join(tmpdir(), 'athena-client-memory-unused-'));
+    sourceDir = await mkdtemp(path.join(tmpdir(), 'hoopoe-client-memory-src-'));
+    unusedDataDir = await mkdtemp(path.join(tmpdir(), 'hoopoe-client-memory-unused-'));
 
     const source = new PGlite(sourceDir);
     await source.exec('CREATE TABLE t (x int);');

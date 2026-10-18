@@ -385,7 +385,7 @@ Example scrape config:
 
 ```yaml
 scrape_configs:
-  - job_name: athena
+  - job_name: hoopoe
     metrics_path: /metrics
     scrape_interval: 30s
     static_configs:
@@ -394,15 +394,15 @@ scrape_configs:
 
 Metrics of interest:
 
-- `athena_http_requests_total{method,route,status_class}` — request
+- `hoopoe_http_requests_total{method,route,status_class}` — request
   counts.
-- `athena_http_request_duration_seconds` — latency histogram.
-- `athena_imports_total{kind,outcome}` — imports counted by format
+- `hoopoe_http_request_duration_seconds` — latency histogram.
+- `hoopoe_imports_total{kind,outcome}` — imports counted by format
   (`csv`/`ofx`/`qfx`/`pdf`/`photo`) and result
   (`success`/`error`/`aborted`).
-- `athena_db_size_bytes` — Postgres database size.
-- `athena_transactions_total`, `athena_accounts_total` — row counts.
-- `athena_backup_last_success_timestamp_seconds` — Unix timestamp of
+- `hoopoe_db_size_bytes` — Postgres database size.
+- `hoopoe_transactions_total`, `hoopoe_accounts_total` — row counts.
+- `hoopoe_backup_last_success_timestamp_seconds` — Unix timestamp of
   the last successful `GET /api/backup/export`. Alert on
   `time() - <this> > <N days>`.
 - `process_*`, `nodejs_*` — Node.js runtime metrics (from `prom-client`

@@ -18,7 +18,7 @@ function memoryProvider(seed: string[] = []): BackupProvider & { files: Map<stri
   };
 }
 
-const day = (d: string) => `athena-backup-${d}-030000.enc.json`;
+const day = (d: string) => `hoopoe-backup-${d}-030000.enc.json`;
 
 describe('uploadAndPrune', () => {
   it('uploads and keeps everything under the cap', async () => {

@@ -18,7 +18,7 @@ Export files contain the full set of your accounts, transactions, rules and budg
   - Linux: `~/.local/share/Hoopoe/`
   - Windows: `%APPDATA%\Hoopoe\`
   (Hoopoe creates the folder on first launch.)
-- **Home server (Docker).** The named volume `athena_pgdata` is mounted at `/var/lib/postgresql/data` in the Postgres container. Backing up the raw volume is possible, but the JSON export described below is more portable — it works across versions and restores just as well onto the desktop app as onto Docker.
+- **Home server (Docker).** The host bind mount `./postgres-data` is mounted at `/var/lib/postgresql/data` in the Postgres container. Backing up the raw volume is possible, but the JSON export described below is more portable — it works across versions and restores just as well onto the desktop app as onto Docker.
 
 ## Export (via the UI)
 
@@ -100,8 +100,8 @@ Prefer the built-in remote backups above. If you want full control over transpor
 
 - **macOS/Linux (cron).** A weekly `curl` script that POSTs a passphrase and drops the result into a folder:
   ```sh
-  curl -s -o "/mnt/vault/athena-$(date +%F).enc.json" \
-    -b athena_session=… \
+  curl -s -o "/mnt/vault/hoopoe-$(date +%F).enc.json" \
+    -b hoopoe.sid=… \
     -X POST -H 'Content-Type: application/json' \
     -d '{"passphrase":"…"}' \
     http://home.lan:8000/api/backup/export

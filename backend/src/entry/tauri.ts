@@ -69,6 +69,25 @@ startParentWatchdog();
 const dir = dataDir();
 await mkdir(dir, { recursive: true });
 
+// One-shot rename of pre-Hoopoe on-disk filenames. Idempotent: safe to run
+// every boot — skips any pair where the new path already exists or the old
+// path is absent. Must run before ensureSessionSecret() (which uses the
+// data-dir presence as a legacy install marker) and before PGLITE_PATH is
+// read.
+for (const [legacy, next] of [
+  ['athena.db', 'hoopoe.db'],
+  ['athena.db.enc', 'hoopoe.db.enc'],
+  ['athena.db.enc.bak', 'hoopoe.db.enc.bak'],
+  ['athena.db.enc.tmp', 'hoopoe.db.enc.tmp'],
+] as const) {
+  const from = path.join(dir, legacy);
+  const to = path.join(dir, next);
+  if (existsSync(from) && !existsSync(to)) {
+    await rename(from, to);
+  }
+}
+await rm(path.join(dir, 'athena.db.trash'), { recursive: true, force: true }).catch(() => { /* best effort */ });
+
 // PGlite tolerates exactly one process per data directory; a concurrent
 // second sidecar (typically an orphan from a force-quit shell) wedges
 // Postgres-in-WASM in a 100%-CPU busy-wait on the next write. The
@@ -87,7 +106,7 @@ try {
 
 process.env.DB_DRIVER = 'pglite';
 process.env.AUTH_MODE = 'none';
-process.env.PGLITE_PATH = path.join(dir, 'athena.db');
+process.env.PGLITE_PATH = path.join(dir, 'hoopoe.db');
 // The Tauri distribution is self-contained: one process serves both the API
 // and the built frontend. STATIC_ROOT is left overridable so the Rust shell
 // can point at the bundled resource directory.
@@ -96,8 +115,8 @@ process.env.SERVE_STATIC ??= 'true';
 // Tauri install now gets its OWN random secret at first boot, persisted to
 // <dataDir>/session-secret.bin (mode 0o600) — the KDF for TOTP, bank-sync,
 // MCP wrap and backup-destination field crypto is per-install, so a stolen
-// athena.db no longer decrypts under a public constant. Legacy installs
-// (session-secret.bin absent, athena.db present) get a one-shot re-encrypt
+// hoopoe.db no longer decrypts under a public constant. Legacy installs
+// (session-secret.bin absent, hoopoe.db present) get a one-shot re-encrypt
 // pass right after runMigrations() so their existing ciphertexts survive.
 let sessionSecretResult: SessionSecretResult;
 try {

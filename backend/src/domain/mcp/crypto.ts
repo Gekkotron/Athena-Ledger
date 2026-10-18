@@ -1,5 +1,9 @@
 import { hkdfSync, randomBytes, createCipheriv, createDecipheriv } from 'node:crypto';
 
+// Legacy "athena-" prefix kept so existing wrapped MCP keys still unwrap
+// after the Hoopoe rename — these salts feed persistent key derivation and
+// changing them would invalidate every stored MCP token. The user-visible
+// AAD prefix in the HTTP route is renamed independently (not persisted).
 const HKDF_SALT = 'athena-mcp-v1';
 const HKDF_INFO = 'content-key';
 const WRAP_SALT = 'athena-mcp-wrap';

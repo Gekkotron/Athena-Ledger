@@ -7,7 +7,7 @@ import { Counter, type Registry } from 'prom-client';
 // registry-less at construction so unit tests can inspect it without
 // booting Fastify.
 export const notificationHookFailuresTotal = new Counter({
-  name: 'athena_notification_hook_failures_total',
+  name: 'hoopoe_notification_hook_failures_total',
   help: 'Count of notification hook failures, labeled by hook name.',
   labelNames: ['hook'] as const,
   registers: [],

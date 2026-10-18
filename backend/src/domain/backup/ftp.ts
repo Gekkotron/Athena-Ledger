@@ -194,7 +194,7 @@ export function createFtpProvider(cfg: FtpDialConfig, password: string): BackupP
         // outright (dev.freebox.fr FS#3196). The prefix keeps the partial
         // file out of isBackupFilename's pattern, so pruning and restore
         // guidance never see it.
-        const tmp = `athena-tmp-${name}`;
+        const tmp = `hoopoe-tmp-${name}`;
         const data = await pasv(conn, cfg.host);
         const r = await conn.cmd(`STOR ${tmp}`);
         if (r.code !== 125 && r.code !== 150) {

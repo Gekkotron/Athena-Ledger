@@ -600,9 +600,9 @@ curl -s http://localhost:8001/metrics
 ```
 
 Exposes Prometheus-format counters and histograms. The two lines worth
-grepping for when something feels slow are `http_request_duration_seconds`
-(per-route latency) and `athena_imports_failed_total` (import failures
-by reason). Attach a snippet of the output to your issue if you're
+grepping for when something feels slow are `hoopoe_http_request_duration_seconds`
+(per-route latency) and `hoopoe_imports_total` (import attempts by kind
+and outcome). Attach a snippet of the output to your issue if you're
 reporting a performance regression.
 
 *See also:* [Importing](./importing) ·

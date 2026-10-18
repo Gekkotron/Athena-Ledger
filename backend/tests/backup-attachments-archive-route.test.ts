@@ -40,7 +40,7 @@ let tmp: string;
 
 describe.skipIf(!RUN)('/api/backup/{export,import}-attachments', () => {
   beforeAll(async () => {
-    tmp = await mkdtemp(path.join(tmpdir(), 'athena-att-arch-'));
+    tmp = await mkdtemp(path.join(tmpdir(), 'hoopoe-att-arch-'));
     process.env.DATA_DIR = tmp;
 
     const { buildApp } = await import('./helpers/build-app.js');

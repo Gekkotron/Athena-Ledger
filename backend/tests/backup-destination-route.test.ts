@@ -36,7 +36,7 @@ describe.skipIf(!RUN)('/api/backup/destination', () => {
     app = await buildApp();
     ({ db } = await import('../src/db/client.js'));
     schema = await import('../src/db/schema.js');
-    dir = await mkdtemp(join(tmpdir(), 'athena-dest-'));
+    dir = await mkdtemp(join(tmpdir(), 'hoopoe-dest-'));
     for (const [user, pass] of [
       ['backup-dest-a', 'backup-dest-1234'],
       ['backup-dest-b', 'backup-dest-5678'],
@@ -156,10 +156,10 @@ describe.skipIf(!RUN)('/api/backup/destination', () => {
     });
     expect(res.statusCode).toBe(200);
     const { filename } = res.json();
-    expect(filename).toMatch(/^athena-backup-\d{4}-\d{2}-\d{2}-\d{6,9}\.enc\.json$/);
+    expect(filename).toMatch(/^hoopoe-backup-\d{4}-\d{2}-\d{2}-\d{6,9}\.enc\.json$/);
     const envelope = JSON.parse((await readFile(join(dir, filename))).toString()) as EncryptedEnvelope;
     const dump = JSON.parse(decryptEnvelope(envelope, PASSPHRASE));
-    expect(dump.instance).toBe('athena-ledger');
+    expect(dump.instance).toBe('hoopoe');
     const get = await app.inject({
       method: 'GET',
       url: '/api/backup/destination',
@@ -173,11 +173,11 @@ describe.skipIf(!RUN)('/api/backup/destination', () => {
     // Start from a known state — the previous test already pushed a file
     // (possibly colliding on the same one-second stamp as this run).
     for (const n of await readdir(dir)) {
-      if (n.startsWith('athena-backup-')) await rm(join(dir, n));
+      if (n.startsWith('hoopoe-backup-')) await rm(join(dir, n));
     }
-    await writeFile(join(dir, 'athena-backup-2020-01-01-000000.enc.json'), 'old');
-    await writeFile(join(dir, 'athena-backup-2020-01-02-000000.enc.json'), 'old');
-    await writeFile(join(dir, 'athena-backup-2020-01-03-000000.enc.json'), 'old');
+    await writeFile(join(dir, 'hoopoe-backup-2020-01-01-000000.enc.json'), 'old');
+    await writeFile(join(dir, 'hoopoe-backup-2020-01-02-000000.enc.json'), 'old');
+    await writeFile(join(dir, 'hoopoe-backup-2020-01-03-000000.enc.json'), 'old');
     await writeFile(join(dir, 'notes-perso.txt'), 'keep me');
     const res = await app.inject({
       method: 'POST',
@@ -188,10 +188,10 @@ describe.skipIf(!RUN)('/api/backup/destination', () => {
     const names = await readdir(dir);
     expect(names).toContain('notes-perso.txt');
     // keepLast 2 → the two oldest of the four backups are pruned.
-    expect(names).not.toContain('athena-backup-2020-01-01-000000.enc.json');
-    expect(names).not.toContain('athena-backup-2020-01-02-000000.enc.json');
-    expect(names).toContain('athena-backup-2020-01-03-000000.enc.json');
-    expect(names.filter((n) => n.startsWith('athena-backup-'))).toHaveLength(2);
+    expect(names).not.toContain('hoopoe-backup-2020-01-01-000000.enc.json');
+    expect(names).not.toContain('hoopoe-backup-2020-01-02-000000.enc.json');
+    expect(names).toContain('hoopoe-backup-2020-01-03-000000.enc.json');
+    expect(names.filter((n) => n.startsWith('hoopoe-backup-'))).toHaveLength(2);
   });
 
   it('validates a webdav destination through the injected fetch', async () => {
@@ -281,7 +281,7 @@ describe.skipIf(!RUN)('/api/backup/destination', () => {
       const stored = ftp.files.get(filename);
       expect(stored).toBeDefined();
       const dump = JSON.parse(decryptEnvelope(JSON.parse(stored!.toString()) as EncryptedEnvelope, PASSPHRASE));
-      expect(dump.instance).toBe('athena-ledger');
+      expect(dump.instance).toBe('hoopoe');
 
       // Password encrypted at rest.
       const rows = await db
@@ -380,7 +380,7 @@ describe.skipIf(!RUN)('/api/backup/destination', () => {
       expect(run.statusCode).toBe(200);
       const stored = ftp.files.get(run.json().filename);
       const dump = JSON.parse(decryptEnvelope(JSON.parse(stored!.toString()) as EncryptedEnvelope, PASSPHRASE));
-      expect(dump.instance).toBe('athena-ledger');
+      expect(dump.instance).toBe('hoopoe');
     } finally {
       await ftp.close();
       await db.delete(schema.backupDestinations).where(eq(schema.backupDestinations.userId, userAId));
