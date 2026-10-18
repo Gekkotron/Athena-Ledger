@@ -5,7 +5,7 @@
 
 ## Problem
 
-Athena's rule engine (`backend/src/domain/rules/`) stamps exactly one
+Hoopoe's rule engine (`backend/src/domain/rules/`) stamps exactly one
 category on each matched transaction — `rules.category_id` is
 `NOT NULL` and the engine emits a single `UPDATE transactions SET
 category_id = ?, category_source = 'auto'` per match. Users who want

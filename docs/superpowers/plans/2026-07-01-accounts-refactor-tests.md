@@ -560,7 +560,7 @@ git push origin main
 
 Run:
 ```bash
-gh run watch $(gh run list --workflow ci.yml --limit 1 --repo Gekkotron/Athena-Accounting --json databaseId --jq '.[0].databaseId') --repo Gekkotron/Athena-Accounting --exit-status
+gh run watch $(gh run list --workflow ci.yml --limit 1 --repo Gekkotron/Hoopoe --json databaseId --jq '.[0].databaseId') --repo Gekkotron/Hoopoe --exit-status
 ```
 Expected: both `backend-tests` and `frontend-tests` jobs pass. Codecov upload succeeds on both.
 
@@ -1622,8 +1622,8 @@ _Last updated: 2026-07-01_
 Self-hosted personal accounting app. Local-only, LAN-reachable. See
 [`README.md`](./README.md) for setup.
 
-- CI: <https://github.com/Gekkotron/Athena-Accounting/actions>
-- Coverage: <https://codecov.io/gh/Gekkotron/Athena-Accounting>
+- CI: <https://github.com/Gekkotron/Hoopoe/actions>
+- Coverage: <https://codecov.io/gh/Gekkotron/Hoopoe>
 
 ## Recently landed
 

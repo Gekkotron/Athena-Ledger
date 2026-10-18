@@ -10,7 +10,7 @@ expense category and see planned-vs-actual for a given month. The feature is
 opt-in: the screen always exists in the sidebar, but only categories the user
 has given a limit appear on it. No global on/off toggle.
 
-Athena is a retrospective ledger (fed by bank statements after the fact), so
+Hoopoe is a retrospective ledger (fed by bank statements after the fact), so
 budgets are a light "am I over on this category this month?" signal, not a
 forward-planning envelope system.
 

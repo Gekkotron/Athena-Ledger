@@ -1,8 +1,8 @@
-# Athena MCP Server Implementation Plan
+# Hoopoe MCP Server Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Add a local, encrypted MCP server that lets an LLM (e.g. Ollama via an MCP client) create/update/delete Athena transactions plus the reads needed to use them.
+**Goal:** Add a local, encrypted MCP server that lets an LLM (e.g. Ollama via an MCP client) create/update/delete Hoopoe transactions plus the reads needed to use them.
 
 **Architecture:** A standalone stdio MCP server (`/mcp` package) sends each operation as `{op,args,ts}` encrypted with AES-256-GCM to a single backend endpoint `POST /api/mcp/rpc`. A valid GCM tag proves the caller holds the per-user token (no token on the wire); the backend unwraps the user's content key with a `SESSION_SECRET`-derived master key, decrypts, dispatches the operation to the *existing* transaction routes via in-process `app.inject`, and returns an encrypted `{status,body}`. Token enable/generate/revoke lives in dedicated `user_settings` columns, surfaced in the Réglages page.
 
@@ -1687,7 +1687,7 @@ Create `docs/users/mcp.md` covering, in order (use placeholders only — no real
    }
    ```
 
-5. **Use with Ollama** — note that the MCP client (e.g. `mcphost`, `oterm`) is what points at Ollama as its model; link to that client's docs; the Athena server is model-agnostic.
+5. **Use with Ollama** — note that the MCP client (e.g. `mcphost`, `oterm`) is what points at Ollama as its model; link to that client's docs; the Hoopoe server is model-agnostic.
 6. **Tools reference** — table of the 6 tools and their arguments (mirror Task 9's `TOOL_SPECS`).
 7. **Security** — token is a full-CRUD credential (treat like a password); shown once; revoke/rotate in Réglages; rotating `SESSION_SECRET` invalidates the token (regenerate).
 

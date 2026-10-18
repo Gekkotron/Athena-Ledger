@@ -100,7 +100,7 @@ Athena-Ledger/
 - `url: 'https://gekkotron.github.io'`
 - `baseUrl: '/Athena-Ledger/'`
 - `organizationName: 'Gekkotron'`, `projectName: 'Athena-Ledger'`
-- `presets: [['classic', { docs: { path: '../docs', sidebarPath: './sidebars.ts', editUrl: 'https://github.com/Gekkotron/Athena-Ledger/edit/main/' }, blog: {}, theme: { customCss: './src/css/custom.css' } }]]`
+- `presets: [['classic', { docs: { path: '../docs', sidebarPath: './sidebars.ts', editUrl: 'https://github.com/Gekkotron/Hoopoe/edit/main/' }, blog: {}, theme: { customCss: './src/css/custom.css' } }]]`
 - `i18n: { defaultLocale: 'en', locales: ['en', 'fr'] }`
 - Navbar: logo + "Docs" (→ `/docs/users/getting-started`) + "Blog" + language dropdown + GitHub link.
 

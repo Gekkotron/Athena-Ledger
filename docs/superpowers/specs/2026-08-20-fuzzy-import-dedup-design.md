@@ -5,7 +5,7 @@
 
 ## Problem
 
-Athena's dedup pipeline has two tiers today:
+Hoopoe's dedup pipeline has two tiers today:
 
 1. **Hard dedup at the DB level.** `transactions.dedup_key` is either the bank's `FITID` (when present in an OFX file) or `sha1(account|date|amount|normalized_label)`. A `UNIQUE(account_id, dedup_key)` constraint makes re-imports idempotent. Enforced by `computeDedupKey` in `backend/src/domain/imports/dedup.ts` and the `ON CONFLICT DO NOTHING` clause in `runImport` (`backend/src/domain/imports/import-service.ts:202`).
 2. **Soft-dedup review panel.** `GET /api/transactions/duplicates` (`backend/src/http/routes/transactions/duplicates.ts`) surfaces groups of transactions that share **exact** `(account_id, date, amount)` but differ on `dedup_key`. Users dismiss false positives with "Ce n'est pas un doublon" (`POST /api/transactions/mark-not-duplicate`, flipping `not_duplicate=true`).

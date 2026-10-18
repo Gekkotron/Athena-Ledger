@@ -1239,7 +1239,7 @@ git push origin main
 - [ ] **Step 6: Watch CI**
 
 ```bash
-gh run watch $(gh run list --workflow ci.yml --limit 1 --repo Gekkotron/Athena-Accounting --json databaseId --jq '.[0].databaseId') --repo Gekkotron/Athena-Accounting --exit-status
+gh run watch $(gh run list --workflow ci.yml --limit 1 --repo Gekkotron/Hoopoe --json databaseId --jq '.[0].databaseId') --repo Gekkotron/Hoopoe --exit-status
 ```
 Expected: both jobs green.
 

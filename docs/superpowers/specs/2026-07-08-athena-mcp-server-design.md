@@ -1,11 +1,11 @@
-# Athena MCP Server — Design
+# Hoopoe MCP Server — Design
 
 **Date:** 2026-07-08
 **Status:** Approved (design), pending implementation plan
 
 ## Goal
 
-Expose Athena's transaction operations (add / update / remove, plus the reads
+Expose Hoopoe's transaction operations (add / update / remove, plus the reads
 needed to use them) over the Model Context Protocol, so a local LLM — e.g. an
 Ollama model driven through an MCP client on the user's Mac — can manage
 transactions. Everything stays local, and **nothing sensitive travels the LAN
@@ -193,7 +193,7 @@ Standalone TypeScript package (peer of `backend/` and `frontend/`), using
 
 Config (env, read at startup; fail fast with a clear message if missing):
 - `ATHENA_API_URL` — backend base URL, e.g. `http://<mini-pc-host>:<port>`
-- `ATHENA_MCP_USER` — the Athena username (goes in the envelope, non-secret)
+- `ATHENA_MCP_USER` — the Hoopoe username (goes in the envelope, non-secret)
 - `ATHENA_MCP_TOKEN` — the token generated in Réglages
 
 Layout:

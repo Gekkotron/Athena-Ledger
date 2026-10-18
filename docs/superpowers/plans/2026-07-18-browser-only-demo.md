@@ -2,14 +2,14 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Ship a fully interactive, browser-only demo of Athena at `/demo/` on the public docs site — no backend, no cloud, no signup. All state lives in `localStorage`; a "Reset demo" button restores the seed data. Aimed at first-touch conversion: a visitor lands from the README, clicks *Try the demo*, sees the dashboard populated with realistic French bank data, and can categorise, budget, and browse without installing anything.
+**Goal:** Ship a fully interactive, browser-only demo of Hoopoe at `/demo/` on the public docs site — no backend, no cloud, no signup. All state lives in `localStorage`; a "Reset demo" button restores the seed data. Aimed at first-touch conversion: a visitor lands from the README, clicks *Try the demo*, sees the dashboard populated with realistic French bank data, and can categorise, budget, and browse without installing anything.
 
 **Architecture:** Single Vite build gated by `VITE_DEMO=1`. When the flag is on:
 - `frontend/src/api/client.ts` `api()` and `apiUpload()` are replaced (compile-time) by a localStorage-backed adapter in `frontend/src/api/demo/`.
 - Auth is short-circuited (`/api/auth/me` returns a hard-coded demo user; login page is unreachable).
 - All mutating endpoints write through the adapter; reads hydrate from `localStorage.athena_demo_state` (JSON blob) on first render.
 - A persistent `DemoBanner` component sits at the top of `Layout.tsx` explaining "This is a demo. Data is stored in your browser only. [Reset]".
-- File-based imports (PDF/CSV/OFX) are stubbed with a friendly modal ("Not available in the demo — install Athena to use this").
+- File-based imports (PDF/CSV/OFX) are stubbed with a friendly modal ("Not available in the demo — install Hoopoe to use this").
 - MCP token endpoints are stubbed similarly.
 
 The demo build outputs to `frontend/dist-demo/`. A new GH Actions job publishes it to the Docusaurus `gh-pages` branch under `/demo/`, alongside the docs.
@@ -100,7 +100,7 @@ Every write goes through `store.setState(mutator)` which persists to `localStora
 - [ ] `POST /api/imports` (all file types) — reject with a typed `ApiError` whose `data.demoStub = true`.
 - [ ] `GET/POST /api/pdf-templates[/…]` — same.
 - [ ] `POST /api/mcp/tokens[/…]` — same.
-- [ ] `errorMessage.ts` learns to detect `demoStub` and returns a fixed French message: *"Cette fonctionnalité n'est pas disponible dans la démo. Installez Athena pour l'utiliser."*
+- [ ] `errorMessage.ts` learns to detect `demoStub` and returns a fixed French message: *"Cette fonctionnalité n'est pas disponible dans la démo. Installez Hoopoe pour l'utiliser."*
 - [ ] A shared `<DemoUnavailableModal>` shown by the affected pages when they catch a `demoStub` error.
 
 ## Task 6: Demo banner + reset

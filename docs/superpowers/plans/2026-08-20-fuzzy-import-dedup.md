@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Extend Athena's import + duplicates surface with a shared fuzzy-match engine (hard date/amount windows plus Jaccard label gate) so bank re-posts and rounding drift are caught, and the soft-dedup panel stops surfacing coincidental (date, amount) collisions with disjoint labels.
+**Goal:** Extend Hoopoe's import + duplicates surface with a shared fuzzy-match engine (hard date/amount windows plus Jaccard label gate) so bank re-posts and rounding drift are caught, and the soft-dedup panel stops surfacing coincidental (date, amount) collisions with disjoint labels.
 
 **Architecture:** New shared engine at `backend/src/domain/dedup/fuzzy-match.ts` (SQL narrows candidates, JS scores with the existing pinned-parity `jaccardTokenSimilarity`). Two consumers: import preview (adds a third `fuzzy-duplicate` row status with a pre-ticked skip checkbox and a `skipParsedIndices` commit contract) and the soft-dedup panel (widens the tuple match and post-filters by max-pairwise Jaccard). One narrow DDL change: `file_imports.user_skipped`.
 

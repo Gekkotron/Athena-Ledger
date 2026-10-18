@@ -16,7 +16,7 @@ finds a scribbled password walks straight in from any device on the network).
 The app is about to go public with a "flagship" open-source push, so an
 optional TOTP second factor is table-stakes for the security-conscious users
 who will actually audit the code before running it. Keeping it **optional**
-matches the single-user home-server framing — a family running Athena on
+matches the single-user home-server framing — a family running Hoopoe on
 LAN with strict physical access already has adequate defence in depth, and
 should not be forced through a phone dance every login.
 

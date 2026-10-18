@@ -6,12 +6,12 @@
 ## Goal
 
 Automate the manual, multi-hour job of checking a bank-statement PDF against
-what is already recorded in Athena. Expose a **read-only** MCP tool,
+what is already recorded in Hoopoe. Expose a **read-only** MCP tool,
 `reconcile_statement`, that parses a statement PDF (reusing the account's saved
 import template) and returns a deterministic four-bucket report — **matched /
 missing / mismatched / extra** — so a local LLM (Ollama in LM Studio) can run
 the check conversationally and read the result back. Nothing is written;
-adding the missing transactions is done by re-running Athena's normal PDF
+adding the missing transactions is done by re-running Hoopoe's normal PDF
 import (its dedup inserts exactly the missing ones).
 
 ## Constraints & context
@@ -22,7 +22,7 @@ import (its dedup inserts exactly the missing ones).
   received a populated `search_transactions` result and reported "none found").
   Therefore ALL parsing and matching is deterministic backend code; the model
   only triggers the tool and relays a backend-rendered sentence.
-- **Reuse, don't reinvent.** Athena already parses this bank's PDF via a saved
+- **Reuse, don't reinvent.** Hoopoe already parses this bank's PDF via a saved
   template and already computes a `dedupKey` per transaction
   (`computeDedupKey` in `backend/src/domain/imports/dedup.ts`). That key is the
   deterministic match primitive. The reconcile parser is refactored out of the
@@ -83,8 +83,8 @@ reconcile(
 ): ReconcileReport
 ```
 
-Matching rules (in order, each statement line consumes at most one Athena row;
-each Athena row is matched at most once):
+Matching rules (in order, each statement line consumes at most one Hoopoe row;
+each Hoopoe row is matched at most once):
 1. **matched** — statement line whose `dedupKey` equals an existing row's
    `dedupKey` (exact: same account/date/amount/normalized-label).
 2. **mismatched** — not an exact dedup match, but a candidate exists:
@@ -163,14 +163,14 @@ route is untouched.
 ## Applying the missing transactions
 
 `reconcile_statement` is read-only. When the report shows N missing, the user
-imports the same PDF through Athena's normal import; dedup inserts exactly the
+imports the same PDF through Hoopoe's normal import; dedup inserts exactly the
 missing rows and skips the rest. `summaryText` states this explicitly when
 `missing > 0`. No new write path is added.
 
 ## Error handling summary
 
 - No template for the PDF → 422 `needs_template` → friendly tool message
-  ("import this statement once in Athena to set/retrain its template").
+  ("import this statement once in Hoopoe to set/retrain its template").
 - Missing path / not a `.pdf` / > 10 MB → MCP-side error before any request.
 - Password-protected PDF → mapped from `pdf_encrypted`.
 - Unknown / not-owned account → 400.
@@ -180,7 +180,7 @@ missing rows and skips the rest. `summaryText` states this explicitly when
 - **Backend unit (ungated, no DB):** `reconcile()` truth table — exact match;
   missing; amount-differs mismatch; date within ±3 days (matched-as-mismatch)
   vs outside (missing); extra; transfer legs excluded from extra; empty
-  statement; multiple lines competing for one Athena row (each matched once).
+  statement; multiple lines competing for one Hoopoe row (each matched once).
   Plus `summaryText` rendering for a representative report.
 - **Backend regression:** `parsePdfWithTemplate` yields the same rows the
   importer produces for an existing PDF fixture (reuse a fixture from the PDF

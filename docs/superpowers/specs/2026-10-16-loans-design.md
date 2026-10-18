@@ -5,7 +5,7 @@
 
 ## Problem
 
-Athena tracks balances, budgets and savings goals, but has no place for
+Hoopoe tracks balances, budgets and savings goals, but has no place for
 the loans a household is repaying (mortgage, car, consumer credit). Users
 want to know, for each loan: how much capital is still owed today, when it
 ends, and what it costs in total (interest + insurance + fees). Real French

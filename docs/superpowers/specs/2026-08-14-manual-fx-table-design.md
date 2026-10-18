@@ -5,7 +5,7 @@
 
 ## Problem
 
-Every Athena account carries its own ISO 4217 `currency` (default EUR). Today, every aggregate view — Dashboard balance, timeseries chart, budgets report, insights, sankey, category donut, stats — emits data grouped by currency, and the frontend renders N separate cards / lines when the user holds more than one currency. There is no way to see a single consolidated total.
+Every Hoopoe account carries its own ISO 4217 `currency` (default EUR). Today, every aggregate view — Dashboard balance, timeseries chart, budgets report, insights, sankey, category donut, stats — emits data grouped by currency, and the frontend renders N separate cards / lines when the user holds more than one currency. There is no way to see a single consolidated total.
 
 The schema has anticipated this since day one (`backend/src/db/schema.ts:77`, comment on `accounts`: _"aggregates are reported per currency until an explicit FX-rate table is introduced"_). This spec introduces that table.
 

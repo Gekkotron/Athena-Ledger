@@ -13,7 +13,7 @@
 - Attribution: `Gekkotron` only. Never write "Julien Huguel" or any real name into `package.json`, LICENSE, footer, doc bylines, or generated site metadata. Contact email: `60887050+Gekkotron@users.noreply.github.com`.
 - Commits: Git identity is `Gekkotron` via `-c user.name=Gekkotron -c user.email=60887050+Gekkotron@users.noreply.github.com` on every commit. Do not touch `.git/config`.
 - Branching: Commits land directly on `main`. No feature branches. Do not push unless the user explicitly asks.
-- Public-safe commits: no IPs, hostnames, secrets. `gekkotron.github.io` and `Gekkotron/Athena-Accounting` are the public identifiers.
+- Public-safe commits: no IPs, hostnames, secrets. `gekkotron.github.io` and `Gekkotron/Hoopoe` are the public identifiers.
 - Existing `docs/` tree must remain readable on GitHub. Frontmatter is additive; do not delete or rewrite content.
 - Deploy target: GitHub Pages project URL — `url: 'https://gekkotron.github.io'`, `baseUrl: '/Athena-Accounting/'`.
 - Locale: default `en`, second locale `fr` with empty translations (falls back to EN).
@@ -193,7 +193,7 @@ const config: Config = {
           routeBasePath: 'docs',
           sidebarPath: './sidebars.ts',
           editUrl: ({ docPath }) =>
-            `https://github.com/Gekkotron/Athena-Accounting/edit/main/docs/${docPath}`,
+            `https://github.com/Gekkotron/Hoopoe/edit/main/docs/${docPath}`,
           exclude: [
             '**/_*.{js,jsx,ts,tsx,md,mdx}',
             '**/_*/**',
@@ -228,7 +228,7 @@ const config: Config = {
         { to: '/blog', label: 'Blog', position: 'left' },
         { type: 'localeDropdown', position: 'right' },
         {
-          href: 'https://github.com/Gekkotron/Athena-Accounting',
+          href: 'https://github.com/Gekkotron/Hoopoe',
           label: 'GitHub',
           position: 'right',
         },
@@ -248,14 +248,14 @@ const config: Config = {
         {
           title: 'Community',
           items: [
-            { label: 'Issues', href: 'https://github.com/Gekkotron/Athena-Accounting/issues' },
+            { label: 'Issues', href: 'https://github.com/Gekkotron/Hoopoe/issues' },
             { label: 'Sponsor', href: 'https://github.com/sponsors/Gekkotron' },
           ],
         },
         {
           title: 'More',
           items: [
-            { label: 'GitHub', href: 'https://github.com/Gekkotron/Athena-Accounting' },
+            { label: 'GitHub', href: 'https://github.com/Gekkotron/Hoopoe' },
             { label: 'Blog', to: '/blog' },
           ],
         },
@@ -821,7 +821,7 @@ function HomepageHeader() {
           </Link>
           <Link
             className="button button--outline button--secondary button--lg"
-            href="https://github.com/Gekkotron/Athena-Accounting">
+            href="https://github.com/Gekkotron/Hoopoe">
             Star on GitHub
           </Link>
         </div>
@@ -876,7 +876,7 @@ export default function Home(): React.JSX.Element {
 cd website && npm run build
 ```
 
-Expected: exits 0, `website/build/index.html` contains the hero text "Athena Accounting" and the four feature titles.
+Expected: exits 0, `website/build/index.html` contains the hero text "Hoopoe" and the four feature titles.
 
 - [ ] **Step 6: Verify locally in the browser (optional)**
 
@@ -901,7 +901,7 @@ With `onBrokenLinks: 'throw'` now enforced, `docs/README.md`'s two references to
 
 Edit `docs/README.md`:
 ```markdown
-[top-level README](https://github.com/Gekkotron/Athena-Accounting#readme)
+[top-level README](https://github.com/Gekkotron/Hoopoe#readme)
 ```
 (Both occurrences — lines around 7 and 56.)
 

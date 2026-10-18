@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Add a user-managed FX rate table so Athena can consolidate multi-currency balances, timeseries and budget reports into one display currency.
+**Goal:** Add a user-managed FX rate table so Hoopoe can consolidate multi-currency balances, timeseries and budget reports into one display currency.
 
 **Architecture:** New `fx_rates` table (user-scoped, time-varying, direct pairs). A new `displayCurrency` field in the `user_settings` JSONB drives consolidation. A shared TS helper (`resolveRate` + `consolidate`) fronts every conversion. Three routes gain a `consolidated` block alongside their existing `perCurrency` shape: balance, timeseries, budget. Frontend gets a Settings UI to manage rates + display currency and rewires the Dashboard total card and BalanceChart consumer.
 

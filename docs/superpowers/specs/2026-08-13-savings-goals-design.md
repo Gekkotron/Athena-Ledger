@@ -11,7 +11,7 @@ contribution and withdrawal events the user records against the goal. Multiple
 goals can live on the same account, letting a single Livret A carry
 `Vacances 2 000 € / Fond d'urgence 5 000 € / Buffer` side by side.
 
-Athena is a retrospective ledger. Savings goals do not touch the real ledger —
+Hoopoe is a retrospective ledger. Savings goals do not touch the real ledger —
 they are a **layer of intent** on top of an account's real balance, capturing
 how the user has mentally partitioned it. Recording a contribution does not
 create a transaction, and creating a transaction does not credit any goal.
@@ -40,11 +40,11 @@ create a transaction, and creating a transaction does not credit any goal.
   "Objectifs" strip on each `AccountCard`, and a `SavingsGoalsSection`
   widget on the Dashboard showing the three soonest goals.
 - **Currency inherited from the account** — no `currency` column on the
-  goal. Athena has no FX yet, and letting a goal declare a currency
+  goal. Hoopoe has no FX yet, and letting a goal declare a currency
   different from its account would silently lie.
 - **Balance sanity is advisory, not enforced** — `SUM(saved_amount)` on
   goals of a single account can exceed the account's current balance;
-  Athena is retrospective and the user is authoritative. The overrun is
+  Hoopoe is retrospective and the user is authoritative. The overrun is
   surfaced as an amber warning by the UI, joining the goals list with
   the account balance client-side (no duplicated SQL — see § API).
 - **Overshoot is allowed; completion is not automatic** — going over the
@@ -174,7 +174,7 @@ ORDER BY g.closed_at NULLS FIRST, g.created_at ASC;
 
 ### Balance sanity — advisory, not enforced
 
-Rejected: enforcing `SUM(saved) <= currentBalance` at the API. Athena is
+Rejected: enforcing `SUM(saved) <= currentBalance` at the API. Hoopoe is
 retrospective and the user's `+200 €` intent may precede the bank statement
 that will land tomorrow. Instead: `overReserved` is a per-account flag on
 the list response consumed by the UI to render an amber warning strip.
@@ -183,7 +183,7 @@ the list response consumed by the UI to render an amber warning strip.
 
 - `POST /events` that pushes `saved` across the target from below sets
   `justReached: true` on the response. The UI fires a one-shot success
-  toast (no emoji in the default copy; Athena's "no emojis" default holds
+  toast (no emoji in the default copy; Hoopoe's "no emojis" default holds
   — see `frontend/src/locales/{fr,en}/goals.json`).
 - The goal is **not** auto-closed. Users close explicitly via
   `POST /:id/close`. Overshoot stays visible until they do.

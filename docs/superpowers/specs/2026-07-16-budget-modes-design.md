@@ -9,7 +9,7 @@ Dashboard tile.
 
 ## Problem
 
-Athena today ships one budgeting model: a **recurring monthly cap per
+Hoopoe today ships one budgeting model: a **recurring monthly cap per
 category**. The `category_budgets` table stores a single `monthly_limit`
 per `(user, category, period, account_id?)`; there is no rollover, no
 per-month history, no "money must have a job" invariant. Its purpose is

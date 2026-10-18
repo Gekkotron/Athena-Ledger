@@ -17,7 +17,7 @@ exact format (`## [X.Y.Z] - YYYY-MM-DD`).
   *Paramètres → Notifications → Canaux* posts alerts to a Discord channel
   via a webhook URL (restricted to Discord webhook endpoints), with the same privacy masks
   and per-minute rate limit as the WhatsApp channel.
-- **Four new import formats land together.** Athena now reads **QIF**
+- **Four new import formats land together.** Hoopoe now reads **QIF**
   (Quicken Interchange Format — Bank/CCard/Cash/Oth sections, FR+US
   decimal/date variants), **MT940** (SWIFT pre-ISO20022 bank statements —
   `:61:` + `:86:` with structured-subfield stripping, UTF-8 / Windows-1252
@@ -278,7 +278,7 @@ fix below and the post-tag polish listed under *Fixed*.
   children.
 - **Footer bar**: direct link to the documentation, with an anchor
   computed from the active route (for example, on *Rules*, the link
-  points straight to the Rules section). The footer *Athena* logo
+  points straight to the Rules section). The footer *Hoopoe* logo
   routes back to the dashboard.
 
 ### Changed

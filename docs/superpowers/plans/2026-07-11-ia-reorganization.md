@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Reshape Athena's frontend navigation from an 8-item flat sidebar
+**Goal:** Reshape Hoopoe's frontend navigation from an 8-item flat sidebar
 into a sectioned sidebar with three groups (Tous les jours / Classification
 / Structure) and expandable hubs for Règles, Comptes, and Données —
 without changing any component internals, colors, typography, or charts.
