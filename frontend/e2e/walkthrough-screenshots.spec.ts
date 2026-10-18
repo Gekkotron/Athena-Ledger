@@ -88,7 +88,10 @@ function routePath(path: string): string {
 }
 
 async function waitForBoot(page: Page): Promise<void> {
-  await page.waitForLoadState('networkidle');
+  // The real backend keeps a service-worker / long-poll connection warm, so
+  // `networkidle` never fires in LOCAL_MODE; `domcontentloaded` is enough
+  // there since the sidebar wait below is the real readiness gate.
+  await page.waitForLoadState(LOCAL_MODE ? 'domcontentloaded' : 'networkidle');
   // The sidebar only renders inside <Layout>, which is gated on `user`.
   // Its appearance signals /api/auth/me resolved and we are past the
   // null-user redirect that otherwise bounces the hash back to '/'.
@@ -107,6 +110,11 @@ async function gotoAndSettle(page: Page, path: string): Promise<void> {
 
 test.describe('walkthrough screenshots', () => {
   test.skip(!SHOULD_RUN, 'set WALKTHROUGH_SHOTS=1 to regenerate walkthrough PNGs');
+
+  // The real backend takes noticeably longer than the demo build (each
+  // gotoAndSettle waits ~5 s for the tour that never shows up), so the EN
+  // suite was already hitting 28 s / test and the FR suite went over.
+  test.describe.configure({ timeout: 90_000 });
 
   test.use({ locale: PLAYWRIGHT_LOCALE });
 
@@ -211,10 +219,16 @@ test.describe('walkthrough screenshots', () => {
     const scopeBar = page.getByRole('group', {
       name: /Charts scope|Portée des graphiques/i,
     });
+    // See waitForBoot() — real backend never reaches networkidle, so fall
+    // back to a short settle for LOCAL_MODE after each scope control change.
+    const settle = async () => {
+      if (LOCAL_MODE) await page.waitForTimeout(400);
+      else await page.waitForLoadState('networkidle');
+    };
     await scopeBar.locator('select').selectOption({ index: 1 });
-    await page.waitForLoadState('networkidle');
+    await settle();
     await scopeBar.getByRole('button', { name: /^All$|^Tout$/i }).click();
-    await page.waitForLoadState('networkidle');
+    await settle();
     const balanceSection = page.locator('#dash-evolution');
     await balanceSection.evaluate((el) => el.scrollIntoView({ block: 'center' }));
     await page.waitForTimeout(600);
