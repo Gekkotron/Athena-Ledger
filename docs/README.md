@@ -3,9 +3,9 @@ title: Documentation home
 sidebar_position: 0
 ---
 
-# Athena-Ledger Documentation
+# Hoopoe Documentation
 
-Athena-Ledger is self-hosted personal accounting for people who
+Hoopoe is self-hosted personal accounting for people who
 want their bank data to stay on their own network. This is the deep
 dive; if you just want to install and run, the [top-level README](https://github.com/Gekkotron/Athena-Ledger#readme)
 covers the quickstart.
@@ -14,7 +14,7 @@ The docs are split into two tracks and a reference bucket.
 
 ## For users
 
-You installed Athena (or plan to) and want to understand it.
+You installed Hoopoe (or plan to) and want to understand it.
 
 - **[Getting started](users/getting-started.md)** — install, first-run
   onboarding, your first ten minutes.
@@ -59,6 +59,6 @@ Pure lookup, no narrative.
 ## Not what you're looking for?
 
 - The **[top-level README](https://github.com/Gekkotron/Athena-Ledger#readme)** is the entry point for
-  installing Athena.
+  installing Hoopoe.
 - **Bugs and requests** live on the [issue tracker](https://github.com/Gekkotron/Athena-Ledger/issues).
-- If Athena helps you, consider **[sponsoring the project](https://github.com/sponsors/Gekkotron)**.
+- If Hoopoe helps you, consider **[sponsoring the project](https://github.com/sponsors/Gekkotron)**.

@@ -56,7 +56,7 @@
     "description": "SR-only heading above the dashboard screenshot"
   },
   "home.product.alt": {
-    "message": "Tableau de bord Athena Ledger : courbe de solde, camembert par catégorie, diagramme de Sankey, aperçus mensuels.",
+    "message": "Tableau de bord Hoopoe : courbe de solde, camembert par catégorie, diagramme de Sankey, aperçus mensuels.",
     "description": "Alt text for the dashboard screenshot"
   },
   "home.product.caption": {
@@ -108,11 +108,11 @@
     "description": "Closing CTA heading"
   },
   "home.closing.body": {
-    "message": "Ledger tourne sur un Raspberry Pi, un mini-PC de rechange, ou votre portable. Aucun compte à créer, aucun forfait à mettre à niveau, aucun serveur qui puisse être éteint.",
+    "message": "Hoopoe tourne sur un Raspberry Pi, un mini-PC de rechange, ou votre portable. Aucun compte à créer, aucun forfait à mettre à niveau, aucun serveur qui puisse être éteint.",
     "description": "Closing CTA body"
   },
   "home.closing.cta1": {
-    "message": "Installer Ledger",
+    "message": "Installer Hoopoe",
     "description": "Closing primary CTA"
   },
   "home.closing.cta2": {
@@ -124,7 +124,7 @@
     "description": "Signature line at the bottom of the closing block"
   },
   "home.meta.title": {
-    "message": "Athena Ledger — un livre de comptes privé et auto-hébergé",
+    "message": "Hoopoe — un livre de comptes privé et auto-hébergé",
     "description": "HTML <title> for the homepage"
   },
   "home.meta.description": {
@@ -136,7 +136,7 @@
     "description": "Eyebrow above the feature grid section title"
   },
   "feat.section.title": {
-    "message": "Tout ce qu'est Ledger, sur une seule page.",
+    "message": "Tout ce qu'est Hoopoe, sur une seule page.",
     "description": "Feature grid section title"
   },
   "feat.imports.eyebrow": {

@@ -3,7 +3,7 @@ import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'Athena Ledger',
+  title: 'Hoopoe',
   tagline: 'Self-hosted personal accounting. Your bank data never leaves your network.',
   favicon: 'img/logo.png',
 
@@ -54,7 +54,7 @@ const config: Config = {
         },
         blog: {
           showReadingTime: true,
-          blogTitle: 'Athena Ledger blog',
+          blogTitle: 'Hoopoe blog',
           blogDescription: 'Release notes and news',
         },
         theme: {
@@ -72,9 +72,9 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'Athena Ledger',
+      title: 'Hoopoe',
       logo: {
-        alt: 'Athena Ledger logo',
+        alt: 'Hoopoe logo',
         src: 'img/logo.png',
       },
       items: [
@@ -120,7 +120,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Athena Ledger. Built by Gekkotron. MIT licensed.`,
+      copyright: `Hoopoe. Built by Gekkotron. MIT licensed.`,
     },
     prism: {
       // Light — subtle; Dark — Nord/Oceanic-style tones that read well on the

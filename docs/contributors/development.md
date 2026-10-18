@@ -5,7 +5,7 @@ sidebar_position: 5
 
 # Development
 
-How to run Athena locally, how to run the tests, and how to submit a
+How to run Hoopoe locally, how to run the tests, and how to submit a
 change. This page assumes you have Docker and (optionally, for a nicer
 dev loop) Node 20 installed.
 

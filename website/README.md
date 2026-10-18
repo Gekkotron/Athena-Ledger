@@ -1,4 +1,4 @@
-# Athena Ledger website
+# Hoopoe website
 
 Docusaurus site published to <https://gekkotron.github.io/Athena-Ledger/>.
 

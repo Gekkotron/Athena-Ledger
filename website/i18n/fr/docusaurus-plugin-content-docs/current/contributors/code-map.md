@@ -146,7 +146,7 @@ sous-dossiers :
 - **`tools.ts`** — les définitions d'outils Model Context Protocol
   (lister les comptes, requêter les transactions, etc.). C'est le
   fichier à ouvrir en premier : `mcp/src/tools.ts`.
-- **`client.ts`** — client HTTP qui rappelle le backend Athena, si
+- **`client.ts`** — client HTTP qui rappelle le backend Hoopoe, si
   bien que le serveur MCP est un adaptateur fin, pas une seconde
   source de vérité.
 - **`config.ts`** — chargement env + fichier de config.

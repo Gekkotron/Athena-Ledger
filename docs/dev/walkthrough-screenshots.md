@@ -3,7 +3,7 @@
 The PNGs backing the walkthrough docs are captured by a gated
 Playwright suite: `frontend/e2e/walkthrough-screenshots.spec.ts`.
 It ships in two modes — a VITE_DEMO fallback that needs no backend
-and a real-backend mode that logs in against a running Athena
+and a real-backend mode that logs in against a running Hoopoe
 instance. Real-backend mode is the one that produces the shots
 currently on gh-pages (no demo banner, real data).
 
@@ -41,13 +41,13 @@ false`) so scrolling stays outside the frame.
 
 ## Real-backend mode (preferred)
 
-Produces shots that match what a user sees after installing Athena
+Produces shots that match what a user sees after installing Hoopoe
 locally — sidebar shows `CONNECTÉ <user>`, no `Démo — vos actions…`
 banner up top, real data throughout.
 
 ### Prerequisites
 
-- A running Athena instance reachable from this machine (frontend +
+- A running Hoopoe instance reachable from this machine (frontend +
   Fastify + Postgres, e.g. the LAN deployment).
 - A seeded **demo user** on that instance with enough data to fill
   every screen the walkthroughs visit — accounts with balances,

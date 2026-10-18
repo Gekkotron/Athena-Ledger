@@ -5,7 +5,7 @@ sidebar_position: 5
 
 # Développement
 
-Comment faire tourner Athena localement, lancer les tests et proposer
+Comment faire tourner Hoopoe localement, lancer les tests et proposer
 un changement. Cette page suppose que Docker est installé — et, en
 option pour une meilleure boucle de dev, Node 20.
 

@@ -5,7 +5,7 @@ sidebar_position: 1
 
 # Pour les contributeurs
 
-Vous voulez lire, corriger ou étendre Athena. Commencez par
+Vous voulez lire, corriger ou étendre Hoopoe. Commencez par
 **[architecture](architecture.md)** et **[carte du code](code-map.md)**,
 puis consultez **[développement](development.md)** pour la boucle
 de développement locale.

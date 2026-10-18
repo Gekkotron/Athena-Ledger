@@ -5,7 +5,7 @@ sidebar_position: 1
 
 # Démo interactive
 
-Une version d'Athena Ledger tourne directement dans votre navigateur.
+Une version d'Hoopoe tourne directement dans votre navigateur.
 Pas de compte, pas d'installation, pas de serveur : tout ce que vous
 faites est enregistré uniquement dans `localStorage` (sur votre machine,
 dans votre navigateur, isolé du reste du web).
@@ -21,7 +21,7 @@ dans votre navigateur, isolé du reste du web).
 - Le bouton **Réinitialiser la démo** en haut de l'écran remet le jeu
   de données d'origine si vous voulez repartir de zéro.
 
-![Tableau de bord Ledger avec le jeu de données de démo](/img/users/fr/demo-dashboard.png)
+![Tableau de bord Hoopoe avec le jeu de données de démo](/img/users/fr/demo-dashboard.png)
 
 <p style={{ textAlign: 'center', margin: '2rem 0' }}>
   <a
@@ -43,7 +43,7 @@ dans votre navigateur, isolé du reste du web).
 
 - Aucun back-end : les endpoints qui reposent sur du code Node
   (parsing PDF, OCR photo, jetons MCP) affichent une modale
-  « non disponible ». C'est volontaire — installer Ledger localement
+  « non disponible ». C'est volontaire — installer Hoopoe localement
   débloque ces fonctionnalités.
 - Le stockage est celui du navigateur : effacer les données du site
   supprime aussi la démo. Utilisez-la comme un aperçu, pas comme un

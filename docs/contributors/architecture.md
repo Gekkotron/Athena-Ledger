@@ -7,7 +7,7 @@ sidebar_position: 2
 
 ## System in one sentence
 
-Athena is a three-container stack — a React frontend, a Fastify
+Hoopoe is a three-container stack — a React frontend, a Fastify
 backend, and a PostgreSQL database — orchestrated by Docker Compose
 and designed to run on a single host. An optional fourth container
 runs a Model Context Protocol server for local LLM access.

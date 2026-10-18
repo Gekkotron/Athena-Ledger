@@ -2,7 +2,7 @@
 
 ## Reporting a vulnerability
 
-If you believe you've found a security vulnerability in Athena Ledger,
+If you believe you've found a security vulnerability in Hoopoe,
 please report it privately rather than opening a public issue.
 
 - **Contact:** `60887050+Gekkotron@users.noreply.github.com`
@@ -19,7 +19,7 @@ disclose publicly, whether or not a fix has shipped.
 
 ## No SLA
 
-Athena Ledger is a **solo-maintainer, open-source project** with no paid
+Hoopoe is a **solo-maintainer, open-source project** with no paid
 support and no service-level agreement. Reports will be triaged on a
 best-effort basis, and response times may vary. Critical issues are
 prioritized, but there is no guaranteed time-to-fix.
@@ -31,7 +31,7 @@ pre-release builds are not maintained.
 
 ## Threat model
 
-Athena Ledger is designed as a **single-tenant, LAN-only** deployment
+Hoopoe is designed as a **single-tenant, LAN-only** deployment
 (a home mini-PC, an intranet server, or similar). By default:
 
 - The frontend and backend containers bind to **every host interface**
@@ -55,7 +55,7 @@ nginx basic-auth, etc.) between it and the outside world.
 
 ## Third-party network calls
 
-Athena is designed to run without egress to the public internet. The only
+Hoopoe is designed to run without egress to the public internet. The only
 subsystem that *can* reach out on its own is OCR:
 
 - **tesseract.js** downloads `fra.traineddata` / `eng.traineddata` (~30 MB

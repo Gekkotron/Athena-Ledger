@@ -5,7 +5,7 @@ sidebar_position: 3
 
 # Endpoints d'API
 
-La surface REST appelée par le frontend d'Athena. Toutes les routes
+La surface REST appelée par le frontend de Hoopoe. Toutes les routes
 sont préfixées par `/api/…` et servies par le backend Fastify. Voir
 [Architecture](../contributors/architecture.md) pour le contexte du
 flux de requêtes autour de cette page.
@@ -264,7 +264,7 @@ Export / restauration en JSON portable.
 
 ## MCP
 
-Surface RPC chiffrée pour le serveur MCP d'Athena (agents Claude /
+Surface RPC chiffrée pour le serveur MCP de Hoopoe (agents Claude /
 IDE). Seule route qui n'utilise pas le cookie de session — elle
 effectue sa propre authentification cryptographique.
 

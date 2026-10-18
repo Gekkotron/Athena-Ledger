@@ -7,7 +7,7 @@ sidebar_position: 2
 
 ## Le système en une phrase
 
-Athena est une pile à trois conteneurs — un frontend React, un backend
+Hoopoe est une pile à trois conteneurs — un frontend React, un backend
 Fastify et une base PostgreSQL — orchestrée par Docker Compose et conçue
 pour tourner sur une seule machine. Un quatrième conteneur optionnel
 héberge un serveur Model Context Protocol pour l'accès local aux LLM.

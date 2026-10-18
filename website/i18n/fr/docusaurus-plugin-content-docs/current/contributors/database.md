@@ -15,7 +15,7 @@ les autres conteneurs s'articulent), voir
 
 ## Extensions PostgreSQL
 
-Athena requiert trois extensions. Chacune est chargée dans la toute
+Hoopoe requiert trois extensions. Chacune est chargée dans la toute
 première migration (`0000_init.sql`) et doit exister dans l'image
 Postgres utilisée par Compose (l'image officielle `postgres:16` les
 fournit toutes les trois).

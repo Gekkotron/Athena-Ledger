@@ -5,7 +5,7 @@ sidebar_position: 3
 
 # API endpoints
 
-The REST surface the Athena frontend calls. All routes are prefixed
+The REST surface the Hoopoe frontend calls. All routes are prefixed
 `/api/…` and served by the Fastify backend. See
 [Architecture](../contributors/architecture.md) for the request-flow
 context around this page.
@@ -244,7 +244,7 @@ Portable JSON dump / restore.
 
 ## MCP
 
-Encrypted RPC surface for the Athena MCP server (Claude / IDE agents).
+Encrypted RPC surface for the Hoopoe MCP server (Claude / IDE agents).
 The only route that does not use the session cookie — it performs its
 own crypto auth.
 

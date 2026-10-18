@@ -5,7 +5,7 @@ sidebar_position: 2
 
 # Configuration
 
-Athena lit sa configuration depuis les variables d'environnement au démarrage
+Hoopoe lit sa configuration depuis les variables d'environnement au démarrage
 et depuis les réglages par utilisateur stockés en base. Cette page énumère
 les deux, ainsi que les ports réseau par défaut sur lesquels les trois
 services écoutent.

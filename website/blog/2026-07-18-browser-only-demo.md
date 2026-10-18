@@ -1,11 +1,11 @@
 ---
 slug: browser-only-demo
-title: Try Athena in your browser — no install, no signup
+title: Try Hoopoe in your browser — no install, no signup
 authors: [Gekkotron]
 tags: [demo, release, frontend]
 ---
 
-Athena Ledger now has a fully interactive demo running in the
+Hoopoe now has a fully interactive demo running in the
 browser at
 [**gekkotron.github.io/Athena-Ledger/demo/**](https://gekkotron.github.io/Athena-Ledger/demo/).
 No account, no server, no download. Everything the app does — dashboard,
@@ -19,7 +19,7 @@ French bank data.
 
 The install page has always been the friction point. Even the desktop
 build asks the visitor to trust an unsigned binary. The demo removes
-every barrier between "I read about Athena on GitHub" and "I've clicked
+every barrier between "I read about Hoopoe on GitHub" and "I've clicked
 through the dashboard for two minutes." The tradeoff is that anything
 requiring a real backend — parsing PDF statements, OCR-ing bank
 photos, minting MCP tokens — pops a friendly "not available in the
@@ -67,7 +67,7 @@ demo URL share the same origin. The demo's Vite `base` is set to
 ## What it doesn't do
 
 - No import of your own bank statements. That's what installing
-  Athena is for — and the demo says so explicitly when you try.
+  Hoopoe is for — and the demo says so explicitly when you try.
 - No syncing between visitors. Your localStorage is your own.
 - No server-side rendering. It's a Vite SPA behind an iframe on the
   docs page; SEO of the demo page itself is not a goal.

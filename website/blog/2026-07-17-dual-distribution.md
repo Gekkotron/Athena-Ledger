@@ -1,12 +1,12 @@
 ---
 slug: dual-distribution
-title: One codebase, two installs — Athena ships as a desktop app
+title: One codebase, two installs — Hoopoe ships as a desktop app
 authors: [Gekkotron]
 tags: [release, desktop, docker, tauri]
 draft: true
 ---
 
-Athena Ledger now ships in two flavours from the same repo. The
+Hoopoe now ships in two flavours from the same repo. The
 family-server Docker stack you already know is unchanged. Alongside it,
 there's a new **desktop app** — a single download for macOS, Windows,
 or Linux, no Docker, no prerequisites, single user.
@@ -29,7 +29,7 @@ statements: they have to know what Docker is, install it, keep it
 running, and open the right port on the right machine.
 
 The desktop app strips all of that away. You download a `.dmg` (or
-`.exe`, or `.AppImage`), double-click it, and Athena opens like any
+`.exe`, or `.AppImage`), double-click it, and Hoopoe opens like any
 other application. Everything — the Fastify backend, the React
 frontend, the database — runs inside the app on your own machine, on a
 port bound to `127.0.0.1` that nothing else can reach.
@@ -66,7 +66,7 @@ Two decisions worth calling out:
   migration and query in the repo now runs cleanly under both the
   Postgres driver (Docker path) and the PGlite driver (desktop path).
   A single `DB_DRIVER` env flag flips between them.
-- **Directory sidecar instead of single-binary.** Athena's native-deps
+- **Directory sidecar instead of single-binary.** Hoopoe's native-deps
   tree (sharp/libvips, canvas, argon2, PGlite WASM, pdfjs, tesseract)
   is hostile to single-binary bundlers. Tauri's sidecar mechanism
   accepts a folder just as happily, so we ship the whole tree and let

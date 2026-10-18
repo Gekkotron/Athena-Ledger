@@ -11,7 +11,7 @@ La documentation se répartit en deux volets et une section de référence.
 
 ## Pour les utilisateurs
 
-Vous avez installé Athena (ou vous prévoyez de le faire) et vous voulez le comprendre.
+Vous avez installé Hoopoe (ou vous prévoyez de le faire) et vous voulez le comprendre.
 
 - **[Démarrage](users/getting-started.md)** — installation, onboarding initial, vos dix premières minutes.
 - **[Importer](users/importing.md)** — relevés bancaires OFX, CSV français et PDF, incluant l'assistant interactif de modèles.
@@ -42,6 +42,6 @@ Consultation pure, sans narration.
 
 ## Ce n'est pas ce que vous cherchez ?
 
-- Le **[README principal](https://github.com/Gekkotron/Athena-Ledger#readme)** est le point d'entrée pour installer Athena.
+- Le **[README principal](https://github.com/Gekkotron/Athena-Ledger#readme)** est le point d'entrée pour installer Hoopoe.
 - **Les bugs et demandes** vivent sur le [suivi d'incidents](https://github.com/Gekkotron/Athena-Ledger/issues).
-- Si Athena vous aide, pensez à **[soutenir le projet](https://github.com/sponsors/Gekkotron)**.
+- Si Hoopoe vous aide, pensez à **[soutenir le projet](https://github.com/sponsors/Gekkotron)**.

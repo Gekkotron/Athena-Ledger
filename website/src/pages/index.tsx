@@ -138,7 +138,7 @@ function ProductShot() {
           alt={translate({
             id: 'home.product.alt',
             message:
-              'Athena Ledger dashboard: balance curve, category donut, Sankey flow, monthly insights.',
+              'Hoopoe dashboard: balance curve, category donut, Sankey flow, monthly insights.',
           })}
         />
       </div>
@@ -174,14 +174,14 @@ function ClosingCta() {
         </h2>
         <p className={styles.closingBody}>
           <Translate id="home.closing.body">
-            Ledger runs on a Raspberry Pi, a spare mini-PC, or your laptop. There is no account to create, no plan to upgrade, and no server that can be turned off.
+            Hoopoe runs on a Raspberry Pi, a spare mini-PC, or your laptop. There is no account to create, no plan to upgrade, and no server that can be turned off.
           </Translate>
         </p>
         <div className={styles.closingCtas}>
           <Link
             to="/docs/users/getting-started"
             className={clsx('button button--primary button--lg', styles.ctaPrimary)}>
-            <Translate id="home.closing.cta1">Install Ledger</Translate>
+            <Translate id="home.closing.cta1">Install Hoopoe</Translate>
             <span className={styles.ctaArrow} aria-hidden="true">
               →
             </span>
@@ -215,7 +215,7 @@ export default function Home(): React.JSX.Element {
     <Layout
       title={translate({
         id: 'home.meta.title',
-        message: 'Athena Ledger — a private, self-hosted ledger',
+        message: 'Hoopoe — a private, self-hosted ledger',
       })}
       description={translate({
         id: 'home.meta.description',

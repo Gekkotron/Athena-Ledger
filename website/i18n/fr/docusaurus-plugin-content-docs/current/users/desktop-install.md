@@ -5,7 +5,7 @@ sidebar_position: 3
 
 # Installation bureau
 
-L'application de bureau est la façon « pas d'installation, pas de Docker » de faire tourner Ledger. C'est une application unique sur macOS, Windows ou Linux — vous double-cliquez, une fenêtre s'ouvre, et tout (base de données, backend, interface) tourne dans ce processus, sur votre propre machine. Pas de LAN, pas d'autres utilisateurs, pas de cloud.
+L'application de bureau est la façon « pas d'installation, pas de Docker » de faire tourner Hoopoe. C'est une application unique sur macOS, Windows ou Linux — vous double-cliquez, une fenêtre s'ouvre, et tout (base de données, backend, interface) tourne dans ce processus, sur votre propre machine. Pas de LAN, pas d'autres utilisateurs, pas de cloud.
 
 Si vous voulez un serveur familial auquel tout le foyer se connecte, sautez cette page et lisez plutôt **[Démarrage avec Docker](getting-started.md)**.
 
@@ -27,9 +27,9 @@ Chaque artefact est construit par le workflow GitHub Actions `desktop-release` d
 
 ### macOS
 
-1. Ouvrez le `.dmg` et glissez **Athena Ledger** dans `Applications`.
-2. Au premier lancement, macOS affiche *« Athena Ledger can't be opened because Apple cannot check it for malicious software »* — l'application n'est pas encore signée avec un certificat Apple Developer. Fermez la boîte de dialogue, puis clic droit sur l'app dans le Finder → **Ouvrir** → **Ouvrir** dans la nouvelle boîte de dialogue. macOS mémorise votre choix ; les lancements suivants se font par un double-clic normal.
-3. Si Gatekeeper refuse malgré le clic droit → Ouvrir, exécutez une fois depuis un terminal : `xattr -dr com.apple.quarantine "/Applications/Athena Ledger.app"`.
+1. Ouvrez le `.dmg` et glissez **Hoopoe** dans `Applications`.
+2. Au premier lancement, macOS affiche *« Hoopoe can't be opened because Apple cannot check it for malicious software »* — l'application n'est pas encore signée avec un certificat Apple Developer. Fermez la boîte de dialogue, puis clic droit sur l'app dans le Finder → **Ouvrir** → **Ouvrir** dans la nouvelle boîte de dialogue. macOS mémorise votre choix ; les lancements suivants se font par un double-clic normal.
+3. Si Gatekeeper refuse malgré le clic droit → Ouvrir, exécutez une fois depuis un terminal : `xattr -dr com.apple.quarantine "/Applications/Hoopoe.app"`.
 
 ### Windows
 
@@ -53,9 +53,9 @@ L'application écrit tout — le fichier PGlite, les relevés importés, les exp
 
 | OS | Chemin |
 |----|--------|
-| macOS | `~/Library/Application Support/Athena Ledger/` |
-| Windows | `%APPDATA%\Athena Ledger\` (typiquement `C:\Users\<vous>\AppData\Roaming\Athena Ledger\`) |
-| Linux | `~/.local/share/Athena Ledger/` (ou `$XDG_DATA_HOME/Athena Ledger/` si défini) |
+| macOS | `~/Library/Application Support/Hoopoe/` |
+| Windows | `%APPDATA%\Hoopoe\` (typiquement `C:\Users\<vous>\AppData\Roaming\Hoopoe\`) |
+| Linux | `~/.local/share/Hoopoe/` (ou `$XDG_DATA_HOME/Hoopoe/` si défini) |
 
 À l'intérieur, vous trouverez :
 
@@ -77,9 +77,9 @@ La métrique Prometheus `athena_backup_last_success_timestamp_seconds` que le mo
 
 ## Désinstaller
 
-- **macOS** — glissez l'application dans la corbeille, puis supprimez `~/Library/Application Support/Athena Ledger/` si vous voulez aussi effacer vos données.
-- **Windows** — *Paramètres → Applications → Athena Ledger → Désinstaller*, puis supprimez `%APPDATA%\Athena Ledger\` pour les données.
-- **Linux** — supprimez le `.AppImage`, puis supprimez `~/.local/share/Athena Ledger/`.
+- **macOS** — glissez l'application dans la corbeille, puis supprimez `~/Library/Application Support/Hoopoe/` si vous voulez aussi effacer vos données.
+- **Windows** — *Paramètres → Applications → Hoopoe → Désinstaller*, puis supprimez `%APPDATA%\Hoopoe\` pour les données.
+- **Linux** — supprimez le `.AppImage`, puis supprimez `~/.local/share/Hoopoe/`.
 
 ## MCP depuis l'application bureau
 

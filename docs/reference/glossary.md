@@ -5,7 +5,7 @@ sidebar_position: 4
 
 # Glossary
 
-Athena's UI is in French. This page maps the French labels the interface uses
+Hoopoe's UI is in French. This page maps the French labels the interface uses
 to their English equivalents so English-only readers of the docs can follow
 along in the app.
 
@@ -26,19 +26,19 @@ along in the app.
 | Données            | Data                            | Nav group holding Imports, Doublons, Modèles PDF, Sauvegarde.               |
 | Imports            | Imports                         | History of statement imports and the entry point to import a new file.     |
 | Doublons           | Duplicates                      | Suspected duplicate transactions awaiting merge or dismissal.               |
-| Modèles PDF        | PDF templates                   | Saved column/row templates that let Athena parse a bank's PDF statements.   |
+| Modèles PDF        | PDF templates                   | Saved column/row templates that let Hoopoe parse a bank's PDF statements.   |
 | Sauvegarde         | Backup                          | Export the full data envelope to a JSON file and restore from one.          |
 | Réglages           | Settings                        | User preferences — default range, chart gap threshold, MCP token, etc.     |
 
 ## Money terms
 
-| French term         | English equivalent              | Meaning in Athena                                                          |
+| French term         | English equivalent              | Meaning in Hoopoe                                                          |
 | ------------------- | ------------------------------- | -------------------------------------------------------------------------- |
 | Solde               | Balance                         | Signed sum of transactions on an account.                                  |
 | Disponible          | Available                       | Cash you can spend today — total balance minus Bloqué and active Enveloppes. |
 | Bloqué              | Locked / reserved               | Amount you have chosen to fence off from Disponible (rent-in-transit, tax). |
 | Ventilation         | Split / allocation              | Breaking one transaction across several categories.                        |
-| Point de contrôle   | Checkpoint                      | Anchor tying a real bank balance on a given date to Athena's computed one. |
+| Point de contrôle   | Checkpoint                      | Anchor tying a real bank balance on a given date to Hoopoe's computed one. |
 | Enveloppe           | Envelope                        | A fixed pot reserved from Disponible for a recurring goal (holiday, gifts). |
 | Plafond             | Cap                             | A monthly ceiling on a category's spend; drives the Budgets alerts.        |
 | Transfert           | Transfer                        | A transaction moving money between two of your own accounts.               |
@@ -46,19 +46,19 @@ along in the app.
 
 ## Import terms
 
-| French term         | English equivalent              | Meaning in Athena                                                           |
+| French term         | English equivalent              | Meaning in Hoopoe                                                           |
 | ------------------- | ------------------------------- | --------------------------------------------------------------------------- |
 | Relevé              | Statement                       | A bank statement file (PDF, CSV, OFX) uploaded through Imports.             |
 | Modèle              | Template                        | A saved PDF parsing recipe — page layout + column boundaries.               |
 | Ligne               | Row / line                      | A single line on the statement — becomes one transaction on import.         |
 | Colonne             | Column                          | A column in the PDF/CSV grid (date, label, debit, credit, balance).         |
-| Doublon             | Duplicate                       | A transaction Athena flags as likely already imported.                      |
+| Doublon             | Duplicate                       | A transaction Hoopoe flags as likely already imported.                      |
 | Motif de fichier    | File pattern                    | Regex on the file name that routes an import to a specific account.         |
 | Import              | Import                          | The act of loading a Relevé, or the audit row that records it.              |
 
 ## Chart and dashboard terms
 
-| French term         | English equivalent              | Meaning in Athena                                                           |
+| French term         | English equivalent              | Meaning in Hoopoe                                                           |
 | ------------------- | ------------------------------- | --------------------------------------------------------------------------- |
 | Évolution           | Trend / balance-over-time chart | Line chart of running balance across the selected range.                    |
 | Répartition         | Breakdown / donut               | Donut chart splitting spend across categories.                              |

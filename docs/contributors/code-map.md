@@ -29,7 +29,7 @@ and test config; there is no root `package.json`.
 Root-level files worth knowing: `docker-compose.yml` and
 `docker-compose.test.yml` (server stack), `install.sh` /
 `update.sh` (one-shot host setup), `README.md`, `CONTRIBUTING.md`,
-and `PLAN.md` (the machine-readable backlog driven by the Athena
+and `PLAN.md` (the machine-readable backlog driven by the Hoopoe
 Orchestrator — see `CLAUDE.md` for its contract).
 
 ## `backend/src` tour
@@ -138,7 +138,7 @@ subdirectories:
 - **`tools.ts`** — the actual Model Context Protocol tool
   definitions (list accounts, query transactions, etc.). This is the
   file to open first: `mcp/src/tools.ts`.
-- **`client.ts`** — HTTP client that calls back into the Athena
+- **`client.ts`** — HTTP client that calls back into the Hoopoe
   backend, so the MCP server is a thin adapter, not a second source
   of truth.
 - **`config.ts`** — env + config-file loading.

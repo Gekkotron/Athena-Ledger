@@ -5,13 +5,13 @@ sidebar_position: 2
 
 # Configuration
 
-Athena reads its configuration from environment variables at boot and from
+Hoopoe reads its configuration from environment variables at boot and from
 per-user settings stored in the database. This page enumerates both, plus
 the default network ports the three services listen on.
 
 ## Environment variables
 
-All defaults below are the values Athena falls back to when the variable is
+All defaults below are the values Hoopoe falls back to when the variable is
 unset. Copy `.env.example` to `.env` before starting `docker compose up` and
 fill in the fields marked **required**.
 

@@ -5,7 +5,7 @@ sidebar_position: 3
 
 # Desktop install
 
-The desktop app is the "no install, no Docker" way to run Ledger. It's a
+The desktop app is the "no install, no Docker" way to run Hoopoe. It's a
 single application on macOS, Windows, or Linux — you double-click it, a
 window opens, and everything (database, backend, UI) runs inside that
 process on your own machine. No LAN, no other users, no cloud.
@@ -41,16 +41,16 @@ ID yet). That's enough for the signature to be valid, but macOS Sonoma
 further — any browser-downloaded artifact carries a
 `com.apple.quarantine` extended attribute, and on those OS versions
 Gatekeeper refuses to launch ad-hoc-signed quarantined apps, with the
-misleading *"Athena Ledger est endommagé et ne peut pas être
+misleading *"Hoopoe est endommagé et ne peut pas être
 ouvert"* dialog. Right-click → Open no longer bypasses this.
 
 The one-shot cure is a single Terminal command that strips the quarantine
 attribute:
 
-1. Open the `.dmg` and drag **Athena Ledger** into `Applications`.
+1. Open the `.dmg` and drag **Hoopoe** into `Applications`.
 2. Open **Terminal** and run:
    ```bash
-   xattr -cr "/Applications/Athena Ledger.app"
+   xattr -cr "/Applications/Hoopoe.app"
    ```
 3. Double-click the app in Finder. It launches normally from now on.
 
@@ -93,9 +93,9 @@ leaves that directory; there is no network traffic beyond localhost.
 
 | OS | Path |
 |----|------|
-| macOS | `~/Library/Application Support/Athena Ledger/` |
-| Windows | `%APPDATA%\Athena Ledger\` (typically `C:\Users\<you>\AppData\Roaming\Athena Ledger\`) |
-| Linux | `~/.local/share/Athena Ledger/` (or `$XDG_DATA_HOME/Athena Ledger/` if set) |
+| macOS | `~/Library/Application Support/Hoopoe/` |
+| Windows | `%APPDATA%\Hoopoe\` (typically `C:\Users\<you>\AppData\Roaming\Hoopoe\`) |
+| Linux | `~/.local/share/Hoopoe/` (or `$XDG_DATA_HOME/Hoopoe/` if set) |
 
 Inside you'll find:
 
@@ -132,12 +132,12 @@ scrapes it. Use a calendar reminder instead.
 ## Uninstall
 
 - **macOS** — drag the app to the Trash, then delete
-  `~/Library/Application Support/Athena Ledger/` if you also want
+  `~/Library/Application Support/Hoopoe/` if you also want
   your data gone.
-- **Windows** — *Settings → Apps → Athena Ledger → Uninstall*, then
-  delete `%APPDATA%\Athena Ledger\` for the data.
+- **Windows** — *Settings → Apps → Hoopoe → Uninstall*, then
+  delete `%APPDATA%\Hoopoe\` for the data.
 - **Linux** — delete the `.AppImage`, then delete
-  `~/.local/share/Athena Ledger/`.
+  `~/.local/share/Hoopoe/`.
 
 ## MCP from the desktop app
 

@@ -5,7 +5,7 @@ sidebar_position: 1
 
 # For contributors
 
-You want to read, fix, or extend Athena. Start with
+You want to read, fix, or extend Hoopoe. Start with
 **[architecture](architecture.md)** and **[code map](code-map.md)**,
 then check **[development](development.md)** for the local dev loop.
 

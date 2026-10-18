@@ -14,7 +14,7 @@ containers fit together), see [Architecture](architecture.md).
 
 ## PostgreSQL extensions
 
-Athena requires three extensions. Each is loaded in the very first
+Hoopoe requires three extensions. Each is loaded in the very first
 migration (`0000_init.sql`) and must exist on the Postgres image
 Compose uses (the stock `postgres:16` image ships all three).
 

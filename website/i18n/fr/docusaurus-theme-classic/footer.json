@@ -40,7 +40,7 @@
     "description": "The label of footer link with label=Blog linking to /blog"
   },
   "copyright": {
-    "message": "Athena Ledger. Développé par Gekkotron. Sous licence MIT.",
+    "message": "Hoopoe. Développé par Gekkotron. Sous licence MIT.",
     "description": "The footer copyright"
   }
 }

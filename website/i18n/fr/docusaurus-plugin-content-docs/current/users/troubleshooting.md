@@ -8,7 +8,7 @@ sidebar_position: 9
 Problèmes courants et contournements. Chaque sous-section suit la même
 structure : ce que vous observez, la cause, et la correction. Si le
 vôtre n'apparaît pas, ouvrez une issue en précisant votre version
-de Ledger, le plus petit exemple qui reproduit le problème, et les
+de Hoopoe, le plus petit exemple qui reproduit le problème, et les
 lignes utiles de `docker compose logs` (voir
 [Recueillir des diagnostics](#recueillir-des-diagnostics)).
 
@@ -62,7 +62,7 @@ migration Prisma ou Drizzle — typiquement
 `relation "…" already exists` ou `column "…" does not exist`.
 
 **Cause.** Le volume `postgres-data/` provient d'un schéma antérieur
-incompatible (mise à jour de Ledger à travers une migration cassante,
+incompatible (mise à jour de Hoopoe à travers une migration cassante,
 ou base peuplée à la main).
 
 **Correction.** Pour une installation fraîche, supprimez le volume
@@ -107,7 +107,7 @@ de `é`).
 
 **Cause.** Les banques françaises et belges produisent souvent des OFX
 en `ISO-8859-1` (ou `windows-1252`), alors que l'en-tête OFX 1.x
-déclare `UTF-8` — ou ne déclare rien du tout. Ledger lit en UTF-8 par
+déclare `UTF-8` — ou ne déclare rien du tout. Hoopoe lit en UTF-8 par
 défaut et retombe sur Latin-1 quand il détecte des séquences UTF-8
 invalides, mais un fichier à encodage mixte peut passer entre les
 mailles.
@@ -130,7 +130,7 @@ systématiquement des fichiers en Latin-1, marquez le compte dans
 colonne).
 
 **Cause.** Deux variantes fréquentes : le fichier utilise `;` comme
-séparateur (export banque française) alors que Ledger a deviné `,`, ou
+séparateur (export banque française) alors que Hoopoe a deviné `,`, ou
 il comporte une ligne d'en-tête en prose au-dessus des vrais titres de
 colonnes.
 
@@ -140,7 +140,7 @@ ligne. Enregistrez ce mapping comme modèle sur le compte pour que
 l'import suivant depuis la même banque le détecte automatiquement. Si
 le fichier est fondamentalement mal formé (séparateurs mélangés,
 virgules non échappées dans les libellés), ouvrez-le dans un éditeur
-de texte et nettoyez-le avant import — Ledger ne fera pas de
+de texte et nettoyez-le avant import — Hoopoe ne fera pas de
 supposition silencieuse dans ce cas.
 
 ## Écart de solde
@@ -151,7 +151,7 @@ expliquent presque tous les écarts.
 
 ### Une transaction manque
 
-**Symptôme.** Le solde Ledger est inférieur (ou supérieur) au solde
+**Symptôme.** Le solde Hoopoe est inférieur (ou supérieur) au solde
 banque d'exactement le montant d'une transaction.
 
 **Cause.** Un relevé couvrait une période partielle, et une
@@ -190,7 +190,7 @@ forme canonique avant la déduplication.
 présent depuis une date bien précise.
 
 **Cause.** Un **checkpoint** — l'ancre « au JJ/MM/AAAA, la banque
-indique un solde de X » que Ledger utilise comme source de vérité — a
+indique un solde de X » que Hoopoe utilise comme source de vérité — a
 été saisi avec la mauvaise valeur, ou des transactions antérieures
 ont été modifiées après sa création. Chaque solde affiché vaut
 `checkpoint + somme des transactions postérieures au checkpoint` ;
@@ -199,7 +199,7 @@ un checkpoint erroné décale donc tout ce qui vient après.
 **Correction.** Ouvrez **Réglages → Compte → Checkpoints**, supprimez
 le checkpoint dérivé, et re-saisissez-le avec la valeur d'un relevé
 banque dont la date vous inspire confiance. Si plusieurs checkpoints
-sont faux, ne gardez que le plus ancien correct — Ledger recalcule à
+sont faux, ne gardez que le plus ancien correct — Hoopoe recalcule à
 partir de là.
 
 ## Erreurs de sauvegarde et de restauration
@@ -209,8 +209,8 @@ partir de là.
 **Symptôme.** La restauration échoue immédiatement avec
 `unsupported backup version: v5 (this build supports up to v4)`.
 
-**Cause.** L'export a été produit par une version de Ledger plus
-récente que celle sur laquelle vous restaurez. Ledger refuse d'ouvrir
+**Cause.** L'export a été produit par une version de Hoopoe plus
+récente que celle sur laquelle vous restaurez. Hoopoe refuse d'ouvrir
 un fichier de version supérieure — rétrograder un schéma n'est pas
 sûr, c'est un refus volontaire.
 
@@ -230,7 +230,7 @@ lignes de l'utilisateur courant. Un second client (un autre onglet,
 ou un import en cours en arrière-plan) détient un lock au niveau
 ligne et la restauration expire en attendant.
 
-**Correction.** Fermez tous les autres onglets Ledger et annulez
+**Correction.** Fermez tous les autres onglets Hoopoe et annulez
 l'import en cours, puis réessayez. La restauration est idempotente —
 la tentative échouée n'a laissé aucun état partiel, grâce au rollback.
 
@@ -248,8 +248,8 @@ d'écriture.
 
 ```sh
 # macOS
-mv "~/Library/Application Support/Athena Ledger/athena.db" \
-   "~/Library/Application Support/Athena Ledger/athena.db.corrupt"
+mv "~/Library/Application Support/Hoopoe/athena.db" \
+   "~/Library/Application Support/Hoopoe/athena.db.corrupt"
 ```
 
 Relancez l'application, passez par l'onboarding, puis utilisez
@@ -391,7 +391,7 @@ seules des séries détectées existent.
 
 ### Une facture mensuelle n'apparaît pas dans Détectés
 
-**Symptôme.** Vous payez le même abonnement chaque mois, mais Ledger
+**Symptôme.** Vous payez le même abonnement chaque mois, mais Hoopoe
 ne l'a jamais fait remonter dans **Récurrent → Détectés**.
 
 **Cause.** Le détecteur exige au moins trois occurrences avec un
@@ -427,7 +427,7 @@ sa **prochaine occurrence** à la date correcte — le doublon disparaît.
 ### Les outils n'apparaissent pas dans le client
 
 **Symptôme.** Vous avez branché le serveur MCP `athena` dans la
-config de votre client, redémarré le client, et les six outils Ledger
+config de votre client, redémarré le client, et les six outils Hoopoe
 (`search_transactions`, `create_transaction`, …) ne s'affichent
 toujours pas.
 
@@ -449,10 +449,10 @@ clients MCP.
 appel échoue avec `unauthorized` ou `invalid token`.
 
 **Cause.** Le `ATHENA_MCP_TOKEN` dans la config client est vide,
-tronqué au collage, ou a été régénéré dans Ledger sans être mis à
+tronqué au collage, ou a été régénéré dans Hoopoe sans être mis à
 jour côté client.
 
-**Correction.** Dans Ledger, ouvrez **Réglages → MCP**, révoquez et
+**Correction.** Dans Hoopoe, ouvrez **Réglages → MCP**, révoquez et
 régénérez le token, copiez-le en entier (ils sont longs — attention à
 la coupure de ligne du terminal), collez-le dans la config client,
 redémarrez le client. Vérifiez aussi que `ATHENA_MCP_USER` correspond
@@ -503,7 +503,7 @@ déconnecter tout le monde volontairement.
 tout ce que vous essayez, et il n'y a pas de lien d'inscription
 visible.
 
-**Cause.** Ledger est mono-utilisateur par installation et n'expose
+**Cause.** Hoopoe est mono-utilisateur par installation et n'expose
 pas d'inscription publique. Le premier utilisateur doit être seedé
 — soit par le flux d'onboarding de l'application desktop, soit sur
 Docker via la commande de première exécution du backend.
@@ -521,7 +521,7 @@ pas de serveur SMTP, pas de dépendance externe).
 ### Gatekeeper macOS bloque le premier lancement
 
 **Symptôme.** Double-cliquer sur le `.dmg` ou l'`.app` téléchargé
-produit une boîte de dialogue du style *« Athena Ledger ne peut
+produit une boîte de dialogue du style *« Hoopoe ne peut
 pas être ouvert car Apple ne peut pas vérifier qu'il ne contient pas
 de logiciel malveillant »*.
 
@@ -533,7 +533,7 @@ vis d'un certificat de signature récent.
 double-clic) — ce chemin fait apparaître une boîte « Ouvrir quand
 même » qui n'apparaît pas au double-clic. Alternative : **Réglages
 Système → Confidentialité et sécurité**, descendez jusqu'au message
-« Athena Ledger a été bloqué… », cliquez sur **Ouvrir quand
+« Hoopoe a été bloqué… », cliquez sur **Ouvrir quand
 même**.
 
 ### L'application ne démarre plus après une mise à jour
@@ -548,9 +548,9 @@ PGlite, ou l'updater n'a pas pu terminer l'écrasement d'une
 ressource.
 
 **Correction.** Forcez la fermeture de toutes les instances en cours
-d'exécution (macOS : `⌘⌥⎋` → Athena Ledger → Forcer à quitter ;
+d'exécution (macOS : `⌘⌥⎋` → Hoopoe → Forcer à quitter ;
 Windows : Gestionnaire de tâches → Fin de tâche sur chaque processus
-Ledger). Relancez. Si le crash se répète, suivez
+Hoopoe). Relancez. Si le crash se répète, suivez
 [`athena.db` est corrompu](#athenadb-est-corrompu-application-bureau) — le
 fichier a peut-être été laissé en écriture par la mise à jour.
 
