@@ -1,9 +1,9 @@
 {
-  "name": "athena-mcp",
+  "name": "hoopoe-mcp",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "bin": { "athena-mcp": "dist/index.js" },
+  "bin": { "hoopoe-mcp": "dist/index.js" },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "dev": "tsx src/index.ts",

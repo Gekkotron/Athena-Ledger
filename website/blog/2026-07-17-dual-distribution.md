@@ -55,7 +55,7 @@ The desktop app is a **Tauri 2 shell** wrapping the existing backend as
 a **directory-based sidecar**: a bundled Node 22 runtime + an esbuild
 bundle of the Fastify app + prebuilt native modules (sharp, canvas,
 argon2, PGlite WASM, pdfjs worker, tesseract). The shell (~50 lines of
-Rust) spawns the sidecar, reads `ATHENA_PORT=…` from its stdout, and
+Rust) spawns the sidecar, reads `HOOPOE_PORT=…` from its stdout, and
 opens a window pointed at `http://127.0.0.1:{port}`. Closing the window
 sends `SIGTERM`; no zombie process, no leftover port.
 

@@ -220,4 +220,4 @@ for (const t of traineddata) {
 
 log('done. To smoke-test:');
 log(`  ./desktop/sidecar/node ./desktop/sidecar/entry.js`);
-log('  (expect: ATHENA_PORT=<n> on stdout; curl 127.0.0.1:<n>/health → {ok:true})');
+log('  (expect: HOOPOE_PORT=<n> on stdout; curl 127.0.0.1:<n>/health → {ok:true})');

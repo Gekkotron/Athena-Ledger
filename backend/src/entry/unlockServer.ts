@@ -2,7 +2,7 @@
 // directory holds an encryption marker (see snapshotStore.ts), the real
 // Fastify app cannot start yet — there's no plaintext database to serve
 // from. Instead, tauri.ts binds this tiny plain node:http server first,
-// prints its port as the `ATHENA_PORT` contract line so the Rust shell
+// prints its port as the `HOOPOE_PORT` contract line so the Rust shell
 // points the WebView at it, and shows a French password prompt. Once the
 // right password decrypts the on-disk snapshot, the `unlocked` promise this
 // module hands back resolves with the plaintext dump and the server closes
@@ -119,7 +119,7 @@ export interface UnlockOutcome {
 
 // What runUnlockServer() resolves with — deliberately split from
 // UnlockOutcome above. The bound `port` is known (and needed by the caller,
-// to print the ATHENA_PORT contract line and show the password prompt) the
+// to print the HOOPOE_PORT contract line and show the password prompt) the
 // instant the listener binds, long before anyone has typed a password;
 // `unlocked` is the separate, later-settling promise for that. Bundling
 // both into one promise (as an earlier version of this module did) meant

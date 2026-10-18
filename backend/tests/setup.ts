@@ -34,7 +34,7 @@ process.env.SESSION_SECRET =
 // independent gates in the route handlers (NODE_ENV=test AND this var) so
 // a misdeployed image with only one of them set can't leak live TOTP
 // codes.
-process.env.ATHENA_TEST_ROUTES = '1';
+process.env.HOOPOE_TEST_ROUTES = '1';
 
 // Same spirit for the driver: a bare run has no DATABASE_URL, and env.ts
 // hard-requires one under the default postgres driver. Fall back to the

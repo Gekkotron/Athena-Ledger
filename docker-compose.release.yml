@@ -4,7 +4,7 @@
 #   ./install.sh                                        # writes .env (secrets)
 #   docker compose -f docker-compose.release.yml up -d
 #
-# Pin a version by setting ATHENA_VERSION=1.2.3 in .env (defaults to
+# Pin a version by setting HOOPOE_VERSION=1.2.3 in .env (defaults to
 # `latest`). Upgrade with:
 #
 #   docker compose -f docker-compose.release.yml pull
@@ -37,7 +37,7 @@ services:
       retries: 20
 
   backend:
-    image: ghcr.io/gekkotron/athena-ledger-backend:${ATHENA_VERSION:-latest}
+    image: ghcr.io/gekkotron/athena-ledger-backend:${HOOPOE_VERSION:-latest}
     restart: unless-stopped
     environment:
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
@@ -58,7 +58,7 @@ services:
       - "${BACKEND_PORT:-8001}:3000"
 
   frontend:
-    image: ghcr.io/gekkotron/athena-ledger-frontend:${ATHENA_VERSION:-latest}
+    image: ghcr.io/gekkotron/athena-ledger-frontend:${HOOPOE_VERSION:-latest}
     restart: unless-stopped
     depends_on:
       - backend

@@ -138,7 +138,7 @@ curl -fsS -o /dev/null "$BASE_URL/" || {
 
 (
   cd "$REPO_ROOT/frontend"
-  ATHENA_SMOKE_URL="$BASE_URL" ATHENA_EXPECT_VERSION="${EXPECTED_VERSION:-}" \
+  HOOPOE_SMOKE_URL="$BASE_URL" HOOPOE_EXPECT_VERSION="${EXPECTED_VERSION:-}" \
     npx playwright test -c playwright.installed.config.ts
 )
 

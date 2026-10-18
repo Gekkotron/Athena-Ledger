@@ -1,5 +1,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    athena_desktop_lib::run()
+    hoopoe_desktop_lib::run()
 }

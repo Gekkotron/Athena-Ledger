@@ -22,9 +22,9 @@ Pick the file for your OS from the latest release:
 
 | OS | File |
 |----|------|
-| macOS (Apple Silicon or Intel) | `Athena-Ledger_<version>_universal.dmg` |
-| Windows 10 / 11 (x64) | `Athena-Ledger_<version>_x64-setup.exe` |
-| Linux (x64) | `Athena-Ledger_<version>_amd64.AppImage` |
+| macOS (Apple Silicon or Intel) | `Hoopoe_<version>_universal.dmg` |
+| Windows 10 / 11 (x64) | `Hoopoe_<version>_x64-setup.exe` |
+| Linux (x64) | `Hoopoe_<version>_amd64.AppImage` |
 
 Each artifact is built by the `Release` GitHub Actions workflow straight
 from a tagged commit on `main` — the same `vX.Y.Z` release also carries
@@ -71,7 +71,7 @@ of this will be needed.
 
 ### Linux
 
-1. Mark the `.AppImage` executable: `chmod +x Athena-Ledger_*.AppImage`.
+1. Mark the `.AppImage` executable: `chmod +x Hoopoe_*.AppImage`.
 2. Double-click it, or run it from a terminal.
 
 ### After the window opens
@@ -105,7 +105,7 @@ Inside you'll find:
 - `backups/` — backup exports triggered from the UI or via the MCP
   endpoint.
 
-You can override the location by setting the `ATHENA_DATA_DIR`
+You can override the location by setting the `DATA_DIR`
 environment variable before launching the app (useful if you keep the
 DB on an external drive).
 

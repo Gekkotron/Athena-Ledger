@@ -1,5 +1,5 @@
 // Tauri desktop entry point. The Rust shell spawns this binary, parses the
-// `ATHENA_PORT=<n>` line from stdout to learn where the backend bound, then
+// `HOOPOE_PORT=<n>` line from stdout to learn where the backend bound, then
 // points its WebView at http://127.0.0.1:<port>. On window close the shell
 // sends SIGTERM — we close Fastify cleanly and exit.
 //
@@ -34,11 +34,11 @@ function toBlob(buf: Buffer): Blob {
   return new Blob([new Uint8Array(buf)]);
 }
 
-// ATHENA_FATAL is a machine-readable, single-line stdout contract the Rust
+// HOOPOE_FATAL is a machine-readable, single-line stdout contract the Rust
 // shell greps for (see spawn_sidecar in desktop/src-tauri/src/lib.rs) — an
 // error message that happens to contain a newline (an embedded stack trace,
 // a multi-line library error, ...) would otherwise get split across
-// multiple "lines" on stdout, none of which match the `ATHENA_FATAL=`
+// multiple "lines" on stdout, none of which match the `HOOPOE_FATAL=`
 // prefix the shell is scanning for after the first line. Take the first
 // line only.
 function fatalMessage(err: unknown): string {
@@ -72,14 +72,14 @@ await mkdir(dir, { recursive: true });
 // PGlite tolerates exactly one process per data directory; a concurrent
 // second sidecar (typically an orphan from a force-quit shell) wedges
 // Postgres-in-WASM in a 100%-CPU busy-wait on the next write. The
-// ATHENA_FATAL line is machine-readable — the Rust shell surfaces it instead
-// of timing out waiting for ATHENA_PORT.
+// HOOPOE_FATAL line is machine-readable — the Rust shell surfaces it instead
+// of timing out waiting for HOOPOE_PORT.
 let releaseLock: () => Promise<void>;
 try {
   releaseLock = await acquireSingleInstanceLock(dir);
 } catch (err) {
   if (err instanceof AlreadyRunningError) {
-    process.stdout.write(`ATHENA_FATAL=${fatalMessage(err)}\n`);
+    process.stdout.write(`HOOPOE_FATAL=${fatalMessage(err)}\n`);
     process.exit(1);
   }
   throw err;
@@ -103,7 +103,7 @@ let sessionSecretResult: SessionSecretResult;
 try {
   sessionSecretResult = await ensureSessionSecret(dir);
 } catch (err) {
-  process.stdout.write(`ATHENA_FATAL=${fatalMessage(err)}\n`);
+  process.stdout.write(`HOOPOE_FATAL=${fatalMessage(err)}\n`);
   await releaseLock().catch(() => { /* best effort — process is exiting anyway */ });
   process.exit(1);
 }
@@ -120,7 +120,7 @@ for (const rel of ['./package.json', '../../package.json']) {
       version?: string;
     };
     if (pkg.version) {
-      process.env.ATHENA_APP_VERSION ??= pkg.version;
+      process.env.HOOPOE_APP_VERSION ??= pkg.version;
       break;
     }
   } catch {
@@ -139,7 +139,7 @@ await rm(`${process.env.PGLITE_PATH}.trash`, { recursive: true, force: true }).c
 
 // Advertise the bound port to local MCP clients. `${DATA_DIR}/.mcp-port` is
 // the well-known contract: the MCP bridge (mcp/dist/index.js) resolves its
-// backend URL from this file when the user sets ATHENA_PORT_FILE in their
+// backend URL from this file when the user sets HOOPOE_PORT_FILE in their
 // Claude Desktop / Cursor / mcphost config. See docs/users/mcp.md. Declared
 // early (rather than after `build()`, as before) because the locked-boot
 // path below needs to publish it as soon as the unlock server binds.
@@ -150,7 +150,7 @@ const portFile = path.join(dir, '.mcp-port');
 // materialization, the dynamic DB imports, migrations, or the app boot
 // itself would otherwise surface as an unhandled rejection — a silent hang
 // from the Rust shell's point of view (it just times out after 30s waiting
-// for ATHENA_PORT). Reporting ATHENA_FATAL instead gives it an immediate,
+// for HOOPOE_PORT). Reporting HOOPOE_FATAL instead gives it an immediate,
 // legible failure.
 try {
   const marker = await readMarker(dir);
@@ -171,13 +171,13 @@ try {
     // before anyone has typed a password — precisely so the port can be
     // published immediately below. The password prompt is only reachable
     // once the Rust shell has pointed its WebView at this port (off the
-    // ATHENA_PORT line), so publishing the port and waiting for `unlocked`
+    // HOOPOE_PORT line), so publishing the port and waiting for `unlocked`
     // must be two separate steps, not one: bundling them (as an earlier
     // version of this file did) meant nothing could ever unlock, because
     // the port was never printed until *after* a correct password had
     // already been submitted to it.
     const { port, unlocked } = await runUnlockServer({ dir });
-    process.stdout.write(`ATHENA_PORT=${port}\n`);
+    process.stdout.write(`HOOPOE_PORT=${port}\n`);
     await writeFile(portFile, `${port}\n`, { mode: 0o600 });
     unlockedPort = port;
 
@@ -364,7 +364,7 @@ try {
 
   // When the unlock phase already bound a port (locked boot), rebind the
   // real app to that exact port — the Rust shell's WebView already
-  // navigated there off the ATHENA_PORT line printed above, and the unlock
+  // navigated there off the HOOPOE_PORT line printed above, and the unlock
   // server just released it. A short retry absorbs the brief window
   // between its server.close() and the OS actually freeing the socket.
   let address: string | undefined;
@@ -389,10 +389,10 @@ try {
   // only once overall: the locked-boot path above already sent it when it
   // applies.
   if (unlockedPort === undefined) {
-    process.stdout.write(`ATHENA_PORT=${port}\n`);
+    process.stdout.write(`HOOPOE_PORT=${port}\n`);
   }
 } catch (err) {
-  process.stdout.write(`ATHENA_FATAL=${fatalMessage(err)}\n`);
+  process.stdout.write(`HOOPOE_FATAL=${fatalMessage(err)}\n`);
   await releaseLock().catch(() => { /* best effort — process is exiting anyway */ });
   process.exit(1);
 }

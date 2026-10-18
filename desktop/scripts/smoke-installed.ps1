@@ -72,8 +72,8 @@ try {
 
   Push-Location (Join-Path $PSScriptRoot '..\..\frontend')
   try {
-    $env:ATHENA_SMOKE_URL = $base
-    $env:ATHENA_EXPECT_VERSION = $ExpectedVersion
+    $env:HOOPOE_SMOKE_URL = $base
+    $env:HOOPOE_EXPECT_VERSION = $ExpectedVersion
     npx playwright test -c playwright.installed.config.ts
     if ($LASTEXITCODE -ne 0) { throw "playwright suite failed (exit $LASTEXITCODE)" }
   }

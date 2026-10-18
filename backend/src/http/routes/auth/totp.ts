@@ -354,10 +354,10 @@ export async function totpRoutes(app: FastifyInstance): Promise<void> {
   // independent gates so a misdeployed image with `NODE_ENV=test` alone
   // (Docker --env-file typo, CI artefact pushed to prod) can't leak
   // live TOTP codes to whoever knows the URL — the test harness
-  // (tests/setup.ts) sets ATHENA_TEST_ROUTES=1 too. `?offset=<int>`
+  // (tests/setup.ts) sets HOOPOE_TEST_ROUTES=1 too. `?offset=<int>`
   // shifts the counter by n × 30 s so replay-protected verify tests can
   // grab a fresh-counter code without waiting a real clock window.
-  if (process.env.NODE_ENV === 'test' && process.env.ATHENA_TEST_ROUTES === '1') {
+  if (process.env.NODE_ENV === 'test' && process.env.HOOPOE_TEST_ROUTES === '1') {
     app.get('/api/auth/2fa/__debug/current-code', { preHandler: app.requireAuth }, async (req, reply) => {
       const uid = req.session.userId!;
       const [row] = await db.select().from(userTotp).where(eq(userTotp.userId, uid)).limit(1);

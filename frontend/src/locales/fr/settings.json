@@ -60,7 +60,7 @@
       "tokenCopy": "Copier",
       "tokenCopied": "Copié",
       "tokenCopyAria": "Copier le jeton MCP dans le presse-papiers",
-      "tokenConfigHint": "Configurez le client MCP avec <1>ATHENA_MCP_USER</1> (votre identifiant) et<3> ATHENA_MCP_TOKEN</3>."
+      "tokenConfigHint": "Configurez le client MCP avec <1>HOOPOE_MCP_USER</1> (votre identifiant) et<3> HOOPOE_MCP_TOKEN</3>."
     },
     "bankSync": {
       "sectionLabel": "Synchronisation bancaire",

@@ -86,11 +86,11 @@ Chaque [release](https://github.com/Gekkotron/Athena-Ledger/releases) publie des
 ./update-release.sh
 ```
 
-Le script détermine la dernière version publiée via l'API GitHub, l'épingle dans `.env` (`ATHENA_VERSION`), télécharge les images, démarre la stack (`docker-compose.release.yml`) et attend que le backend réponde sain. Relancez-le à tout moment pour mettre à jour.
+Le script détermine la dernière version publiée via l'API GitHub, l'épingle dans `.env` (`HOOPOE_VERSION`), télécharge les images, démarre la stack (`docker-compose.release.yml`) et attend que le backend réponde sain. Relancez-le à tout moment pour mettre à jour.
 
 Deux réglages `.env` à connaître :
 
-- `ATHENA_VERSION` — la version épinglée. Le script la gère, mais vous pouvez la fixer à la main sur n'importe quel tag de la page Releases.
+- `HOOPOE_VERSION` — la version épinglée. Le script la gère, mais vous pouvez la fixer à la main sur n'importe quel tag de la page Releases.
 - `TZ` (ex. `TZ=Europe/Paris`) — sans lui, les conteneurs tournent en UTC et les fonctions planifiées (l'heure de récupération de la synchronisation bancaire) se déclenchent à des heures UTC au lieu de votre heure locale.
 
 ### Option B — build depuis les sources
@@ -122,7 +122,7 @@ Deux scripts, un par mode d'installation — les deux se lancent depuis le dossi
 ./update-release.sh
 ```
 
-Il résout la dernière release publiée via l'API GitHub (la dernière stable dès qu'il y en a une ; la RC la plus récente en attendant), écrit une sauvegarde `pg_dump` dans `./backups/`, épingle `ATHENA_VERSION` dans `.env`, télécharge les images, redémarre la stack et attend `/health`. Relancé alors que tout est à jour, il se termine tôt. `--no-backup` saute la sauvegarde.
+Il résout la dernière release publiée via l'API GitHub (la dernière stable dès qu'il y en a une ; la RC la plus récente en attendant), écrit une sauvegarde `pg_dump` dans `./backups/`, épingle `HOOPOE_VERSION` dans `.env`, télécharge les images, redémarre la stack et attend `/health`. Relancé alors que tout est à jour, il se termine tôt. `--no-backup` saute la sauvegarde.
 
 **Build depuis les sources** (`docker-compose.yml`) :
 

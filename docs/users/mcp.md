@@ -61,10 +61,10 @@ Claude Desktop and several other MCP clients):
       "command": "node",
       "args": ["/absolute/path/to/Hoopoe/mcp/dist/index.js"],
       "env": {
-        "ATHENA_API_URL": "http://<mini-pc-host>:8001",
-        "ATHENA_MCP_USER": "<your-athena-username>",
-        "ATHENA_MCP_TOKEN": "<paste-token-here>",
-        "ATHENA_STATEMENTS_DIR": "/Users/you/AthenaStatements"
+        "HOOPOE_API_URL": "http://<mini-pc-host>:8001",
+        "HOOPOE_MCP_USER": "<your-athena-username>",
+        "HOOPOE_MCP_TOKEN": "<paste-token-here>",
+        "HOOPOE_STATEMENTS_DIR": "/Users/you/AthenaStatements"
       }
     }
   }
@@ -73,11 +73,11 @@ Claude Desktop and several other MCP clients):
 
 Replace the placeholders:
 
-- `ATHENA_API_URL` — the URL of your Hoopoe backend (e.g. the LAN address
+- `HOOPOE_API_URL` — the URL of your Hoopoe backend (e.g. the LAN address
   and port where `backend` is reachable). Do not include a trailing slash.
-- `ATHENA_MCP_USER` — your Hoopoe login username.
-- `ATHENA_MCP_TOKEN` — the token generated in step 1.
-- `ATHENA_STATEMENTS_DIR` *(optional)* — a folder your statement PDFs live in.
+- `HOOPOE_MCP_USER` — your Hoopoe login username.
+- `HOOPOE_MCP_TOKEN` — the token generated in step 1.
+- `HOOPOE_STATEMENTS_DIR` *(optional)* — a folder your statement PDFs live in.
   When set, `reconcile_statement` resolves a **bare filename** (e.g.
   `april.pdf`) against it, so you don't have to type a full absolute path. A
   leading `~` is expanded, and if a file isn't found the error lists the `.pdf`
@@ -85,7 +85,7 @@ Replace the placeholders:
 
 All three are required; the server refuses to start if any is missing.
 
-### Desktop (Tauri) app: use a port file instead of `ATHENA_API_URL`
+### Desktop (Tauri) app: use a port file instead of `HOOPOE_API_URL`
 
 The desktop distribution binds Fastify to `127.0.0.1` on an OS-assigned port,
 so the URL changes every launch. Instead of hard-coding a URL, point the MCP
@@ -98,9 +98,9 @@ bridge at the port file the app writes on startup:
       "command": "node",
       "args": ["/absolute/path/to/Hoopoe/mcp/dist/index.js"],
       "env": {
-        "ATHENA_PORT_FILE": "<DATA_DIR>/.mcp-port",
-        "ATHENA_MCP_USER": "<your-athena-username>",
-        "ATHENA_MCP_TOKEN": "<paste-token-here>"
+        "HOOPOE_PORT_FILE": "<DATA_DIR>/.mcp-port",
+        "HOOPOE_MCP_USER": "<your-athena-username>",
+        "HOOPOE_MCP_TOKEN": "<paste-token-here>"
       }
     }
   }
@@ -116,7 +116,7 @@ holds `athena.db`. Defaults per OS:
 
 The bridge reads the port from that file each time it starts, so opening and
 closing the desktop app between MCP client sessions works transparently. If
-both `ATHENA_API_URL` and `ATHENA_PORT_FILE` are set, `ATHENA_API_URL` wins.
+both `HOOPOE_API_URL` and `HOOPOE_PORT_FILE` are set, `HOOPOE_API_URL` wins.
 
 ## 4. Use with Ollama
 
@@ -253,7 +253,7 @@ recorded and skip everything that's already there.
 
 - `path` (required) — the statement PDF **on the machine running the MCP
   server** (not the machine running the chat client). Either a **bare
-  filename** resolved against `ATHENA_STATEMENTS_DIR` (see step 3) or an
+  filename** resolved against `HOOPOE_STATEMENTS_DIR` (see step 3) or an
   absolute path; a leading `~` is expanded. Must end in `.pdf` and be at
   most 10 MB.
 - `accountId` (required) — the Hoopoe account id to reconcile against — the

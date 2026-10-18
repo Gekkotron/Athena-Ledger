@@ -11,7 +11,7 @@
 #   3. Exit early if .env already pins that version and the stack is up.
 #   4. pg_dump a safety backup into ./backups/ (skipped only with
 #      --no-backup, or when the db container is not running).
-#   5. Pin ATHENA_VERSION in .env, pull the images, `up -d`.
+#   5. Pin HOOPOE_VERSION in .env, pull the images, `up -d`.
 #   6. Poll /health until the backend answers.
 #
 # Usage: ./update-release.sh [--no-backup]
@@ -42,7 +42,7 @@ resolve_version() {
 }
 
 VERSION="$(resolve_version)"
-CURRENT="$(sed -n 's/^ATHENA_VERSION=//p' .env 2>/dev/null | tail -n 1)"
+CURRENT="$(sed -n 's/^HOOPOE_VERSION=//p' .env 2>/dev/null | tail -n 1)"
 echo "$(date): newest published version: $VERSION (currently pinned: ${CURRENT:-none})"
 
 BACKEND_RUNNING=$("${COMPOSE[@]}" ps -q backend 2>/dev/null || true)
@@ -68,10 +68,10 @@ else
 fi
 
 # --- Pin, pull, restart ---------------------------------------------------------
-if grep -q '^ATHENA_VERSION=' .env 2>/dev/null; then
-  sed -i.bak "s/^ATHENA_VERSION=.*/ATHENA_VERSION=$VERSION/" .env && rm -f .env.bak
+if grep -q '^HOOPOE_VERSION=' .env 2>/dev/null; then
+  sed -i.bak "s/^HOOPOE_VERSION=.*/HOOPOE_VERSION=$VERSION/" .env && rm -f .env.bak
 else
-  printf '\nATHENA_VERSION=%s\n' "$VERSION" >> .env
+  printf '\nHOOPOE_VERSION=%s\n' "$VERSION" >> .env
 fi
 
 "${COMPOSE[@]}" pull

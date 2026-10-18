@@ -40,10 +40,10 @@ Pointez votre client MCP vers le serveur construit, en passant les trois variabl
       "command": "node",
       "args": ["/chemin/absolu/vers/Athena-Ledger/mcp/dist/index.js"],
       "env": {
-        "ATHENA_API_URL": "http://<mini-pc-host>:8001",
-        "ATHENA_MCP_USER": "<votre-nom-utilisateur-athena>",
-        "ATHENA_MCP_TOKEN": "<coller-le-jeton-ici>",
-        "ATHENA_STATEMENTS_DIR": "/Users/vous/RelevésHoopoe"
+        "HOOPOE_API_URL": "http://<mini-pc-host>:8001",
+        "HOOPOE_MCP_USER": "<votre-nom-utilisateur-athena>",
+        "HOOPOE_MCP_TOKEN": "<coller-le-jeton-ici>",
+        "HOOPOE_STATEMENTS_DIR": "/Users/vous/RelevésHoopoe"
       }
     }
   }
@@ -52,14 +52,14 @@ Pointez votre client MCP vers le serveur construit, en passant les trois variabl
 
 Remplacez les placeholders :
 
-- `ATHENA_API_URL` — l'URL de votre backend Hoopoe (par exemple l'adresse LAN et le port où `backend` est joignable). Ne pas mettre de barre oblique finale.
-- `ATHENA_MCP_USER` — votre nom d'utilisateur de login Hoopoe.
-- `ATHENA_MCP_TOKEN` — le jeton généré à l'étape 1.
-- `ATHENA_STATEMENTS_DIR` *(optionnel)* — un dossier contenant vos PDF de relevés. Quand il est défini, `reconcile_statement` résout un **nom de fichier nu** (par exemple `avril.pdf`) contre ce dossier, ce qui vous évite de taper un chemin absolu complet. Un `~` initial est étendu, et si un fichier n'est pas trouvé, l'erreur liste les `.pdf` réellement présents dans le dossier.
+- `HOOPOE_API_URL` — l'URL de votre backend Hoopoe (par exemple l'adresse LAN et le port où `backend` est joignable). Ne pas mettre de barre oblique finale.
+- `HOOPOE_MCP_USER` — votre nom d'utilisateur de login Hoopoe.
+- `HOOPOE_MCP_TOKEN` — le jeton généré à l'étape 1.
+- `HOOPOE_STATEMENTS_DIR` *(optionnel)* — un dossier contenant vos PDF de relevés. Quand il est défini, `reconcile_statement` résout un **nom de fichier nu** (par exemple `avril.pdf`) contre ce dossier, ce qui vous évite de taper un chemin absolu complet. Un `~` initial est étendu, et si un fichier n'est pas trouvé, l'erreur liste les `.pdf` réellement présents dans le dossier.
 
 Les trois premiers sont requis ; le serveur refuse de démarrer si l'un manque.
 
-### Application bureau (Tauri) : utiliser un fichier de port au lieu de `ATHENA_API_URL`
+### Application bureau (Tauri) : utiliser un fichier de port au lieu de `HOOPOE_API_URL`
 
 La distribution bureau lie Fastify à `127.0.0.1` sur un port assigné par l'OS, donc l'URL change à chaque lancement. Au lieu de coder une URL en dur, pointez le pont MCP sur le fichier de port que l'application écrit au démarrage :
 
@@ -70,9 +70,9 @@ La distribution bureau lie Fastify à `127.0.0.1` sur un port assigné par l'OS,
       "command": "node",
       "args": ["/chemin/absolu/vers/Athena-Ledger/mcp/dist/index.js"],
       "env": {
-        "ATHENA_PORT_FILE": "<DATA_DIR>/.mcp-port",
-        "ATHENA_MCP_USER": "<votre-nom-utilisateur-athena>",
-        "ATHENA_MCP_TOKEN": "<coller-le-jeton-ici>"
+        "HOOPOE_PORT_FILE": "<DATA_DIR>/.mcp-port",
+        "HOOPOE_MCP_USER": "<votre-nom-utilisateur-athena>",
+        "HOOPOE_MCP_TOKEN": "<coller-le-jeton-ici>"
       }
     }
   }
@@ -85,7 +85,7 @@ La distribution bureau lie Fastify à `127.0.0.1` sur un port assigné par l'OS,
 - Linux : `~/.local/share/com.athena.ledger.desktop/`
 - Windows : `%APPDATA%\com.athena.ledger.desktop\`
 
-Le pont lit le port depuis ce fichier à chaque démarrage, donc ouvrir et fermer l'application bureau entre les sessions du client MCP fonctionne de manière transparente. Si `ATHENA_API_URL` et `ATHENA_PORT_FILE` sont tous les deux définis, `ATHENA_API_URL` prend le pas.
+Le pont lit le port depuis ce fichier à chaque démarrage, donc ouvrir et fermer l'application bureau entre les sessions du client MCP fonctionne de manière transparente. Si `HOOPOE_API_URL` et `HOOPOE_PORT_FILE` sont tous les deux définis, `HOOPOE_API_URL` prend le pas.
 
 ## 4. Utiliser avec Ollama
 
@@ -167,7 +167,7 @@ Pas sûr de l'id du compte ? Appelez d'abord `list_accounts` — il retourne l'i
 
 `reconcile_statement(path, accountId, fromDate?, toDate?)`
 
-- `path` (requis) — le PDF du relevé **sur la machine qui fait tourner le serveur MCP** (pas la machine qui fait tourner le client de chat). Soit un **nom de fichier nu** résolu contre `ATHENA_STATEMENTS_DIR` (voir étape 3), soit un chemin absolu ; un `~` initial est étendu. Doit se terminer par `.pdf` et faire au plus 10 Mo.
+- `path` (requis) — le PDF du relevé **sur la machine qui fait tourner le serveur MCP** (pas la machine qui fait tourner le client de chat). Soit un **nom de fichier nu** résolu contre `HOOPOE_STATEMENTS_DIR` (voir étape 3), soit un chemin absolu ; un `~` initial est étendu. Doit se terminer par `.pdf` et faire au plus 10 Mo.
 - `accountId` (requis) — l'id du compte Hoopoe à rapprocher — le petit entier de `list_accounts`, **pas** le numéro de compte bancaire.
 - `fromDate`, `toDate` (optionnels, `YYYY-MM-DD`) — restreignent la fenêtre de comparaison. Omis, la fenêtre par défaut prend les dates les plus anciennes/récentes trouvées sur le relevé parsé.
 

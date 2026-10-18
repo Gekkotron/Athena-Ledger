@@ -6,16 +6,16 @@ import { defineConfig, devices } from '@playwright/test';
 // in desktop/scripts/smoke-installed.{sh,ps1}; this config only needs the
 // resulting URL:
 //
-//   ATHENA_SMOKE_URL=http://127.0.0.1:<port>   (required — from .mcp-port)
-//   ATHENA_EXPECT_VERSION=1.2.3                (optional — asserted on /health)
+//   HOOPOE_SMOKE_URL=http://127.0.0.1:<port>   (required — from .mcp-port)
+//   HOOPOE_EXPECT_VERSION=1.2.3                (optional — asserted on /health)
 //
 // No webServer: the app under test is external and must NOT be managed by
 // Playwright (killing it is the smoke script's job).
 
-const BASE = process.env.ATHENA_SMOKE_URL;
+const BASE = process.env.HOOPOE_SMOKE_URL;
 if (!BASE) {
   throw new Error(
-    'ATHENA_SMOKE_URL must point at a running installed app — see desktop/scripts/smoke-installed.sh',
+    'HOOPOE_SMOKE_URL must point at a running installed app — see desktop/scripts/smoke-installed.sh',
   );
 }
 

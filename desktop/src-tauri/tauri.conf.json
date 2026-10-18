@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Athena Ledger",
+  "productName": "Hoopoe",
   "version": "1.0.0-rc.8",
-  "identifier": "com.athena.ledger.desktop",
+  "identifier": "com.gekkotron.hoopoe.desktop",
   "build": {
     "beforeDevCommand": "",
     "beforeBuildCommand": "",

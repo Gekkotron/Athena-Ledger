@@ -106,13 +106,13 @@ needs no Node and compiles nothing:
 ```
 
 The script resolves the newest published version from GitHub, pins it
-as `ATHENA_VERSION` in `.env`, pulls the images, starts the stack
+as `HOOPOE_VERSION` in `.env`, pulls the images, starts the stack
 (`docker-compose.release.yml`), and waits for the backend to report
 healthy. Re-run it any time to update.
 
 Two `.env` settings worth knowing:
 
-- `ATHENA_VERSION` — the pinned version. The script manages it, but you
+- `HOOPOE_VERSION` — the pinned version. The script manages it, but you
   can set it by hand to any tag from the releases page.
 - `TZ` (e.g. `TZ=Europe/Paris`) — without it the containers run on UTC,
   so schedule-based features (the bank-sync retrieval hour) fire at UTC
@@ -159,7 +159,7 @@ directory and both leave your Postgres data untouched:
 
 It resolves the newest published release from the GitHub API (latest
 stable once one exists; the newest RC until then), writes a `pg_dump`
-safety backup into `./backups/`, pins `ATHENA_VERSION` in `.env`, pulls
+safety backup into `./backups/`, pins `HOOPOE_VERSION` in `.env`, pulls
 the images, restarts the stack, and waits for `/health`. Re-running when
 already up to date exits early. `--no-backup` skips the dump.
 

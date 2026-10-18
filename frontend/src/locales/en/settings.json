@@ -60,7 +60,7 @@
       "tokenCopy": "Copy",
       "tokenCopied": "Copied",
       "tokenCopyAria": "Copy MCP token to clipboard",
-      "tokenConfigHint": "Configure the MCP client with <1>ATHENA_MCP_USER</1> (your username) and<3> ATHENA_MCP_TOKEN</3>."
+      "tokenConfigHint": "Configure the MCP client with <1>HOOPOE_MCP_USER</1> (your username) and<3> HOOPOE_MCP_TOKEN</3>."
     },
     "bankSync": {
       "sectionLabel": "Bank sync",

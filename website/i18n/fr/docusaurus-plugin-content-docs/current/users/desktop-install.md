@@ -17,9 +17,9 @@ Choisissez le fichier correspondant à votre OS dans la dernière release :
 
 | OS | Fichier |
 |----|---------|
-| macOS (Apple Silicon ou Intel) | `Athena-Ledger_<version>_universal.dmg` |
-| Windows 10 / 11 (x64) | `Athena-Ledger_<version>_x64-setup.exe` |
-| Linux (x64) | `Athena-Ledger_<version>_amd64.AppImage` |
+| macOS (Apple Silicon ou Intel) | `Hoopoe_<version>_universal.dmg` |
+| Windows 10 / 11 (x64) | `Hoopoe_<version>_x64-setup.exe` |
+| Linux (x64) | `Hoopoe_<version>_amd64.AppImage` |
 
 Chaque artefact est construit par le workflow GitHub Actions `desktop-release` directement depuis un commit tagué sur `main`. Les sommes de contrôle sont publiées à côté des artefacts, sur la même page de release.
 
@@ -38,7 +38,7 @@ Chaque artefact est construit par le workflow GitHub Actions `desktop-release` d
 
 ### Linux
 
-1. Rendez le `.AppImage` exécutable : `chmod +x Athena-Ledger_*.AppImage`.
+1. Rendez le `.AppImage` exécutable : `chmod +x Hoopoe_*.AppImage`.
 2. Double-cliquez, ou lancez-le depuis un terminal.
 
 ### Une fois la fenêtre ouverte
@@ -63,7 +63,7 @@ L'application écrit tout — le fichier PGlite, les relevés importés, les exp
 - `uploads/` — copies des fichiers de relevés que vous avez importés.
 - `backups/` — exports de sauvegarde déclenchés depuis l'interface ou via l'endpoint MCP.
 
-Vous pouvez outrepasser l'emplacement en définissant la variable d'environnement `ATHENA_DATA_DIR` avant de lancer l'application (utile si vous gardez la base sur un disque externe).
+Vous pouvez outrepasser l'emplacement en définissant la variable d'environnement `DATA_DIR` avant de lancer l'application (utile si vous gardez la base sur un disque externe).
 
 ## Comment sauvegarder
 

@@ -18,7 +18,7 @@ test('health reports ok, the pglite driver, and the expected version', async ({ 
   const body = await res.json();
   expect(body.ok).toBe(true);
   expect(body.driver).toBe('pglite');
-  const expected = process.env.ATHENA_EXPECT_VERSION;
+  const expected = process.env.HOOPOE_EXPECT_VERSION;
   if (expected) expect(body.version).toBe(expected);
 });
 

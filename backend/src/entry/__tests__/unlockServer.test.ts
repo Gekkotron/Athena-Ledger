@@ -28,7 +28,7 @@ describe('runUnlockServer', () => {
     // This is exactly the chicken-and-egg bug the split { port, unlocked }
     // interface exists to fix: an earlier version of runUnlockServer only
     // resolved once a *correct password* had already been submitted, so
-    // the caller could never publish ATHENA_PORT — which is required to
+    // the caller could never publish HOOPOE_PORT — which is required to
     // even reach the password prompt in the first place — before a
     // password had already been typed into a port nobody could know yet.
     const { port, unlocked } = await runUnlockServer({ dir });

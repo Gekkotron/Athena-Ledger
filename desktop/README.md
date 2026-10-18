@@ -94,7 +94,7 @@ them under `node_modules/`.
 ./desktop/sidecar/node ./desktop/sidecar/entry.js
 ```
 
-Prints one machine-readable line to stdout — `ATHENA_PORT=<n>` — after
+Prints one machine-readable line to stdout — `HOOPOE_PORT=<n>` — after
 Fastify binds `127.0.0.1:0` (OS-assigned port). The Rust shell greps for
 that line and opens its WebView at `http://127.0.0.1:<n>/`. `SIGTERM`
 triggers a clean Fastify close + `pool.end()` before exit.
@@ -124,7 +124,7 @@ cargo tauri dev
 ```
 
 The shell spawns `./sidecar/node ./sidecar/entry.js`, watches its stdout
-for the `ATHENA_PORT=<n>` handshake line, then opens the main window at
+for the `HOOPOE_PORT=<n>` handshake line, then opens the main window at
 `http://127.0.0.1:<n>/`. Closing the window sends SIGKILL to the sidecar
 child (its own SIGTERM handler in `backend/src/entry/tauri.ts` handles
 graceful shutdown before that if the shell exits via `ExitRequested`).

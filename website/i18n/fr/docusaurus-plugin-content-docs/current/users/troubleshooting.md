@@ -448,14 +448,14 @@ clients MCP.
 **Symptôme.** Les outils apparaissent dans le client, mais tout
 appel échoue avec `unauthorized` ou `invalid token`.
 
-**Cause.** Le `ATHENA_MCP_TOKEN` dans la config client est vide,
+**Cause.** Le `HOOPOE_MCP_TOKEN` dans la config client est vide,
 tronqué au collage, ou a été régénéré dans Hoopoe sans être mis à
 jour côté client.
 
 **Correction.** Dans Hoopoe, ouvrez **Réglages → MCP**, révoquez et
 régénérez le token, copiez-le en entier (ils sont longs — attention à
 la coupure de ligne du terminal), collez-le dans la config client,
-redémarrez le client. Vérifiez aussi que `ATHENA_MCP_USER` correspond
+redémarrez le client. Vérifiez aussi que `HOOPOE_MCP_USER` correspond
 exactement à votre nom d'utilisateur de connexion (la casse compte).
 
 ### `reconcile_statement` signale que le chemin du PDF n'est pas lisible
@@ -467,11 +467,11 @@ file`.
 **Cause.** Les outils MCP tournent dans le processus du client, donc
 les chemins relatifs se résolvent contre le répertoire de travail *du
 client* — rarement là où vos relevés sont stockés. Passer un simple
-nom de fichier échoue tant que `ATHENA_STATEMENTS_DIR` n'est pas
+nom de fichier échoue tant que `HOOPOE_STATEMENTS_DIR` n'est pas
 défini.
 
 **Correction.** Soit passez un chemin absolu vers le PDF, soit
-définissez `ATHENA_STATEMENTS_DIR` dans le bloc `env` du client
+définissez `HOOPOE_STATEMENTS_DIR` dans le bloc `env` du client
 pointant vers le dossier où vivent vos relevés — un simple nom de
 fichier se résoudra alors contre ce dossier. Voir
 [Accès MCP](./mcp) pour la forme complète de la config.

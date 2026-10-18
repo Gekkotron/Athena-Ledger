@@ -408,14 +408,14 @@ clients.
 **Symptom.** Tools appear in the client, but any call fails with
 `unauthorized` or `invalid token`.
 
-**Cause.** The `ATHENA_MCP_TOKEN` in the client config is empty,
+**Cause.** The `HOOPOE_MCP_TOKEN` in the client config is empty,
 truncated on paste, or was rotated in Hoopoe and not updated in the
 client.
 
 **Fix.** In Hoopoe, open **Settings → MCP**, revoke and regenerate
 the token, copy it whole (they're long — mind the terminal wrap),
 paste into the client config, restart the client. Also check the
-`ATHENA_MCP_USER` matches your login username exactly (case matters).
+`HOOPOE_MCP_USER` matches your login username exactly (case matters).
 
 ### `reconcile_statement` says the PDF path is not readable
 
@@ -425,10 +425,10 @@ fails with `path not readable` or `no such file`.
 **Cause.** MCP tools run in the client's process, so relative paths
 resolve against the *client's* working directory — usually not where
 your statements live. Passing a bare filename fails unless
-`ATHENA_STATEMENTS_DIR` is set.
+`HOOPOE_STATEMENTS_DIR` is set.
 
 **Fix.** Either pass an absolute path to the PDF, or set
-`ATHENA_STATEMENTS_DIR` in the client's `env` block to the folder
+`HOOPOE_STATEMENTS_DIR` in the client's `env` block to the folder
 your statements live in — then a bare filename resolves against that
 folder. See [MCP access](./mcp) for the full config shape.
 

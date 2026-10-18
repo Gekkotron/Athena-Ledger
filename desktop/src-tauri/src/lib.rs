@@ -117,12 +117,12 @@ fn spawn_sidecar(app: &tauri::AppHandle) -> (Child, u16) {
         let mut sent = false;
         for line in reader.lines().map_while(Result::ok) {
             if !sent {
-                if let Some(rest) = line.strip_prefix("ATHENA_PORT=") {
+                if let Some(rest) = line.strip_prefix("HOOPOE_PORT=") {
                     if let Ok(port) = rest.trim().parse::<u16>() {
                         let _ = tx.send(Startup::Port(port));
                         sent = true;
                     }
-                } else if let Some(msg) = line.strip_prefix("ATHENA_FATAL=") {
+                } else if let Some(msg) = line.strip_prefix("HOOPOE_FATAL=") {
                     let _ = tx.send(Startup::Fatal(msg.to_string()));
                     sent = true;
                 }
@@ -134,7 +134,7 @@ fn spawn_sidecar(app: &tauri::AppHandle) -> (Child, u16) {
     let port = match rx.recv_timeout(std::time::Duration::from_secs(30)) {
         Ok(Startup::Port(port)) => port,
         Ok(Startup::Fatal(msg)) => panic!("sidecar failed to start: {msg}"),
-        Err(_) => panic!("sidecar did not report ATHENA_PORT within 30s"),
+        Err(_) => panic!("sidecar did not report HOOPOE_PORT within 30s"),
     };
     (child, port)
 }
@@ -218,11 +218,11 @@ pub fn run() {
             app.manage(SidecarHandle(Mutex::new(Some(child))));
 
             // spawn_sidecar's reader thread only watches stdout for the
-            // *first* ATHENA_PORT/ATHENA_FATAL line, then just echoes
+            // *first* HOOPOE_PORT/HOOPOE_FATAL line, then just echoes
             // everything after that with no structured handling. A locked
             // boot can legitimately fail *after* the port was already
             // handed to the WebView (any throw inside tauri.ts's outer
-            // try/catch prints a second, now-unwatched ATHENA_FATAL and
+            // try/catch prints a second, now-unwatched HOOPOE_FATAL and
             // exits) — without this, that would just leave a dead, white,
             // unresponsive window with no signal anything went wrong. Poll
             // the sidecar's liveness here instead and crash loudly if it

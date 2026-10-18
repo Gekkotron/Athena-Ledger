@@ -179,29 +179,29 @@ start_sidecar() {
   SIDECAR_PIDS+=("$CUR_PID")
 }
 
-# Polls the sidecar's stdout log for the ATHENA_PORT=<n> contract line (see
-# tauri.ts). Fails fast on ATHENA_FATAL instead of waiting out the full
+# Polls the sidecar's stdout log for the HOOPOE_PORT=<n> contract line (see
+# tauri.ts). Fails fast on HOOPOE_FATAL instead of waiting out the full
 # timeout. Sets CUR_PORT on success.
 wait_for_port() {
   local timeout="${1:-30}"
   local max_iters=$((timeout * 4))
   local i
   for ((i = 0; i < max_iters; i++)); do
-    if grep -q '^ATHENA_FATAL=' "$CUR_LOG" 2>/dev/null; then
-      log "sidecar reported ATHENA_FATAL: $(grep -m1 '^ATHENA_FATAL=' "$CUR_LOG")"
+    if grep -q '^HOOPOE_FATAL=' "$CUR_LOG" 2>/dev/null; then
+      log "sidecar reported HOOPOE_FATAL: $(grep -m1 '^HOOPOE_FATAL=' "$CUR_LOG")"
       return 1
     fi
-    if grep -q '^ATHENA_PORT=' "$CUR_LOG" 2>/dev/null; then
-      CUR_PORT=$(grep -m1 '^ATHENA_PORT=' "$CUR_LOG" | cut -d= -f2 | tr -d '\r')
+    if grep -q '^HOOPOE_PORT=' "$CUR_LOG" 2>/dev/null; then
+      CUR_PORT=$(grep -m1 '^HOOPOE_PORT=' "$CUR_LOG" | cut -d= -f2 | tr -d '\r')
       return 0
     fi
     if ! kill -0 "$CUR_PID" 2>/dev/null; then
-      log "sidecar exited before printing ATHENA_PORT (log so far: $(cat "$CUR_LOG"))"
+      log "sidecar exited before printing HOOPOE_PORT (log so far: $(cat "$CUR_LOG"))"
       return 1
     fi
     sleep 0.25
   done
-  log "timed out waiting for ATHENA_PORT (log so far: $(cat "$CUR_LOG"))"
+  log "timed out waiting for HOOPOE_PORT (log so far: $(cat "$CUR_LOG"))"
   return 1
 }
 

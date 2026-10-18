@@ -96,8 +96,8 @@ function McpAccessSection(): JSX.Element {
           </div>
           <p className="text-ink-400 mt-2">
             <Trans i18nKey="settings:settings.mcp.tokenConfigHint">
-              Configurez le client MCP avec <code>ATHENA_MCP_USER</code> (votre identifiant) et
-              <code> ATHENA_MCP_TOKEN</code>.
+              Configurez le client MCP avec <code>HOOPOE_MCP_USER</code> (votre identifiant) et
+              <code> HOOPOE_MCP_TOKEN</code>.
             </Trans>
           </p>
         </div>

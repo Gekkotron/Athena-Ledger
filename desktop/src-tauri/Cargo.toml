@@ -1,13 +1,13 @@
 [package]
-name = "athena-desktop"
+name = "hoopoe-desktop"
 version = "1.0.0-rc.8"
-description = "Athena Ledger desktop shell"
+description = "Hoopoe desktop shell"
 authors = ["Gekkotron"]
 edition = "2021"
 rust-version = "1.77"
 
 [lib]
-name = "athena_desktop_lib"
+name = "hoopoe_desktop_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
