@@ -58,4 +58,13 @@ describe('demo GET /api/reports/investments-timeseries', () => {
   it('rejects an account that is neither investment nor savings', async () => {
     await expect(get({ accountId: SEED_META.accountIds.Courant })).rejects.toMatchObject({ status: 400 });
   });
+
+  it('accountIds filters the aggregate: Livret stays out when only the AV is passed', async () => {
+    const all = await get({ granularity: 'month', display: 'none' });
+    const only = await get({ granularity: 'month', display: 'none', accountIds: String(av) });
+    const lastAll = all.points[all.points.length - 1]!;
+    const lastOnly = only.points[only.points.length - 1]!;
+    expect(Number(lastOnly.value)).toBeLessThan(Number(lastAll.value));
+    expect(Number(lastOnly.value)).toBeCloseTo(4388.75, 2);
+  });
 });

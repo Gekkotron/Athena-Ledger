@@ -44,12 +44,20 @@ export function PlacementsSection({ accounts, displayCurrency, primaryCurrency, 
   const setRange = (r: RangeKey) => { setRangeState(r); setZoom(null); };
   const setScope = (s: 'all' | 'available' | number) => { setScopeState(s); setZoom(null); };
   const accountId = typeof scope === 'number' && eligible.some((a) => a.id === scope) ? scope : undefined;
+  // When scope is 'all' we send the eligible-subset IDs (investments + locked
+  // savings) so the backend doesn't aggregate unlocked savings like a plain
+  // Livret A into the series. Sorted + deduped for a stable query key.
+  const eligibleIdsKey = useMemo(
+    () => Array.from(new Set(eligible.map((a) => a.id))).sort((a, b) => a - b),
+    [eligible],
+  );
+  const accountIds = accountId === undefined ? eligibleIdsKey : undefined;
   const fromDate = fromDateFor(range);
   const granularity = granularityFor(range);
 
   const q = useQuery({
-    queryKey: ['reports', 'investments-timeseries', accountId ?? 'all', fromDate ?? 'all', granularity, displayCurrency],
-    queryFn: () => getInvestmentsTimeseries({ fromDate, granularity, accountId, display: displayCurrency }),
+    queryKey: ['reports', 'investments-timeseries', accountId ?? accountIds?.join(',') ?? 'all', fromDate ?? 'all', granularity, displayCurrency],
+    queryFn: () => getInvestmentsTimeseries({ fromDate, granularity, accountId, accountIds, display: displayCurrency }),
     enabled: eligible.length > 0,
   });
 

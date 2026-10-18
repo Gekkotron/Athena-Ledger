@@ -76,19 +76,26 @@ function handleInvestmentsTimeseries(req: DemoRequest): InvestmentsTimeseries {
   const today = todayIso();
   const granularity = req.query.granularity === 'month' ? 'month' : 'day';
   const accountId = req.query.accountId ? Number(req.query.accountId) : undefined;
+  // accountIds (CSV) wins over accountId — the Placements "all" scope sends
+  // it so unlocked savings (e.g. a Livret A) stay out of the aggregate.
+  const accountIdsRaw = typeof req.query.accountIds === 'string' ? req.query.accountIds : '';
+  const accountIds = accountIdsRaw
+    ? accountIdsRaw.split(',').map((s) => Number(s)).filter((n) => Number.isInteger(n) && n > 0)
+    : [];
   const scope = state.accounts.filter((a) => a.type === 'investment' || a.type === 'savings');
-  if (accountId !== undefined) {
+  if (accountIds.length === 0 && accountId !== undefined) {
     const acc = state.accounts.find((a) => a.id === accountId);
     if (!acc) throw new ApiError('account not found', 404, { error: 'account not found' });
     if (!scope.includes(acc)) throw new ApiError('account must be investment or savings', 400, { error: 'account must be investment or savings' });
   }
+  const idSet = accountIds.length > 0 ? new Set(accountIds) : null;
   const resolved = resolveDisplayCurrency(req.query.display, req.query.display === undefined ? settingsDisplayCurrency(state) : null);
   if (resolved === 'invalid') throw new ApiError('invalid display currency', 400, { error: 'invalid display currency' });
 
   const incomeIds = new Set(state.categories.filter((c) => c.kind === 'income').map((c) => c.id));
   const to = req.query.toDate && req.query.toDate < today ? req.query.toDate : today;
   const per = new Map<string, { currency: string; bucket: string; contributed: number; value: number; estimated: boolean }>();
-  for (const acc of scope.filter((a) => accountId === undefined || a.id === accountId)) {
+  for (const acc of scope.filter((a) => (idSet ? idSet.has(a.id) : accountId === undefined || a.id === accountId))) {
     const vals = (state.accountValuations ?? []).filter((v) => v.accountId === acc.id).map((v) => ({ date: v.date, value: Number(v.value) }));
     const from = req.query.fromDate && req.query.fromDate > acc.openingDate ? req.query.fromDate : acc.openingDate;
     for (const p of accountSeries(acc, incomeIds, vals, from, to, granularity)) {

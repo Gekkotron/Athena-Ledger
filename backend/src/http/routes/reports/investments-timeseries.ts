@@ -35,7 +35,7 @@ export function registerInvestmentsTimeseriesRoute(app: FastifyInstance): void {
     if (!parsed.success) {
       return reply.code(400).send({ error: 'invalid query', issues: parsed.error.issues });
     }
-    const { fromDate, toDate, granularity, accountId } = parsed.data;
+    const { fromDate, toDate, granularity, accountId, accountIds } = parsed.data;
 
     const q = req.query as { display?: string } | undefined;
     const displayParam = q?.display;
@@ -45,7 +45,17 @@ export function registerInvestmentsTimeseriesRoute(app: FastifyInstance): void {
       return reply.code(400).send({ error: 'invalid display currency' });
     }
 
-    if (accountId !== undefined) {
+    // accountIds (multi-account) wins over accountId (single). The multi form
+    // feeds the Dashboard Placements "all" scope — frontend sends only the
+    // eligible subset (investments + locked savings), so the backend no longer
+    // leaks unlocked savings into the aggregate.
+    const idFilter = accountIds && accountIds.length > 0
+      ? sql`AND a.id IN (${sql.join(accountIds.map((i) => sql`${i}`), sql`, `)})`
+      : accountId !== undefined
+        ? sql`AND a.id = ${accountId}`
+        : sql``;
+
+    if (accountId !== undefined && (!accountIds || accountIds.length === 0)) {
       const owned = await db.execute<{ type: string }>(
         sql`SELECT type FROM accounts WHERE id = ${accountId} AND user_id = ${uid}`,
       );
@@ -65,7 +75,7 @@ export function registerInvestmentsTimeseriesRoute(app: FastifyInstance): void {
       FROM accounts a
       WHERE a.user_id = ${uid}
         AND a.type IN ('investment', 'savings')
-        ${accountId !== undefined ? sql`AND a.id = ${accountId}` : sql``}
+        ${idFilter}
       ORDER BY a.id
     `);
     if (accounts.rows.length === 0) {

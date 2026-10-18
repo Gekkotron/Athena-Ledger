@@ -68,7 +68,10 @@ it('draws both areas, the dots and the Valeur / Versé / Plus-value summary', as
   expect(screen.getAllByTestId('valuation-dot')).toHaveLength(1);
   const [path, opts] = apiMock.mock.calls[0]!;
   expect(path).toBe('/api/reports/investments-timeseries');
-  expect(opts).toMatchObject({ query: { granularity: 'month' } });
+  // 'Tous les comptes' scopes to the eligible subset (Assurance-vie + PEL)
+  // on the wire so the backend doesn't aggregate the Livret A into Valeur.
+  expect(opts).toMatchObject({ query: { granularity: 'month', accountIds: '2,4' } });
+  expect((opts as { query: Record<string, unknown> }).query.accountId).toBeUndefined();
 });
 
 it('counts the plus-value from the start of the selected range', async () => {
