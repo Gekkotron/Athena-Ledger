@@ -306,6 +306,10 @@
       (function () {
         var splash = document.getElementById('splash');
         if (!splash) return;
+        // Freeze a pristine copy of the splash BEFORE the leaving class
+        // or any removal touches the live node. Used by __replaySplash
+        // so the easter-egg replay always starts from a clean state.
+        var template = splash.cloneNode(true);
         var removed = false;
         var minUntil = Date.now() + 450; // avoid flashing on near-instant loads
         function leave() {
@@ -325,6 +329,31 @@
           document.addEventListener('app:ready', scheduleLeave, { once: true });
         }
         setTimeout(leave, 8000);
+
+        // Easter egg: clicking the sidebar logo (Brand.tsx) replays the
+        // splash. The entrance choreography lasts ~1.6 s; we hold it for
+        // 3.5 s total so the user gets ~2 s of settled view before the
+        // fade. Clicking the splash itself fades it early. Any in-flight
+        // replay is killed first so repeat clicks restart cleanly instead
+        // of stacking nodes.
+        window.__replaySplash = function () {
+          var current = document.getElementById('splash');
+          if (current) current.remove();
+          var fresh = template.cloneNode(true);
+          fresh.classList.remove('splash--leaving');
+          document.body.appendChild(fresh);
+          var faded = false;
+          var fade = function () {
+            if (faded) return;
+            faded = true;
+            fresh.classList.add('splash--leaving');
+            setTimeout(function () {
+              if (fresh.parentNode) fresh.parentNode.removeChild(fresh);
+            }, 500);
+          };
+          fresh.addEventListener('click', fade, { once: true });
+          setTimeout(fade, 3500);
+        };
       })();
     </script>
     <script type="module" src="/src/main.tsx"></script>
