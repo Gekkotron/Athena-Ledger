@@ -39,13 +39,35 @@ const OUT_DIR = path.resolve(
 );
 
 async function dismissWelcomeTour(page: Page): Promise<void> {
-  const tour = page.getByRole('dialog', { name: /Hoopoe|Bienvenue/i });
+  // The TourBubble is a role="dialog" with the step title as its accessible
+  // name (e.g. "Solde global"), not a fixed brand label. Match the Skip
+  // button it always exposes instead. .first() guards against strict-mode
+  // when any other "Passer" / "Skip" ever lives on the page.
+  //
+  // Wait up to 5 s for Skip to appear — the dashboard tour only auto-starts
+  // after the balance query resolves, which can land several hundred ms
+  // after networkidle. Click and confirm it stays hidden for 200 ms (long
+  // enough for the demo adapter's dismiss POST to flush) before returning.
+  // No tour at all — the normal case for pages whose tip id is already in
+  // the dismissed map — returns in ~5 s.
+  const skip = page.getByRole('button', { name: /^Passer$|^Skip$/i }).first();
   try {
-    await tour.waitFor({ state: 'visible', timeout: 3_000 });
-    await page.keyboard.press('Escape');
-    await tour.waitFor({ state: 'hidden', timeout: 3_000 });
+    await skip.waitFor({ state: 'visible', timeout: 5_000 });
+    await skip.click({ force: true });
+    await skip.waitFor({ state: 'hidden', timeout: 3_000 });
+    await page.waitForTimeout(200);
   } catch {
-    // No tour — the localStorage may already have marked it dismissed.
+    /* no tour, or dismiss raced it — subsequent gotoAndSettle retries */
+  }
+  // One more cheap check in case the tour appeared during the dismiss POST
+  // (common on view-reports where the dashboard is the only page visited).
+  try {
+    await skip.waitFor({ state: 'visible', timeout: 1_000 });
+    await skip.click({ force: true });
+    await skip.waitFor({ state: 'hidden', timeout: 2_000 });
+    await page.waitForTimeout(150);
+  } catch {
+    /* ok */
   }
 }
 
@@ -53,6 +75,34 @@ async function shot(page: Page, name: string): Promise<void> {
   fs.mkdirSync(OUT_DIR, { recursive: true });
   const file = path.join(OUT_DIR, `${name}.png`);
   await page.screenshot({ path: file, fullPage: false });
+}
+
+// The demo build mounts a HashRouter (see frontend/src/main.tsx) so every
+// in-app route lives behind `#/…`. A bare page.goto('/transactions') lands
+// at '/' with no hash, so React Router shows the dashboard — the reason
+// every non-dashboard shot used to come out as the dashboard. In LOCAL_MODE
+// the real app uses BrowserRouter, so paths stay plain.
+function routePath(path: string): string {
+  if (LOCAL_MODE) return path;
+  return path === '/' ? '/#/' : `/#${path}`;
+}
+
+async function waitForBoot(page: Page): Promise<void> {
+  await page.waitForLoadState('networkidle');
+  // The sidebar only renders inside <Layout>, which is gated on `user`.
+  // Its appearance signals /api/auth/me resolved and we are past the
+  // null-user redirect that otherwise bounces the hash back to '/'.
+  await page.getByRole('link', { name: /Dashboard/i }).first().waitFor({
+    state: 'visible',
+    timeout: 10_000,
+  });
+}
+
+async function gotoAndSettle(page: Page, path: string): Promise<void> {
+  await page.goto(routePath(path));
+  await waitForBoot(page);
+  await dismissWelcomeTour(page);
+  await page.waitForTimeout(300);
 }
 
 test.describe('walkthrough screenshots', () => {
@@ -66,6 +116,10 @@ test.describe('walkthrough screenshots', () => {
     await page.addInitScript((lang) => {
       try { localStorage.setItem('i18nextLng', lang); } catch { /* noop */ }
     }, LANG);
+    // In demo mode api() is routed to an in-browser adapter, not window.fetch,
+    // so page.route() cannot intercept tip requests. We instead click Skip on
+    // each page's auto-start tour via gotoAndSettle() below; each dismiss POST
+    // persists in the demo's per-context Map and keeps repeat visits quiet.
     if (LOCAL_MODE) {
       const user = process.env.WALKTHROUGH_LOCAL_USER;
       const pass = process.env.WALKTHROUGH_LOCAL_PASS;
@@ -84,80 +138,53 @@ test.describe('walkthrough screenshots', () => {
   });
 
   test('import-a-statement', async ({ page }) => {
-    await page.goto('/');
-    await dismissWelcomeTour(page);
-    await page.waitForLoadState('networkidle');
+    await gotoAndSettle(page, '/');
 
-    await page.goto('/data/imports');
-    await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(600);
+    await gotoAndSettle(page, '/data/imports');
     await shot(page, 'import-01-imports-page');
 
-    await page.goto('/data/duplicates');
-    await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(400);
+    await gotoAndSettle(page, '/data/duplicates');
     await shot(page, 'import-02-doublons');
 
-    await page.goto('/accounts');
-    await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(400);
+    await gotoAndSettle(page, '/accounts');
     await shot(page, 'import-03-comptes-solde');
 
     // Expand the checkpoints panel on the first account card so the drawer
     // (year accordion + add-form) is visible for the walkthrough shot.
-    const firstToggle = page.getByRole('button', { name: /Points de contrôle|Checkpoints/i }).first();
+    const firstToggle = page.getByRole('button', { name: /Points de contrôle|Balance checkpoints|Checkpoints/i }).first();
     await firstToggle.click();
     await page.waitForTimeout(400);
     await shot(page, 'import-04-checkpoints');
   });
 
   test('categorise-transactions', async ({ page }) => {
-    await page.goto('/');
-    await dismissWelcomeTour(page);
-    await page.waitForLoadState('networkidle');
+    await gotoAndSettle(page, '/');
 
-    await page.goto('/transactions');
-    await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(600);
+    await gotoAndSettle(page, '/transactions');
     await shot(page, 'categorise-01-transactions');
 
-    await page.goto('/rules/sort');
-    await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(400);
+    await gotoAndSettle(page, '/rules/sort');
     await shot(page, 'categorise-02-tri');
 
-    await page.goto('/rules/list');
-    await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(400);
+    await gotoAndSettle(page, '/rules/list');
     await shot(page, 'categorise-03-regles-liste');
   });
 
   test('set-a-budget', async ({ page }) => {
-    await page.goto('/');
-    await dismissWelcomeTour(page);
-    await page.waitForLoadState('networkidle');
+    await gotoAndSettle(page, '/');
 
-    await page.goto('/budgets/caps');
-    await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(600);
+    await gotoAndSettle(page, '/budgets/caps');
     await shot(page, 'budget-01-plafonds');
 
-    await page.goto('/budgets/envelopes');
-    await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(400);
+    await gotoAndSettle(page, '/budgets/envelopes');
     await shot(page, 'budget-02-enveloppes');
 
-    await page.goto('/');
-    await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(600);
+    await gotoAndSettle(page, '/');
     await shot(page, 'budget-03-dashboard-progress');
   });
 
   test('view-reports', async ({ page }) => {
-    await page.goto('/');
-    await dismissWelcomeTour(page);
-    await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(800);
+    await gotoAndSettle(page, '/');
     await shot(page, 'reports-01-dashboard');
 
     // Scroll to reveal charts further down the dashboard.
@@ -178,15 +205,17 @@ test.describe('walkthrough screenshots', () => {
     // Dashboard/index.tsx), and the default 3-month range predates the
     // demo seed's oldest checkpoint. Pick the first account and set the
     // range to All / Tout so every diamond appears on the curve.
-    const balanceSection = page
-      .locator('section')
-      .filter({ has: page.getByText(/^Trend · |^Évolution · /i) });
-    await balanceSection.locator('select').selectOption({ index: 1 });
+    //
+    // The scope controls live in the shared ChartScopeBar above the three
+    // chart sections, not inside the Evolution section itself.
+    const scopeBar = page.getByRole('group', {
+      name: /Charts scope|Portée des graphiques/i,
+    });
+    await scopeBar.locator('select').selectOption({ index: 1 });
     await page.waitForLoadState('networkidle');
-    await balanceSection
-      .getByRole('button', { name: /^All$|^Tout$/i })
-      .click();
+    await scopeBar.getByRole('button', { name: /^All$|^Tout$/i }).click();
     await page.waitForLoadState('networkidle');
+    const balanceSection = page.locator('#dash-evolution');
     await balanceSection.evaluate((el) => el.scrollIntoView({ block: 'center' }));
     await page.waitForTimeout(600);
     await shot(page, 'reports-04-balance-curve');
