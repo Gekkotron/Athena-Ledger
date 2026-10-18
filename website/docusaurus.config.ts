@@ -8,10 +8,10 @@ const config: Config = {
   favicon: 'img/logo.png',
 
   url: 'https://gekkotron.github.io',
-  baseUrl: '/Athena-Ledger/',
+  baseUrl: '/Hoopoe/',
 
   organizationName: 'Gekkotron',
-  projectName: 'Athena-Ledger',
+  projectName: 'Hoopoe',
   trailingSlash: false,
 
   onBrokenLinks: 'throw',
@@ -42,7 +42,7 @@ const config: Config = {
           routeBasePath: 'docs',
           sidebarPath: './sidebars.ts',
           editUrl: ({ docPath }) =>
-            `https://github.com/Gekkotron/Athena-Ledger/edit/main/docs/${docPath}`,
+            `https://github.com/Gekkotron/Hoopoe/edit/main/docs/${docPath}`,
           exclude: [
             '**/_*.{js,jsx,ts,tsx,md,mdx}',
             '**/_*/**',
@@ -85,10 +85,10 @@ const config: Config = {
         // `pathname://` prefix tells Docusaurus not to route this
         // through its own SPA router, so the link falls through to a
         // full document load and the demo bundle boots on its own.
-        { href: 'pathname:///Athena-Ledger/demo/', label: 'Live demo', position: 'left' },
+        { href: 'pathname:///Hoopoe/demo/', label: 'Live demo', position: 'left' },
         { type: 'localeDropdown', position: 'right' },
         {
-          href: 'https://github.com/Gekkotron/Athena-Ledger',
+          href: 'https://github.com/Gekkotron/Hoopoe',
           label: 'GitHub',
           position: 'right',
         },
@@ -108,14 +108,14 @@ const config: Config = {
         {
           title: 'Community',
           items: [
-            { label: 'Issues', href: 'https://github.com/Gekkotron/Athena-Ledger/issues' },
+            { label: 'Issues', href: 'https://github.com/Gekkotron/Hoopoe/issues' },
             { label: 'Sponsor', href: 'https://github.com/sponsors/Gekkotron' },
           ],
         },
         {
           title: 'More',
           items: [
-            { label: 'GitHub', href: 'https://github.com/Gekkotron/Athena-Ledger' },
+            { label: 'GitHub', href: 'https://github.com/Gekkotron/Hoopoe' },
             { label: 'Blog', to: '/blog' },
           ],
         },

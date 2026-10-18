@@ -1,6 +1,6 @@
 # Hoopoe website
 
-Docusaurus site published to <https://gekkotron.github.io/Athena-Ledger/>.
+Docusaurus site published to <https://gekkotron.github.io/Hoopoe/>.
 
 ## Local development
 
@@ -10,7 +10,7 @@ npm install
 npm run start
 ```
 
-Opens http://localhost:3000/Athena-Ledger/.
+Opens http://localhost:3000/Hoopoe/.
 
 ## Build
 

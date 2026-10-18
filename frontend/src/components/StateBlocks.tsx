@@ -115,7 +115,7 @@ export function DemoUnavailableState({
           "Cette section a besoin du back-end Hoopoe pour fonctionner. Installez Hoopoe localement pour l'utiliser."}
       </div>
       <a
-        href="https://gekkotron.github.io/Athena-Ledger/docs/users/getting-started"
+        href="https://gekkotron.github.io/Hoopoe/docs/users/getting-started"
         className="btn-secondary mt-1 text-xs"
         target="_blank"
         rel="noopener noreferrer"

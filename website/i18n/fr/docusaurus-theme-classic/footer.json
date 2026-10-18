@@ -25,7 +25,7 @@
   },
   "link.item.label.Issues": {
     "message": "Signalements",
-    "description": "The label of footer link with label=Issues linking to https://github.com/Gekkotron/Athena-Ledger/issues"
+    "description": "The label of footer link with label=Issues linking to https://github.com/Gekkotron/Hoopoe/issues"
   },
   "link.item.label.Sponsor": {
     "message": "Soutenir",
@@ -33,7 +33,7 @@
   },
   "link.item.label.GitHub": {
     "message": "GitHub",
-    "description": "The label of footer link with label=GitHub linking to https://github.com/Gekkotron/Athena-Ledger"
+    "description": "The label of footer link with label=GitHub linking to https://github.com/Gekkotron/Hoopoe"
   },
   "link.item.label.Blog": {
     "message": "Blog",

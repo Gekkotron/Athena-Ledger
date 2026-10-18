@@ -138,7 +138,7 @@ If you don't have a recent export, `athena.db.corrupt` can sometimes be read by 
 
 ## Proof of correctness
 
-The script `backend/scripts/backup-drill.ts` runs a round-trip on a temporary PGlite database (210 transactions, 2 accounts, 8 categories, 5 rules, 3 budgets, 1 checkpoint), hashes the state before exporting, restores the downloaded file, then re-hashes. The two fingerprints must match. The report from the latest run lives in [`docs/dev/backup-drill-report.md`](https://github.com/Gekkotron/Athena-Ledger/blob/main/docs/dev/backup-drill-report.md).
+The script `backend/scripts/backup-drill.ts` runs a round-trip on a temporary PGlite database (210 transactions, 2 accounts, 8 categories, 5 rules, 3 budgets, 1 checkpoint), hashes the state before exporting, restores the downloaded file, then re-hashes. The two fingerprints must match. The report from the latest run lives in [`docs/dev/backup-drill-report.md`](https://github.com/Gekkotron/Hoopoe/blob/main/docs/dev/backup-drill-report.md).
 
 ## See also
 

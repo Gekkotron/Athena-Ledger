@@ -566,7 +566,7 @@ certificat auquel l'updater ne fait pas confiance.
 
 **Correction.** Annulez la mise à jour dans l'application, téléchargez
 le dernier installeur directement depuis
-[GitHub Releases](https://github.com/Gekkotron/Athena-Ledger/releases),
+[GitHub Releases](https://github.com/Gekkotron/Hoopoe/releases),
 et installez par-dessus la version courante — vos données locales
 sont conservées.
 

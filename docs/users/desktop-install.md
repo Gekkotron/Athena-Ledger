@@ -18,7 +18,7 @@ instead.
 
 Pick the file for your OS from the latest release:
 
-- **[Latest release on GitHub](https://github.com/Gekkotron/Athena-Ledger/releases/latest)**
+- **[Latest release on GitHub](https://github.com/Gekkotron/Hoopoe/releases/latest)**
 
 | OS | File |
 |----|------|

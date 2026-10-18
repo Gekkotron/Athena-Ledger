@@ -76,7 +76,7 @@ Two decisions worth calling out:
 ## Getting it
 
 - **Desktop app** — download from the
-  [latest release](https://github.com/Gekkotron/Athena-Ledger/releases/latest)
+  [latest release](https://github.com/Gekkotron/Hoopoe/releases/latest)
   and follow the [desktop install guide](/docs/users/desktop-install).
 - **Docker stack** — clone the repo and follow the
   [getting-started guide](/docs/users/getting-started).
@@ -93,4 +93,4 @@ Two decisions worth calling out:
 
 Feedback, bugs, and "it doesn't work on my
 &lt;distro/window-manager/CPU-arch&gt;" reports are welcome on the
-[issue tracker](https://github.com/Gekkotron/Athena-Ledger/issues).
+[issue tracker](https://github.com/Gekkotron/Hoopoe/issues).

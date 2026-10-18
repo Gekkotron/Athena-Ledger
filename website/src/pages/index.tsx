@@ -87,7 +87,7 @@ function HeroCtas() {
         </Translate>
       </Link>
       <Link
-        href="https://github.com/Gekkotron/Athena-Ledger"
+        href="https://github.com/Gekkotron/Hoopoe"
         className={styles.ctaTextLink}>
         <Translate id="home.cta.source" description="Tertiary CTA — view source">
           View the source

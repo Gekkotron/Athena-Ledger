@@ -42,7 +42,7 @@ export function SiteFooter() {
         <span>Hoopoe</span>
         <span aria-hidden>·</span>
         <a
-          href="https://github.com/Gekkotron/Athena-Ledger"
+          href="https://github.com/Gekkotron/Hoopoe"
           target="_blank"
           rel="noopener noreferrer"
           className={linkClass}

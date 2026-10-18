@@ -198,7 +198,7 @@ sur une base PGlite temporaire (210 transactions, 2 comptes, 8
 catégories, 5 règles, 3 budgets, 1 checkpoint), hash l'état avant
 export, restaure le fichier téléchargé, puis re-hash. Les deux
 empreintes doivent correspondre. Le rapport de la dernière exécution
-vit dans [`docs/dev/backup-drill-report.md`](https://github.com/Gekkotron/Athena-Ledger/blob/main/docs/dev/backup-drill-report.md).
+vit dans [`docs/dev/backup-drill-report.md`](https://github.com/Gekkotron/Hoopoe/blob/main/docs/dev/backup-drill-report.md).
 
 ## Voir aussi
 

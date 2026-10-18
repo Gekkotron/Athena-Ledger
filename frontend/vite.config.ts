@@ -10,9 +10,9 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', ['VITE_']);
   const viteDemo = env.VITE_DEMO ?? '';
   const isDemo = viteDemo === '1';
-  // When VITE_DEMO=1 we're building for gh-pages under /Athena-Ledger/demo/.
+  // When VITE_DEMO=1 we're building for gh-pages under /Hoopoe/demo/.
   // A build-time base override lets local previews still use '/'.
-  const demoBase = env.VITE_DEMO_BASE ?? '/Athena-Ledger/demo/';
+  const demoBase = env.VITE_DEMO_BASE ?? '/Hoopoe/demo/';
   return {
     plugins: [
       react(),

@@ -14,19 +14,19 @@ jobs:
       postgres:
         image: postgres:16-alpine
         env:
-          POSTGRES_USER: athena
-          POSTGRES_PASSWORD: athena
-          POSTGRES_DB: athena
+          POSTGRES_USER: hoopoe
+          POSTGRES_PASSWORD: hoopoe
+          POSTGRES_DB: hoopoe
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U athena -d athena"
+          --health-cmd "pg_isready -U hoopoe -d hoopoe"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 10
 
     env:
-      DATABASE_URL: postgres://athena:athena@localhost:5432/athena
+      DATABASE_URL: postgres://hoopoe:hoopoe@localhost:5432/hoopoe
       SESSION_SECRET: ci-only-session-secret-not-used-anywhere-else-9f2a
       RUN_DB_TESTS: '1'
 
@@ -168,13 +168,13 @@ jobs:
       postgres:
         image: postgres:16-alpine
         env:
-          POSTGRES_USER: athena
-          POSTGRES_PASSWORD: athena
-          POSTGRES_DB: athena_e2e
+          POSTGRES_USER: hoopoe
+          POSTGRES_PASSWORD: hoopoe
+          POSTGRES_DB: hoopoe_e2e
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U athena -d athena_e2e"
+          --health-cmd "pg_isready -U hoopoe -d hoopoe_e2e"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 10
@@ -209,7 +209,7 @@ jobs:
       - name: Run full-stack Playwright suite
         working-directory: frontend
         env:
-          E2E_DATABASE_URL: postgres://athena:athena@localhost:5432/athena_e2e
+          E2E_DATABASE_URL: postgres://hoopoe:hoopoe@localhost:5432/hoopoe_e2e
           E2E_SKIP_BUILD: '1'
         run: npx playwright test -c playwright.fullstack.config.ts
 

@@ -38,7 +38,7 @@ Pointez votre client MCP vers le serveur construit, en passant les trois variabl
   "mcpServers": {
     "athena": {
       "command": "node",
-      "args": ["/chemin/absolu/vers/Athena-Ledger/mcp/dist/index.js"],
+      "args": ["/chemin/absolu/vers/Hoopoe/mcp/dist/index.js"],
       "env": {
         "HOOPOE_API_URL": "http://<mini-pc-host>:8001",
         "HOOPOE_MCP_USER": "<votre-nom-utilisateur-athena>",
@@ -68,7 +68,7 @@ La distribution bureau lie Fastify à `127.0.0.1` sur un port assigné par l'OS,
   "mcpServers": {
     "athena": {
       "command": "node",
-      "args": ["/chemin/absolu/vers/Athena-Ledger/mcp/dist/index.js"],
+      "args": ["/chemin/absolu/vers/Hoopoe/mcp/dist/index.js"],
       "env": {
         "HOOPOE_PORT_FILE": "<DATA_DIR>/.mcp-port",
         "HOOPOE_MCP_USER": "<votre-nom-utilisateur-athena>",

@@ -19,7 +19,7 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
-REPO="Gekkotron/Athena-Ledger"
+REPO="Gekkotron/Hoopoe"
 COMPOSE=(docker compose -f docker-compose.release.yml)
 NO_BACKUP=0
 [ "${1:-}" = "--no-backup" ] && NO_BACKUP=1

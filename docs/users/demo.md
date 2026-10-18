@@ -16,7 +16,7 @@ A version of Hoopoe runs directly in your browser. No account, no install, no se
 
 <p style={{ textAlign: 'center', margin: '2rem 0' }}>
   <a
-    href="/Athena-Ledger/demo/"
+    href="/Hoopoe/demo/"
     className="button button--primary button--lg"
   >
     Open the demo →

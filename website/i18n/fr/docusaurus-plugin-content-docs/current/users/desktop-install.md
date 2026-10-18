@@ -13,7 +13,7 @@ Si vous voulez un serveur familial auquel tout le foyer se connecte, sautez cett
 
 Choisissez le fichier correspondant à votre OS dans la dernière release :
 
-- **[Dernière release sur GitHub](https://github.com/Gekkotron/Athena-Ledger/releases/latest)**
+- **[Dernière release sur GitHub](https://github.com/Gekkotron/Hoopoe/releases/latest)**
 
 | OS | Fichier |
 |----|---------|

@@ -514,7 +514,7 @@ certificate the updater doesn't trust.
 
 **Fix.** Cancel the in-app update, download the latest installer
 directly from
-[GitHub Releases](https://github.com/Gekkotron/Athena-Ledger/releases),
+[GitHub Releases](https://github.com/Gekkotron/Hoopoe/releases),
 and install over the current version — your local data is
 preserved.
 

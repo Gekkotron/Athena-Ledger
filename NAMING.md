@@ -1,6 +1,6 @@
 # Naming — product rename brainstorm
 
-**Context:** Registering `gekkotron.app` as the umbrella domain. This app currently lives as `Athena-Ledger` and will be hosted at `<name>.gekkotron.app`. Goal: pick a name that is **global**, **discoverable** by end users, **FR-safe** (primary audience is French via Enable Banking), and distinctive enough to compete.
+**Context:** Registering `gekkotron.app` as the umbrella domain. This app currently lives as `Hoopoe` and will be hosted at `<name>.gekkotron.app`. Goal: pick a name that is **global**, **discoverable** by end users, **FR-safe** (primary audience is French via Enable Banking), and distinctive enough to compete.
 
 **Status:** DECIDED on 2026-10-18 — the chosen name is **`Hoopoe`**. The owl mark stays (the mark carries brand identity visually; the word is now `Hoopoe`). Repo renaming to `Gekkotron/Hoopoe` is in progress.
 
@@ -56,5 +56,5 @@
 ## Open questions for next session
 
 1. Does `Horizon` feel strong enough despite being generic, or is distinctiveness worth the extra friction of `Pecunia`?
-2. Rename *scope*: user-facing surface only (domain, app title, website, README headline) vs. also the repo (`Athena-Ledger` → `Gekkotron-<name>`), which cascades into `Athena-Orchestrator`'s hard-coded path and the whole `Athena-*` family convention.
+2. Rename *scope*: user-facing surface only (domain, app title, website, README headline) vs. also the repo (`Hoopoe` → `Gekkotron-<name>`), which cascades into `Athena-Orchestrator`'s hard-coded path and the whole `Athena-*` family convention.
 3. Social handles / GitHub availability check for the chosen name under `Gekkotron/*`.

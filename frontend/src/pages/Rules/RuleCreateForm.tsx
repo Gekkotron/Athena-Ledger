@@ -202,7 +202,7 @@ export function RuleCreateForm({
           />
           {t('split.toggleLabel')}
           <a
-            href="https://gekkotron.github.io/Athena-Ledger/docs/users/categorization"
+            href="https://gekkotron.github.io/Hoopoe/docs/users/categorization"
             target="_blank"
             rel="noopener noreferrer"
             className="text-xs text-sage-300 hover:text-sage-200 underline underline-offset-2"

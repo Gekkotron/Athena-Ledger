@@ -25,7 +25,7 @@ dans votre navigateur, isolé du reste du web).
 
 <p style={{ textAlign: 'center', margin: '2rem 0' }}>
   <a
-    href="/Athena-Ledger/demo/"
+    href="/Hoopoe/demo/"
     className="button button--primary button--lg"
   >
     Ouvrir la démo →
