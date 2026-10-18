@@ -84,6 +84,16 @@ for _ in $(seq 1 30); do
   if HEALTH=$(curl -fsS "http://127.0.0.1:$BACKEND_PORT/health" 2>/dev/null); then
     echo "$(date): backend healthy: $HEALTH"
     docker image prune -f >/dev/null 2>&1 || true
+    # One-shot cleanup of the pre-rename image tags, now that the new
+    # containers are up and verified healthy. These still carry tags
+    # (so a plain `image prune` won't touch them) but nothing on the
+    # host references them any more. `-f` + `|| true` so a missing
+    # image, a still-in-use image, or a fresh install that never had
+    # them in the first place all skip cleanly.
+    for legacy in ghcr.io/gekkotron/athena-ledger-backend ghcr.io/gekkotron/athena-ledger-frontend; do
+      docker images --format '{{.Repository}}:{{.Tag}}' "$legacy" 2>/dev/null \
+        | xargs -r docker image rm -f >/dev/null 2>&1 || true
+    done
     echo "$(date): update to $VERSION complete."
     exit 0
   fi

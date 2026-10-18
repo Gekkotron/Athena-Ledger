@@ -87,7 +87,24 @@ installing the new build:
    now begin with `hoopoe_` (same labels, same meaning). Rewire any
    dashboards.
 
-## 3. Delete this hand-off file
+## 3. (Optional) Delete the old GHCR package
+
+The pre-rename images under
+`ghcr.io/gekkotron/athena-ledger-{backend,frontend}` are no longer
+referenced by any compose file and won't be pushed to again, but
+GitHub keeps them until explicitly deleted. If you want them gone:
+
+- https://github.com/users/Gekkotron/packages/container/package/athena-ledger-backend
+- https://github.com/users/Gekkotron/packages/container/package/athena-ledger-frontend
+
+Each page has a *Delete package* button. This is destructive and
+unrecoverable — if anyone else is still running an older release
+that pulls those tags, their next `update-release.sh` run will 404
+on the pull. On your own Mac the next `./update-release.sh` run also
+removes the pre-rename images from the local Docker cache (new
+cleanup block in that script after the health check).
+
+## 4. Delete this hand-off file
 
 Once you've worked through this list, `rm HOOPOE-RENAME-HANDOFF.md`
 and commit. It only exists as a one-shot checklist.
