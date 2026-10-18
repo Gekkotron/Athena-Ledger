@@ -34,6 +34,7 @@
     "fastify": "^5.1.0",
     "fastify-plugin": "^5.0.1",
     "iconv-lite": "^0.6.3",
+    "multicast-dns": "^7.2.5",
     "pdfjs-dist": "^4.10.38",
     "pg": "^8.13.1",
     "pino-pretty": "^13.0.0",
@@ -44,6 +45,7 @@
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",
+    "@types/multicast-dns": "^7.2.4",
     "@types/node": "^22.10.0",
     "@types/pdfkit": "^0.13.5",
     "@types/pg": "^8.11.10",

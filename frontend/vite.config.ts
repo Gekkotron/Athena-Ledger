@@ -88,6 +88,12 @@ export default defineConfig(({ mode }) => {
     server: {
       host: '0.0.0.0',
       port: 5173,
+      // mDNS/Bonjour hostname. Since Vite 5.4.12 the dev server rejects
+      // requests whose Host isn't localhost / an IP, so a browser hitting
+      // http://hoopoe.local:5173 would otherwise get "Blocked request".
+      // The leading dot is a Vite wildcard — matches hoopoe.local itself
+      // and any sub-label (ipv4.hoopoe.local, etc).
+      allowedHosts: ['hoopoe.local', '.hoopoe.local'],
       proxy: {
         '/api': {
           target: 'http://localhost:8001',

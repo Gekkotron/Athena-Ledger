@@ -26,6 +26,7 @@ import { startDraftSweeper } from './domain/imports/pdf/draft-sweeper.js';
 import { startWatchFolder } from './domain/imports/watch-folder.js';
 import { startBankSyncScheduler } from './domain/imports/bank-sync.js';
 import { startBackupScheduler } from './domain/backup/scheduler.js';
+import { startMdnsResponder } from './services/mdns-responder.js';
 import { rulesRoutes } from './http/routes/rules.js';
 import { transactionsRoutes } from './http/routes/transactions/index.js';
 import { reportsRoutes } from './http/routes/reports/index.js';
@@ -207,6 +208,19 @@ await app.register(totpRoutes);
   startWatchFolder(app);
   startBankSyncScheduler(app);
   startBackupScheduler(app);
+
+  // mDNS/Bonjour responder for `<HOOPOE_MDNS_HOSTNAME>.local`. Opt-out via
+  // HOOPOE_MDNS=0. Skipped under the test suite — every integration test
+  // calls build(), and racing a UDP 5353 bind across hundreds of file
+  // modules would spam EADDRINUSE warnings and could stall CI runners.
+  if (env.HOOPOE_MDNS && env.NODE_ENV !== 'test') {
+    void startMdnsResponder({ hostname: env.HOOPOE_MDNS_HOSTNAME, logger: app.log })
+      .then((handle) => {
+        app.addHook('onClose', async () => {
+          await handle.stop();
+        });
+      });
+  }
 
   // v2 orphan-key sweep: strip pre-v2 tip ids ('welcome_tour', 'section:*')
   // from every user's dismissed_tips jsonb. One-shot at boot. Failures are

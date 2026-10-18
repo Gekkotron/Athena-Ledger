@@ -48,6 +48,21 @@ const Env = z
     // configured (Sauvegarde → Sauvegarde distante). On by default; set to
     // 0/false to only back up on demand via the run-now button.
     BACKUP_AUTO: boolish.default(true),
+    // Built-in mDNS/Bonjour responder: when on, the backend answers
+    // multicast A-queries for `<HOOPOE_MDNS_HOSTNAME>.local` with the host's
+    // non-loopback IPv4(s), so other devices on the LAN can reach the app
+    // at http://hoopoe.local without a static DNS entry. On by default.
+    // Fails soft when UDP 5353 is already bound (macOS mDNSResponder /
+    // avahi-daemon) — the OS responder is already serving the local hostname
+    // and we just log and skip. Turn off with 0/false to silence the warning.
+    HOOPOE_MDNS: boolish.default(true),
+    // Hostname advertised by the built-in mDNS responder. The `.local`
+    // suffix is appended automatically. Lowercase ASCII [a-z0-9-] only —
+    // mDNS names are case-insensitive but Bonjour normalizes to lowercase.
+    HOOPOE_MDNS_HOSTNAME: z
+      .string()
+      .regex(/^[a-z0-9][a-z0-9-]{0,62}$/, 'HOOPOE_MDNS_HOSTNAME must be a lowercase DNS label')
+      .default('hoopoe'),
   })
   .refine((v) => v.DB_DRIVER !== 'postgres' || !!v.DATABASE_URL, {
     message: 'DATABASE_URL is required when DB_DRIVER=postgres',
