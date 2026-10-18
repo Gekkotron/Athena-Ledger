@@ -40,3 +40,9 @@ desktop/sidecar/prebuilds/
 desktop/sidecar/package.json
 desktop/sidecar/package-lock.json
 desktop/.node-cache/
+
+# Playwright test-run artifacts can land at the repo root if a run is
+# launched with cwd outside frontend/ (frontend/.gitignore handles
+# frontend/test-results on its own).
+test-results/
+
