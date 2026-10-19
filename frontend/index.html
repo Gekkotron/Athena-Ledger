@@ -330,12 +330,13 @@
         }
         setTimeout(leave, 8000);
 
-        // Easter egg: clicking the sidebar logo (Brand.tsx) replays the
-        // splash. The entrance choreography lasts ~1.6 s; we hold it for
-        // 3.5 s total so the user gets ~2 s of settled view before the
-        // fade. Clicking the splash itself fades it early. Any in-flight
-        // replay is killed first so repeat clicks restart cleanly instead
-        // of stacking nodes.
+        // Easter egg: double-clicking the sidebar logo (Brand.tsx)
+        // replays the splash and plays a short chirp. The entrance
+        // choreography lasts ~1.6 s; we hold it for 3.5 s total so the
+        // user gets ~2 s of settled view before the fade. Clicking the
+        // splash itself fades it early. Any in-flight replay is killed
+        // first so repeat triggers restart cleanly instead of stacking
+        // nodes.
         window.__replaySplash = function () {
           var current = document.getElementById('splash');
           if (current) current.remove();

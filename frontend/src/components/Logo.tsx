@@ -4,6 +4,7 @@ interface Props {
   size?: number;
   className?: string;
   onClick?: (e: MouseEvent<HTMLImageElement>) => void;
+  onDoubleClick?: (e: MouseEvent<HTMLImageElement>) => void;
 }
 
 // Brand mark for Hoopoe — a stylised hoopoe (crest + downcurved beak)
@@ -15,7 +16,8 @@ interface Props {
 // the root-deployed builds (Docker/Tauri, BASE_URL='/') and the demo
 // build served under a sub-path. BASE_URL always ends with a slash, so
 // string concatenation gives one clean slash.
-export function Logo({ size = 28, className = '', onClick }: Props) {
+export function Logo({ size = 28, className = '', onClick, onDoubleClick }: Props) {
+  const interactive = onClick || onDoubleClick;
   return (
     <img
       src={`${import.meta.env.BASE_URL}hoopoe-logo.png`}
@@ -25,7 +27,8 @@ export function Logo({ size = 28, className = '', onClick }: Props) {
       className={className}
       draggable={false}
       onClick={onClick}
-      style={onClick ? { cursor: 'pointer' } : undefined}
+      onDoubleClick={onDoubleClick}
+      style={interactive ? { cursor: 'pointer' } : undefined}
     />
   );
 }
