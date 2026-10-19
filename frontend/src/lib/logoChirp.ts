@@ -1,6 +1,6 @@
 import type { MouseEvent } from 'react';
 
-// Shared easter-egg handler for the hoopoe logo. Double-click (or
+// Shared double-click handler for the hoopoe logo. Double-click (or
 // double-tap) on a <Logo> replays the splash and plays the hoopoe's
 // characteristic three-note call — "hoop-hoop-hoop", three soft hollow
 // notes around 560 Hz spaced ~330 ms apart, synthesized via Web Audio
@@ -57,7 +57,7 @@ function playHoopoeCall() {
   }
 }
 
-export function triggerLogoEasterEgg(e: MouseEvent<HTMLImageElement>) {
+export function triggerLogoChirp(e: MouseEvent<HTMLImageElement>) {
   const replay = (window as unknown as { __replaySplash?: () => void }).__replaySplash;
   if (!replay) return;
   e.preventDefault();

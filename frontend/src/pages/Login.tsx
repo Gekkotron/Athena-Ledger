@@ -6,7 +6,7 @@ import { api, ApiError } from '../api/client';
 import type { User } from '../api/types';
 import { LOCK_FLAG_KEY } from '../contexts/LockContext';
 import { Logo } from '../components/Logo';
-import { triggerLogoEasterEgg } from '../lib/logoEasterEgg';
+import { triggerLogoChirp } from '../lib/logoChirp';
 import { LoginTotpStep } from './LoginTotpStep';
 
 type LoginResponse = { user: User } | { requiresTotp: true };
@@ -92,7 +92,7 @@ export function Login() {
     <div className="min-h-screen flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-md">
         <div className="text-center mb-8 flex flex-col items-center">
-          <Logo size={60} className="text-sage-300" onDoubleClick={triggerLogoEasterEgg} />
+          <Logo size={60} className="text-sage-300" onDoubleClick={triggerLogoChirp} />
           <div className="display text-5xl text-ink-50 tracking-tight mt-5">Hoopoe</div>
           <div className="display-italic text-base text-ink-400 mt-1">Accounting</div>
           <div className="mt-4 text-xs uppercase tracking-[0.2em] text-ink-500">

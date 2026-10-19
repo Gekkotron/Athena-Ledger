@@ -308,7 +308,7 @@
         if (!splash) return;
         // Freeze a pristine copy of the splash BEFORE the leaving class
         // or any removal touches the live node. Used by __replaySplash
-        // so the easter-egg replay always starts from a clean state.
+        // so the manual replay always starts from a clean state.
         var template = splash.cloneNode(true);
         var removed = false;
         var minUntil = Date.now() + 450; // avoid flashing on near-instant loads
@@ -330,13 +330,13 @@
         }
         setTimeout(leave, 8000);
 
-        // Easter egg: double-clicking the sidebar logo (Brand.tsx)
-        // replays the splash and plays a short chirp. The entrance
-        // choreography lasts ~1.6 s; we hold it for 3.5 s total so the
-        // user gets ~2 s of settled view before the fade. Clicking the
-        // splash itself fades it early. Any in-flight replay is killed
-        // first so repeat triggers restart cleanly instead of stacking
-        // nodes.
+        // Double-clicking the hoopoe logo (sidebar brand or login
+        // screen) replays the splash and plays a short chirp. The
+        // entrance choreography lasts ~1.6 s; we hold it for 3.5 s total
+        // so the user gets ~2 s of settled view before the fade.
+        // Clicking the splash itself fades it early. Any in-flight
+        // replay is killed first so repeat triggers restart cleanly
+        // instead of stacking nodes.
         window.__replaySplash = function () {
           var current = document.getElementById('splash');
           if (current) current.remove();
