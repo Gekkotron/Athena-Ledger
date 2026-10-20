@@ -36,12 +36,12 @@ Pointez votre client MCP vers le serveur construit, en passant les trois variabl
 ```json
 {
   "mcpServers": {
-    "athena": {
+    "hoopoe": {
       "command": "node",
       "args": ["/chemin/absolu/vers/Hoopoe/mcp/dist/index.js"],
       "env": {
         "HOOPOE_API_URL": "http://<mini-pc-host>:8001",
-        "HOOPOE_MCP_USER": "<votre-nom-utilisateur-athena>",
+        "HOOPOE_MCP_USER": "<votre-nom-utilisateur-hoopoe>",
         "HOOPOE_MCP_TOKEN": "<coller-le-jeton-ici>",
         "HOOPOE_STATEMENTS_DIR": "/Users/vous/RelevésHoopoe"
       }
@@ -66,12 +66,12 @@ La distribution bureau lie Fastify à `127.0.0.1` sur un port assigné par l'OS,
 ```json
 {
   "mcpServers": {
-    "athena": {
+    "hoopoe": {
       "command": "node",
       "args": ["/chemin/absolu/vers/Hoopoe/mcp/dist/index.js"],
       "env": {
         "HOOPOE_PORT_FILE": "<DATA_DIR>/.mcp-port",
-        "HOOPOE_MCP_USER": "<votre-nom-utilisateur-athena>",
+        "HOOPOE_MCP_USER": "<votre-nom-utilisateur-hoopoe>",
         "HOOPOE_MCP_TOKEN": "<coller-le-jeton-ici>"
       }
     }
@@ -79,11 +79,11 @@ La distribution bureau lie Fastify à `127.0.0.1` sur un port assigné par l'OS,
 }
 ```
 
-`<DATA_DIR>` est l'endroit où l'application bureau stocke ses données — le même dossier qui contient `athena.db`. Valeurs par défaut par OS :
+`<DATA_DIR>` est l'endroit où l'application bureau stocke ses données — le même dossier qui contient `hoopoe.db`. Valeurs par défaut par OS :
 
-- macOS : `~/Library/Application Support/com.athena.ledger.desktop/`
-- Linux : `~/.local/share/com.athena.ledger.desktop/`
-- Windows : `%APPDATA%\com.athena.ledger.desktop\`
+- macOS : `~/Library/Application Support/com.gekkotron.hoopoe.desktop/`
+- Linux : `~/.local/share/com.gekkotron.hoopoe.desktop/`
+- Windows : `%APPDATA%\com.gekkotron.hoopoe.desktop\`
 
 Le pont lit le port depuis ce fichier à chaque démarrage, donc ouvrir et fermer l'application bureau entre les sessions du client MCP fonctionne de manière transparente. Si `HOOPOE_API_URL` et `HOOPOE_PORT_FILE` sont tous les deux définis, `HOOPOE_API_URL` prend le pas.
 

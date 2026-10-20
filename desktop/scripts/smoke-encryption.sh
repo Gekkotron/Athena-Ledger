@@ -34,7 +34,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 BACKEND_DIR="$REPO_ROOT/backend"
 
-WORK_DIR="$(mktemp -d "${TMPDIR:-/tmp}/athena-smoke-XXXXXX")"
+WORK_DIR="$(mktemp -d "${TMPDIR:-/tmp}/hoopoe-smoke-XXXXXX")"
 DATA_DIR="$WORK_DIR/data"
 mkdir -p "$DATA_DIR"
 
@@ -324,7 +324,7 @@ if [ "$ok" -eq 1 ]; then
   fi
 fi
 if [ "$ok" -eq 1 ]; then
-  [ -f "$DATA_DIR/athena.db.enc" ] || { log "athena.db.enc missing after enable"; ok=0; }
+  [ -f "$DATA_DIR/hoopoe.db.enc" ] || { log "hoopoe.db.enc missing after enable"; ok=0; }
 fi
 if [ "$ok" -eq 1 ]; then
   marker_mode=$(json_field mode <"$DATA_DIR/security.json" 2>/dev/null)
@@ -344,8 +344,8 @@ if ! stop_sidecar_clean "$CUR_PID" 20; then
   log "sidecar did not exit within 20s of SIGTERM"
   ok=0
 fi
-if [ "$ok" -eq 1 ] && [ -d "$DATA_DIR/athena.db" ]; then
-  log "athena.db/ plaintext directory still present after clean shutdown"
+if [ "$ok" -eq 1 ] && [ -d "$DATA_DIR/hoopoe.db" ]; then
+  log "hoopoe.db/ plaintext directory still present after clean shutdown"
   ok=0
 fi
 require "$((1 - ok))" "$STAGE_NAME"
@@ -532,16 +532,16 @@ if [ "$ok" -eq 1 ] && ! stop_sidecar_clean "$CUR_PID" 20; then
   log "sidecar did not exit within 20s of SIGTERM (finalize boot)"
   ok=0
 fi
-if [ "$ok" -eq 1 ] && [ -f "$DATA_DIR/athena.db.enc" ]; then
-  log "athena.db.enc still present after disable"
+if [ "$ok" -eq 1 ] && [ -f "$DATA_DIR/hoopoe.db.enc" ]; then
+  log "hoopoe.db.enc still present after disable"
   ok=0
 fi
 if [ "$ok" -eq 1 ] && [ -f "$DATA_DIR/security.json" ]; then
   log "security.json still present after disable"
   ok=0
 fi
-if [ "$ok" -eq 1 ] && [ ! -d "$DATA_DIR/athena.db" ]; then
-  log "plaintext athena.db/ directory missing after disable"
+if [ "$ok" -eq 1 ] && [ ! -d "$DATA_DIR/hoopoe.db" ]; then
+  log "plaintext hoopoe.db/ directory missing after disable"
   ok=0
 fi
 # Final boot: a plain, unencrypted boot — no unlock phase at all.

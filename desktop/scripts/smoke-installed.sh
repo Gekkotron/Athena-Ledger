@@ -24,7 +24,7 @@ set -euo pipefail
 ARTIFACT="${1:?usage: smoke-installed.sh <path to .dmg or .deb>}"
 # Absolute path — the Linux branch runs it from a different cwd.
 ARTIFACT="$(cd "$(dirname "$ARTIFACT")" && pwd)/$(basename "$ARTIFACT")"
-IDENTIFIER="com.athena.ledger.desktop"
+IDENTIFIER="com.gekkotron.hoopoe.desktop"
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 WORK="$(mktemp -d)"
 APP_PID=""
@@ -59,7 +59,7 @@ case "$(uname)" in
     # symlink to /private/var. An app launched from a `mktemp -d` path
     # therefore fails resource_dir() with UnknownPath while the same bundle
     # works from /Applications. /private/tmp is symlink-free.
-    DMG_MOUNT="$(mktemp -d /private/tmp/athena-smoke-dmg.XXXXXX)"
+    DMG_MOUNT="$(mktemp -d /private/tmp/hoopoe-smoke-dmg.XXXXXX)"
     hdiutil attach "$ARTIFACT" -nobrowse -readonly -mountpoint "$DMG_MOUNT" >/dev/null
     # Run straight from the mounted dmg (a normal way to launch a mac app —
     # the app only writes to DATA_DIR). Cleanup kills the app first, then

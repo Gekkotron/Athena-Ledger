@@ -37,7 +37,7 @@ foreach ($root in $roots) {
 if (-not $exe) { throw "installed exe not found under: $($roots -join ', ')" }
 Write-Host "launching: $($exe.FullName)"
 
-$dataDir = Join-Path $env:APPDATA 'com.athena.ledger.desktop'
+$dataDir = Join-Path $env:APPDATA 'com.gekkotron.hoopoe.desktop'
 $portFile = Join-Path $dataDir '.mcp-port'
 Remove-Item -Force -ErrorAction SilentlyContinue $portFile
 

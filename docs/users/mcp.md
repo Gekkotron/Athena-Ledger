@@ -57,14 +57,14 @@ Claude Desktop and several other MCP clients):
 ```json
 {
   "mcpServers": {
-    "athena": {
+    "hoopoe": {
       "command": "node",
       "args": ["/absolute/path/to/Hoopoe/mcp/dist/index.js"],
       "env": {
         "HOOPOE_API_URL": "http://<mini-pc-host>:8001",
-        "HOOPOE_MCP_USER": "<your-athena-username>",
+        "HOOPOE_MCP_USER": "<your-hoopoe-username>",
         "HOOPOE_MCP_TOKEN": "<paste-token-here>",
-        "HOOPOE_STATEMENTS_DIR": "/Users/you/AthenaStatements"
+        "HOOPOE_STATEMENTS_DIR": "/Users/you/HoopoeStatements"
       }
     }
   }
@@ -94,12 +94,12 @@ bridge at the port file the app writes on startup:
 ```json
 {
   "mcpServers": {
-    "athena": {
+    "hoopoe": {
       "command": "node",
       "args": ["/absolute/path/to/Hoopoe/mcp/dist/index.js"],
       "env": {
         "HOOPOE_PORT_FILE": "<DATA_DIR>/.mcp-port",
-        "HOOPOE_MCP_USER": "<your-athena-username>",
+        "HOOPOE_MCP_USER": "<your-hoopoe-username>",
         "HOOPOE_MCP_TOKEN": "<paste-token-here>"
       }
     }
@@ -108,11 +108,11 @@ bridge at the port file the app writes on startup:
 ```
 
 `<DATA_DIR>` is where the desktop app stores its data — the same folder that
-holds `athena.db`. Defaults per OS:
+holds `hoopoe.db`. Defaults per OS:
 
-- macOS: `~/Library/Application Support/com.athena.ledger.desktop/`
-- Linux: `~/.local/share/com.athena.ledger.desktop/`
-- Windows: `%APPDATA%\com.athena.ledger.desktop\`
+- macOS: `~/Library/Application Support/com.gekkotron.hoopoe.desktop/`
+- Linux: `~/.local/share/com.gekkotron.hoopoe.desktop/`
+- Windows: `%APPDATA%\com.gekkotron.hoopoe.desktop\`
 
 The bridge reads the port from that file each time it starts, so opening and
 closing the desktop app between MCP client sessions works transparently. If

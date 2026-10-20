@@ -153,7 +153,7 @@ log('installing runtime deps (npm ci --omit=dev, from backend lockfile) …');
 run('npm', ['ci', '--omit=dev', '--no-audit', '--no-fund'], { cwd: SIDECAR });
 
 const sidecarPkg = {
-  name: 'athena-sidecar',
+  name: 'hoopoe-sidecar',
   private: true,
   version: tauriConf.version,
   type: 'module',

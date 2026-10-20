@@ -1,5 +1,5 @@
 use std::io::{BufRead, BufReader};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::process::{Child, Command, Stdio};
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::mpsc;
@@ -71,6 +71,46 @@ fn sidecar_dir(app: &tauri::AppHandle) -> PathBuf {
         .join("sidecar")
 }
 
+// Bundle identifiers this app used before the Hoopoe rename, tried in order.
+// app_data_dir() is keyed on the identifier, so after the rename an upgraded
+// install would otherwise boot into a fresh, empty directory while the user's
+// data sat untouched next to it. com.athena.accounting.desktop is what
+// v1.0.0-rc.1 … rc.8 shipped, so it wins; com.athena.ledger.desktop only ever
+// existed on unreleased builds from main.
+const LEGACY_IDENTIFIERS: &[&str] = &["com.athena.accounting.desktop", "com.athena.ledger.desktop"];
+
+// One-shot move of a pre-rename data directory onto `data_dir`. Only runs
+// while `data_dir` is missing or empty, so an install that already has data
+// under the new identifier is never touched. The move is a same-parent
+// rename (atomic, no copy). The sidecar then renames athena.db → hoopoe.db
+// inside it (see backend/src/entry/tauri.ts).
+fn migrate_legacy_data_dir(data_dir: &Path) -> Result<Option<PathBuf>, (PathBuf, std::io::Error)> {
+    let Some(parent) = data_dir.parent() else {
+        return Ok(None);
+    };
+    let is_empty = match std::fs::read_dir(data_dir) {
+        Ok(mut entries) => entries.next().is_none(),
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => true,
+        Err(_) => false,
+    };
+    if !is_empty {
+        return Ok(None);
+    }
+    for id in LEGACY_IDENTIFIERS {
+        let legacy = parent.join(id);
+        if !legacy.is_dir() {
+            continue;
+        }
+        // Windows can't rename onto an existing directory, even an empty one.
+        if data_dir.exists() {
+            std::fs::remove_dir(data_dir).map_err(|e| (legacy.clone(), e))?;
+        }
+        std::fs::rename(&legacy, data_dir).map_err(|e| (legacy.clone(), e))?;
+        return Ok(Some(legacy));
+    }
+    Ok(None)
+}
+
 fn spawn_sidecar(app: &tauri::AppHandle) -> (Child, u16) {
     let dir = sidecar_dir(app);
     let node_bin = if cfg!(windows) {
@@ -89,6 +129,17 @@ fn spawn_sidecar(app: &tauri::AppHandle) -> (Child, u16) {
         .path()
         .app_data_dir()
         .expect("no app data dir available on this platform");
+    match migrate_legacy_data_dir(&data_dir) {
+        Ok(Some(from)) => eprintln!("[shell] moved legacy data dir {from:?} → {data_dir:?}"),
+        Ok(None) => {}
+        // Fatal on purpose: carrying on would boot an empty data dir, and the
+        // first write into it makes it non-empty, so the migration would never
+        // be retried and the user's data would look lost for good.
+        Err((from, e)) => panic!(
+            "failed to move legacy data dir {from:?} → {data_dir:?}: {e} \
+             (quit any running Athena Accounting app and relaunch Hoopoe)"
+        ),
+    }
     std::fs::create_dir_all(&data_dir).expect("failed to create app data dir");
 
     let mut cmd = Command::new(&node_bin);
@@ -300,4 +351,84 @@ pub fn run() {
             }
             _ => {}
         });
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn scratch(name: &str) -> PathBuf {
+        let root =
+            std::env::temp_dir().join(format!("hoopoe-migrate-{name}-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&root);
+        std::fs::create_dir_all(&root).unwrap();
+        root
+    }
+
+    #[test]
+    fn moves_legacy_dir_when_new_one_is_missing() {
+        let root = scratch("missing");
+        let legacy = root.join("com.athena.accounting.desktop");
+        std::fs::create_dir_all(legacy.join("athena.db")).unwrap();
+        let data_dir = root.join("com.gekkotron.hoopoe.desktop");
+
+        assert_eq!(
+            migrate_legacy_data_dir(&data_dir).unwrap(),
+            Some(legacy.clone())
+        );
+        assert!(data_dir.join("athena.db").is_dir());
+        assert!(!legacy.exists());
+        std::fs::remove_dir_all(&root).unwrap();
+    }
+
+    #[test]
+    fn replaces_an_empty_new_dir() {
+        let root = scratch("empty");
+        let legacy = root.join("com.athena.ledger.desktop");
+        std::fs::create_dir_all(&legacy).unwrap();
+        std::fs::write(legacy.join("session-secret.bin"), b"x").unwrap();
+        let data_dir = root.join("com.gekkotron.hoopoe.desktop");
+        std::fs::create_dir_all(&data_dir).unwrap();
+
+        assert_eq!(migrate_legacy_data_dir(&data_dir).unwrap(), Some(legacy));
+        assert!(data_dir.join("session-secret.bin").is_file());
+        std::fs::remove_dir_all(&root).unwrap();
+    }
+
+    #[test]
+    fn leaves_a_populated_new_dir_alone() {
+        let root = scratch("populated");
+        let legacy = root.join("com.athena.accounting.desktop");
+        std::fs::create_dir_all(&legacy).unwrap();
+        let data_dir = root.join("com.gekkotron.hoopoe.desktop");
+        std::fs::create_dir_all(data_dir.join("hoopoe.db")).unwrap();
+
+        assert_eq!(migrate_legacy_data_dir(&data_dir).unwrap(), None);
+        assert!(legacy.is_dir());
+        std::fs::remove_dir_all(&root).unwrap();
+    }
+
+    #[test]
+    fn prefers_the_released_identifier() {
+        let root = scratch("both");
+        let released = root.join("com.athena.accounting.desktop");
+        let dev = root.join("com.athena.ledger.desktop");
+        std::fs::create_dir_all(&released).unwrap();
+        std::fs::create_dir_all(&dev).unwrap();
+        let data_dir = root.join("com.gekkotron.hoopoe.desktop");
+
+        assert_eq!(migrate_legacy_data_dir(&data_dir).unwrap(), Some(released));
+        assert!(dev.is_dir());
+        std::fs::remove_dir_all(&root).unwrap();
+    }
+
+    #[test]
+    fn no_op_on_a_fresh_install() {
+        let root = scratch("fresh");
+        let data_dir = root.join("com.gekkotron.hoopoe.desktop");
+
+        assert_eq!(migrate_legacy_data_dir(&data_dir).unwrap(), None);
+        assert!(!data_dir.exists());
+        std::fs::remove_dir_all(&root).unwrap();
+    }
 }
