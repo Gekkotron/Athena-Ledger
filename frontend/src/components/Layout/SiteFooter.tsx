@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { docsUrlFor } from './docsUrl';
 import { useShortcuts } from '../ShortcutsCheatsheet';
+import { DonateMenu } from './DonateMenu';
 
 function KeyboardIcon() {
   return (
@@ -50,6 +51,9 @@ export function SiteFooter() {
           <GitHubIcon />
           {t('footer.githubLink')}
         </a>
+        <span aria-hidden>·</span>
+        <span>{t('footer.donatePrompt')}</span>
+        <DonateMenu className={linkClass} />
       </div>
       <div className="flex items-center gap-4">
         <button type="button" onClick={openShortcuts} className={linkClass}>
