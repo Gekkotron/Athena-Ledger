@@ -260,6 +260,12 @@ fn terminate_gracefully(mut child: Child) {
     let _ = child.wait();
 }
 
+// The only expansion of generate_context! in the crate: it emits a
+// crate-wide Info.plist symbol, so the icon test below has to share it.
+fn context() -> tauri::Context<tauri::Wry> {
+    tauri::generate_context!()
+}
+
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_notification::init())
@@ -325,7 +331,7 @@ pub fn run() {
                 .build()?;
             Ok(())
         })
-        .build(tauri::generate_context!())
+        .build(context())
         .expect("error building tauri app")
         .run(|app, event| match event {
             RunEvent::WindowEvent {
@@ -430,5 +436,20 @@ mod tests {
         assert_eq!(migrate_legacy_data_dir(&data_dir).unwrap(), None);
         assert!(!data_dir.exists());
         std::fs::remove_dir_all(&root).unwrap();
+    }
+
+    // generate_context! embeds icons/32x32.png as raw 8-bit RGBA. A 16-bit
+    // PNG decodes to twice the bytes, and the macOS window setup then panics
+    // with "invalid icon" at launch (rc.9's first release run).
+    #[test]
+    fn default_window_icon_is_8_bit_rgba() {
+        let context = context();
+        let icon = context
+            .default_window_icon()
+            .expect("bundle declares an icon");
+        assert_eq!(
+            icon.rgba().len(),
+            (icon.width() * icon.height() * 4) as usize
+        );
     }
 }
