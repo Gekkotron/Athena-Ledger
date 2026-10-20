@@ -12,6 +12,20 @@ exact format (`## [X.Y.Z] - YYYY-MM-DD`).
 
 ## [Unreleased]
 
+## [1.0.0-rc.10] - 2026-10-20
+
+Re-cut of rc.9 — same product. rc.9 was never published: its Release
+workflow failed on the macOS desktop job, so **read the
+[1.0.0-rc.9](https://github.com/Gekkotron/Hoopoe/blob/v1.0.0-rc.10/CHANGELOG.md#100-rc9---2026-10-20)
+section for the full list of changes since rc.8 and the upgrade notes**
+(desktop data-folder move, Docker image names, one-time sign-in).
+
+### Fixed
+- **macOS app aborted at launch** with `invalid icon`. The new hoopoe
+  icons were 16 bits per channel, and the embedded window icon then had
+  twice the bytes Tauri expects. The desktop icons are now 8-bit RGBA, and
+  a test checks the embedded icon's size.
+
 ## [1.0.0-rc.9] - 2026-10-20
 
 First release under the **Hoopoe** name (formerly Athena Accounting /
