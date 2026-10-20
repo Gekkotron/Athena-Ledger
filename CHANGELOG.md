@@ -12,9 +12,62 @@ exact format (`## [X.Y.Z] - YYYY-MM-DD`).
 
 ## [Unreleased]
 
+## [1.0.0-rc.9] - 2026-10-20
+
+First release under the **Hoopoe** name (formerly Athena Accounting /
+Athena Ledger), and the first feature release since rc.5: loans, investment
+valuations, a reworked Dashboard, Discord notifications and four new import
+formats.
+
+### Upgrading
+- **Desktop:** the app is now *Hoopoe* (`com.gekkotron.hoopoe.desktop`).
+  On first launch it moves your existing data folder from
+  `com.athena.accounting.desktop` to the new location automatically. Quit
+  the old *Athena Accounting* app first; if it is still running, Hoopoe
+  refuses to start rather than open an empty install. The old app bundle
+  can be deleted afterwards (on macOS it sits next to `Hoopoe.app`).
+- **Docker:** images are now published as
+  `ghcr.io/gekkotron/hoopoe-backend` / `hoopoe-frontend`. `update.sh` and
+  `update-release.sh` remove the old `athena-ledger-*` image tags after a
+  healthy upgrade.
+- **Everyone signs in once more:** the session cookie is now `hoopoe.sid`.
+  2FA pairings, bank connections, backup destinations and MCP tokens are
+  kept, because their encryption keys deliberately keep the old derivation
+  salts.
+- Prometheus metrics are renamed `athena_*` → `hoopoe_*`; update any
+  dashboards or alerts that use them.
+- New backups are named `hoopoe-backup-*.enc.json`; retention still rotates
+  older `athena-*` files.
+
 ### Added
+- **Loans.** A new *Prêts* page with loan cards, a detail drawer
+  (cumulative capital / interest / insurance chart, periods and full
+  amortisation schedule) and an editor with live preview. Insurance can be
+  rate-based on initial or remaining capital, revised annually, or a fixed
+  monthly amount. The *Et si…* panel compares a scenario's end date,
+  monthly payment and total cost with the current loan, a loan's payment
+  can be changed from a given date, and a simulation can be converted into
+  a real loan. Loans are included in backup export and
+  restore. Migrations `0048_loans.sql`, `0049_loans_insurance_amount.sql`.
+- **Investment valuations.** Record the current value of investment and
+  savings accounts. Cards show *Versé* (amount paid in) and the plus-value,
+  and a new hideable Dashboard *Placements* section charts value against
+  contributions. Migration `0047_account_valuations.sql`.
+- **Dashboard:** a Total · Placé · Bloqué · Disponible breakdown under the
+  hero, a sticky section nav, a shared chart-scope bar, content-shaped
+  loading skeletons, and *Réglages → Dashboard* toggles to hide any
+  section.
+- **Accounts:** IBAN on each card with a copy button (masked in privacy
+  mode), editable on manual accounts.
+- **Transactions:** a type filter (income / expense / transfer) and a
+  *Non catégorisées* toggle, also applied to the CSV export.
+- Global `?` keyboard-shortcut cheat sheet.
+- New hoopoe icon and an animated splash screen on cold start.
+- The backend advertises `hoopoe.local` over mDNS on the LAN
+  (`HOOPOE_MDNS`, `HOOPOE_MDNS_HOSTNAME`; Docker needs host networking for
+  this).
 - **Discord notifications.** A new *Discord (webhook)* channel in
-  *Paramètres → Notifications → Canaux* posts alerts to a Discord channel
+  *Réglages → Notifications → Canaux* posts alerts to a Discord channel
   via a webhook URL (restricted to Discord webhook endpoints), with the same privacy masks
   and per-minute rate limit as the WhatsApp channel.
 - **Four new import formats land together.** Hoopoe now reads **QIF**
@@ -33,9 +86,29 @@ exact format (`## [X.Y.Z] - YYYY-MM-DD`).
   `import_format` Postgres enum with the four new values.
 
 ### Changed
+- Renamed the app to **Hoopoe** everywhere: UI, docs, packages, GitHub
+  repository (`Gekkotron/Hoopoe`), images, TOTP issuer for new
+  enrolments, metrics and on-disk filenames (`athena.db` → `hoopoe.db`,
+  renamed in place at boot).
 - Upload form `accept` list now covers `.qif`, `.mt940`, `.sta`,
   `.swift`, `.xlsx`, `.bai`, `.bai2` in addition to the previously
   supported extensions.
+- Accounts page uses two columns on wide screens and lists closed accounts
+  last.
+
+### Fixed
+- Signing in or verifying 2FA could immediately sign you back out when
+  requests were still in flight (e.g. the PWA precache). The session cookie
+  is now only sent when the session changes.
+- Logging out could be undone by a request that finished after it, and the
+  pre-login session id stayed valid after rotation.
+- *Revenu moyen mensuel* counts only income categories.
+- The Dashboard *Placements* chart only offers investment and locked
+  accounts, including for *Tous les comptes*.
+- Transactions: the category select is sized to its selected option.
+- Tips tour: Esc closes the bubble once its anchor has rendered.
+- Release smoke scripts and MCP docs now use the Hoopoe data folder and
+  file names.
 
 ### Documentation
 - README landing-page one-liners, the Supported Formats table in

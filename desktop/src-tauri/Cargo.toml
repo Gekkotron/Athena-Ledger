@@ -1,6 +1,6 @@
 [package]
 name = "hoopoe-desktop"
-version = "1.0.0-rc.8"
+version = "1.0.0-rc.9"
 description = "Hoopoe desktop shell"
 authors = ["Gekkotron"]
 edition = "2021"
